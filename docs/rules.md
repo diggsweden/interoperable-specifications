@@ -87,7 +87,7 @@ SHACL-INSPEC builds on top of the SHACL specification by providing additional re
 
 ><a id="ap12"></a> **Rule AP-12:** An application profile *B* MAY express that it is a **variant** of a application profile *A* via the `inspec:variant` property only if for every node shape *X* in *A* there is a variant or refined node shape *Y* in *B*, at least one of the node shapes must be a variant and not a refinement.
 
-><a id="ap13"></a> **Rule AP-13:** Shapes used for refinement or for variants MAY reside in other RDF Datasets as long as the dataset is pointed to via owl:import AND there is a either a `prof:isProfileOf` or a `inspec:variant` relation between the application profile resources.
+><a id="ap13"></a> **Rule AP-13:** Shapes used for refinement or for variants MAY reside in other RDF Datasets as long as the dataset is pointed to via `owl:import` AND there is either a `prof:isProfileOf` or a `inspec:variant` relation between the application profile resources.
 
 ><a id="ap14"></a> **Rule AP-14:** All classes, properties and terminologies referred to via shapes should be explicitly indicated via the `dcterms:requires` property from the "interoperable specification resource" (introduced in Rule INSPEC-1)
 
@@ -107,6 +107,6 @@ SVG-INSPEC builds on top of SVG to provide a way to clarify whether objects in a
 
 (*) Both RDFS and SKOS introduce building blocks (classes and properties) for defining things (other classes, properties, concepts, collections) in an open world manner. However, both vocabularies and terminologies needs to work in the context of semantic specifications where it is stated explicitly what is included, hence it corresponds to a closed world perspective. Hence, in both RDFS-INSPEC and SKOS-INSPEC there is a restriction to assume that everything needed is provided in the indicated RDF Datasets.
 
-(**) SHACL supports imports declared via owl:import, the rules are written from the perspective that these are respected and all RDF Datasets (potentially recursively) are imported first into a single RDF Dataset.
+(**) SHACL supports imports declared via `owl:import`, the rules are written from the perspective that these are respected and all RDF Datasets (potentially recursively) are imported first into a single RDF Dataset.
 
 (***) The id value could in principle be the URI, however, it is highly likely that we want to write CSS rules targeting individual elements and then we need to be more restrictive as CSS rules cannot use URIs as part of selectors.

@@ -32,7 +32,7 @@ First of all subclassing is basically a subset relationship. I.e. all instances 
 
 However, if we are considering reuse across organizations the models we agree on will have to be used in a wider range of situations makes it hard to harshly restrict the model. The characteristics to express (in the form of properties) will vary, sometimes from instance to instance and the amount of subclasses we will need to capture this flexibility will quickly explode. For instance, it is certain that all FoodEstablishments serve food, but which characteristics are we certain of will always apply to only a Cafe and not a Restaurant?
 
-Just like classes, subclasses can be important carriers of information, e.g. stating that something is a Cafe or a Restaurant is valuable information in itself. Much more valuable than if we introduce a subclass solely for the purpose to indicate which specific characteristics should be present in a certain context.  So, to summarize, from the perspective of interoperable specifications, introducing classes as well as subclasses is:
+Just like classes, subclasses can be important carriers of information, e.g. stating that something is a Cafe or a Restaurant is valuable information in itself. Much more valuable than if we introduce a subclass solely for the purpose to indicate which specific characteristics should be present in a certain context. So, to summarize, from the perspective of interoperable specifications, introducing classes as well as subclasses is:
 
 **very valuable** - when providing information about the instances fundamental character \
 **less valuable** - when it is used for the purpose of knowing which properties to use
