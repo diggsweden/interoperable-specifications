@@ -4,7 +4,7 @@ The starting point when you harvest is an expression according to PROF-INSPEC, s
 
 ## Native harvesting according to INSPEC profile
 
-Below we will refer to the interoperable specification resource as INSPEC resource, see by INSPEC-1 what we require of it. 
+Below we will refer to the interoperable specification resource as INSPEC resource, see by INSPEC-1 what we require of it.
 
 ### Data vocabulary
 
@@ -16,7 +16,7 @@ If the data vocabulary is not reused it is attempted to be retrieved from either
 
 If the terminology is reused, i.e. `prof:isInheritedFrom` is provided, no loading is done. If the referenced foundational or interoperable specification does not exist already in the system a warning is logged.
 
-If the terminology is not reused it is attempted to be retrieved from either the prof:hasArtifact value or the subject. The retrieved RDF datasource is checked against SKOS-INSPEC before being loaded into the triplestore. All concepts, concept schemes and collections should be available in the triplestore for easy access. The terminology should be pointed to via `dct:requires` from the INSPEC resource.
+If the terminology is not reused it is attempted to be retrieved from either the `prof:hasArtifact` value or the subject. The retrieved RDF datasource is checked against SKOS-INSPEC before being loaded into the triplestore. All concepts, concept schemes and collections should be available in the triplestore for easy access. The terminology should be pointed to via `dct:requires` from the INSPEC resource.
 
 ### Application profile
 
