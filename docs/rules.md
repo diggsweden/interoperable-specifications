@@ -95,7 +95,7 @@ SHACL-INSPEC builds on top of the SHACL specification by providing additional re
 
 SVG-INSPEC builds on top of SVG to provide a way to clarify whether objects in a diagram corresponds to an entity recognized in interoperable specifications, i.e. a class, a property, a node-shape, a property-shape, a concept, a terminology, or a concept collection. Also interoperable specifications or foundational specifications should be possible to indicate as well as diagrams and data vocabularies if they are included in the diagram. Note that there are no hard restrictions on the diagrammatic style used. Although it should be noted that it is good idea to choose a style that is well known like something akin to UML class diagrams.
 
-><a id="svg1"></a> **Rule SVG-1:** An element corresponding to an INSPEC entity MUST have a href pointing to it's URI. 
+><a id="svg1"></a> **Rule SVG-1:** An element corresponding to an INSPEC entity MUST have a href pointing to it's URI. If the element corresponds to two things, e.g. both a class and a node-shape, the URI of the dominant one should be used.
 
 ><a id="svg2"></a> **Rule SVG-2:** An element corresponding to an INSPEC entity MUST have a custom data attribute on the form `data-inspec-type="TYPE"` where TYPE is one of foundational, application-profile, diagram, data-vocabulary, class, property, node-shape, property-shape, concept, terminology and concept-collection. If the element corresponds to two things, e.g. both a class and a node-shape they can be listed both with a separating comma, the first should be considered dominant.
 
