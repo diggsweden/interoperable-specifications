@@ -32,6 +32,6 @@ There are many potential added values:
 Furthermore, there are several implications for the specification writers:
 
 * The methodology will turn away from defining everything from scratch towards research and adaption of what exists when possible.
-* Neccessary new definitions should be expressed carefully with the intention of furthering reuse in other contexts.
+* Necessary new definitions should be expressed carefully with the intention of furthering reuse in other contexts.
 * Reuse of definitions needs to be documented, often in the form of contextualization and refinement.
 * Documenting definitions and specifications in a common format with stable identifiers becomes paramount.
