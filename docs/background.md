@@ -27,4 +27,4 @@ There are many potential added values:
 * Shorter learning time if new specifications have fewer parts that are unique.
 * Data from different specifications can be partially interoperable.
 
-To reach this goal we need to allow individual parts of a specification to be defined and reused in new contexts, this means being careful about defining these parts independent of the context they first are introduced in. But what does parts can we reuse?
+To reach this goal we need to allow individual parts of a specification to be defined and reused in new contexts, this means being careful about defining these parts independent of the context they first are introduced in.
