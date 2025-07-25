@@ -39,9 +39,11 @@ For diagrams we require SVG as this is an open format which allows for interacti
 
 ><span id="prof6"></span> **Rule PROF-6:** A diagram MUST be detected by `dcterms:conformsTo` property pointing to `inspec:SVG` and MUST follow SVG-INSPEC
 
+In INSPEC we distinguish between foundational and profile interoperable specification (see [design](design.md#foundational-specifications)). For foundational interoperable specification we require that it introduces at least a data vocabulary or a terminology, and we disallow it from containing an application profile.
+
 ><span id="prof7"></span> **Rule PROF-7:** A **foundational** interoperable specification MUST contain at least one data vocabulary or one terminology, MUST NOT contain an application profile and MUST be typed as `dcterms:Standard`
 
-In the context of interoperable specifications it is not possible to talk about a meaningful specification unless it contains a data vocabulary and an application profile describing how the data vocabulary, and any terminologies, are used. This is therefore set as a minimum condition for an interoperable specification.
+For the profile interoperable specification the focus is the application profile describing how the data vocabulary (also required), and any terminologies, are used.
 
 ><span id="prof8"></span> **Rule PROF-8:** A **profile** interoperable specification MUST contain at least one application profile and MUST be typed as `prof:Profile`
 
