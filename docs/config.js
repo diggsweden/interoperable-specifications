@@ -3,7 +3,9 @@ var respecConfig = {
   shortName: "inspec",
   latestVersion: "http://w3id.org/inspec/specification",
   specStatus: "base",
-  lint: "true",
+  lint: {
+    "no-headingless-sections": false,
+  },
   editors: [
     {
       name: "Matthias Palmér",
