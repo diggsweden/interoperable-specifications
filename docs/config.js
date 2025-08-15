@@ -72,7 +72,7 @@ var respecConfig = {
   title: "Interoperable Specifications Profile",
   version: "1.0.0",
   copyright: 'Copyright © 2025 <a href="https://www.digg.se">DIGG</a>.',
-  abstract: "The Interoperability Specification Profile aims to provide a mechanism for reusing parts of specifications when creating new specifications. It thus defines a specification as a container that consists of one or more resources each given URIs and described using RDF.",
+  abstract: "A specification describes how data should be expressed and understood. The Interoperable Specifications Profile (INSPEC) has been developed to ensure that specifications are interoperable, reusable, and machine-readable. It follows a more modern approach, viewing a specification as a package of resources or components, some intended for human consumption and others for machine processing — resources, described using RDF, that are pre-defined to facilitate both semantic and technical interoperability.",
 }
 
 // override some W3C settings and move content out of html
