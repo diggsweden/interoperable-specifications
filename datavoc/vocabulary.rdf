@@ -4,39 +4,43 @@
   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   xmlns:owl="http://www.w3.org/2002/07/owl#"
 >
+  <owl:Ontology rdf:about="https://w3id.org/inspec/datavoc/">
+    <rdfs:label xml:lang="en">The Interoperable Specifications Profile (INSPEC) Vocabulary</rdfs:label>
+    <rdfs:comment xml:lang="en">This vocabulary defines terms used in INSPEC.</rdfs:comment>
+  </owl:Ontology>
   <rdfs:Class rdf:about="https://w3id.org/inspec/datavoc/PROF">
     <rdfs:label xml:lang="en">PROF</rdfs:label>
-    <rdfs:isDefinedBy>
-      <owl:Ontology rdf:about="https://w3id.org/inspec/datavoc/">
-        <rdfs:label xml:lang="en">The Interoperable Specifications Profile (INSPEC) Vocabulary</rdfs:label>
-        <rdfs:comment xml:lang="en">This vocabulary defines terms used in INSPEC.</rdfs:comment>
-      </owl:Ontology>
-    </rdfs:isDefinedBy>
+    <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
     <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of PROF used to capture an interoperable specification. Corresponds to the rules INSPEC-1 — INSPEC-10.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://purl.org/dc/terms/Standard"/>
     <rdfs:seeAlso rdf:resource="https://www.w3.org/TR/dx-prof/"/>
   </rdfs:Class>
   <rdfs:Class rdf:about="https://w3id.org/inspec/datavoc/RDFS">
     <rdfs:label xml:lang="en">RDFS</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
     <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of RDFS used to capture an expression of data vocabularies. Corresponds to the rules DV-1 — DV-6.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://purl.org/dc/terms/Standard"/>
     <rdfs:seeAlso rdf:resource="https://www.w3.org/TR/rdf12-schema/"/>
   </rdfs:Class>
   <rdfs:Class rdf:about="https://w3id.org/inspec/datavoc/SKOS">
     <rdfs:label xml:lang="en">SKOS</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
     <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of SKOS used to capture an expression of terminologies. Corresponds to the rules TE-1 — TE-5.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://purl.org/dc/terms/Standard"/>
     <rdfs:seeAlso rdf:resource="https://www.w3.org/TR/skos-reference/"/>
   </rdfs:Class>
   <rdfs:Class rdf:about="https://w3id.org/inspec/datavoc/SHACL">
     <rdfs:label xml:lang="en">SHACL</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
     <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of SHACL used to capture an expression of application profiles. Corresponds to the rules AP-1 — AP-14.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://purl.org/dc/terms/Standard"/>
     <rdfs:seeAlso rdf:resource="https://www.w3.org/TR/shacl"/>
   </rdfs:Class>
   <rdfs:Class rdf:about="https://w3id.org/inspec/datavoc/SVG">
     <rdfs:label xml:lang="en">SVG</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
     <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of SVG used to capture an expression of diagrams for interoperable specifications. Corresponds to the rules SVG-1 — SVG-5.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://purl.org/dc/terms/Standard"/>
     <rdfs:seeAlso rdf:resource="https://www.w3.org/TR/SVG11/"/>
   </rdfs:Class>
   <rdf:Property rdf:about="https://w3id.org/inspec/datavoc/variant">

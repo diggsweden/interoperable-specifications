@@ -15,30 +15,35 @@ inspec:PROF a rdfs:Class ;
   rdfs:label "PROF"@en ;
   rdfs:isDefinedBy inspec: ;
   rdfs:comment "This is a specification corresponding to a profile of PROF used to capture an interoperable specification. Corresponds to the rules INSPEC-1 — INSPEC-10."@en ;
+  rdfs:subClassOf dct:Standard ;
   rdfs:seeAlso <https://www.w3.org/TR/dx-prof/> .
 
 inspec:RDFS a rdfs:Class ;
   rdfs:label "RDFS"@en ;
   rdfs:isDefinedBy inspec: ;
   rdfs:comment "This is a specification corresponding to a profile of RDFS used to capture an expression of data vocabularies. Corresponds to the rules DV-1 — DV-7."@en ;
+  rdfs:subClassOf dct:Standard ;
   rdfs:seeAlso <https://www.w3.org/TR/rdf12-schema/> .
 
 inspec:SKOS a rdfs:Class ;
   rdfs:label "SKOS"@en ;
   rdfs:isDefinedBy inspec: ;
   rdfs:comment "This is a specification corresponding to a profile of SKOS used to capture an expression of terminologies. Corresponds to the rules TE-1 — TE-6."@en ;
+  rdfs:subClassOf dct:Standard ;
   rdfs:seeAlso <https://www.w3.org/TR/skos-reference/> .
 
 inspec:SHACL a rdfs:Class ;
   rdfs:label "SHACL"@en ;
   rdfs:isDefinedBy inspec: ;
   rdfs:comment "This is a specification corresponding to a profile of SHACL used to capture an expression of application profiles. Corresponds to the rules AP-1 — AP-14."@en ;
+  rdfs:subClassOf dct:Standard ;
   rdfs:seeAlso <https://www.w3.org/TR/shacl> .
 
 inspec:SVG a rdfs:Class ;
   rdfs:label "SVG"@en ;
   rdfs:isDefinedBy inspec: ;
   rdfs:comment "This is a specification corresponding to a profile of SVG used to capture an expression of diagrams for interoperable specifications. Corresponds to the rules SVG-1 — SVG-5."@en ;
+  rdfs:subClassOf dct:Standard ;
   rdfs:seeAlso <https://www.w3.org/TR/SVG11/> .
 
 inspec:variant a rdf:Property ;
