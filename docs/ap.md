@@ -118,7 +118,7 @@ SHACL allows shapes to be combined via `sh:and`. This can be used to specialize 
 ex:ps-publisher a sh:PropertyShape ;
   sh:label "Publisher" ;
   sh:path dcterms:publisher ;
-  sh:nodeKind sh:URI ;
+  sh:nodeKind sh:IRI ;
   sh:minCount "1" ;
   sh:class foaf:Agent .
 ```
@@ -145,7 +145,7 @@ Note that we are not allowed to relax constraints via the refinement constructio
 ex:ps-publisher3 a sh:PropertyShape ;
   sh:label "Publisher" ;
   sh:path dcterms:publisher ;
-  sh:nodeKind sh:URI ;
+  sh:nodeKind sh:IRI ;
   sh:class foaf:Agent ;
   inspec:variant ex:ps-publisher .
 ```
@@ -172,7 +172,7 @@ ex:ps-title a sh:PropertyShape ;
 ex:ps-publisher a sh:PropertyShape ;
   sh:label "Publisher" ;
   sh:path dcterms:publisher ;
-  sh:nodeKind sh:URI ;
+  sh:nodeKind sh:IRI ;
   sh:minCount "1" ;
   sh:class foaf:Agent .
 ```
@@ -209,7 +209,7 @@ ex:ps-title a sh:PropertyShape ;
 ex:ps-publisher a sh:PropertyShape ;
   sh:label "Publisher" ;
   sh:path dcterms:publisher ;
-  sh:nodeKind sh:URI ;
+  sh:nodeKind sh:IRI ;
   sh:minCount "1" ;
   sh:class foaf:Agent .
 ```
@@ -224,7 +224,7 @@ ex:ns-book3 a sh:NodeShape ;
 ex:ps-publisher3 a sh:PropertyShape ;
   sh:label "Publisher" ;
   sh:path dcterms:publisher ;
-  sh:nodeKind sh:URI ;
+  sh:nodeKind sh:IRI ;
   sh:class foaf:Agent ;
   inspec:variant ex:ps-publisher .
 ```
@@ -379,12 +379,12 @@ ex:ns1 a sh:NodeShape ;
 ex:ps1 a sh:PropertyShape ;
   sh:label "Hobbies" ;
   sh:path foaf:topic_interests ;
-  sh:nodeKind sh:URI ;
+  sh:nodeKind sh:IRI ;
   sh:pattern "^http://example.com/hobbies/.*$";
 ex:ps2 a sh:PropertyShape ;
   sh:label "Professional interests in computer science" ;
   sh:path foaf:topic_interests ;
-  sh:nodeKind sh:URI ;
+  sh:nodeKind sh:IRI ;
   sh:pattern "^http://example.com/computer_science/.*$";
 ```
 
