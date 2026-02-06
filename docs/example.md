@@ -14,6 +14,7 @@ The publisher should be typed as a person, have a name, an email that is recomme
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix prof: <http://www.w3.org/ns/dx/prof/> .
+@prefix profrole: <http://www.w3.org/ns/dx/prof/role/> .
 @prefix dtheme: <http://publications.europa.eu/resource/authority/data-theme/> .
 @prefix inspec: <https://w3id.org/inspec/datavoc/> .
 
@@ -33,7 +34,7 @@ ex:ap1 a prof:ResourceDescriptor ;
   dcterms:conformsTo inspec:SHACL ;
   dcterms:format "text/turtle" ;
   prof:hasArtifact ex:AP1File ;
-  prof:hasRole prof:schema, prof:constraints ;
+  prof:hasRole profrole:schema, profrole:constraints ;
 
 ex:dv1 a prof:ResourceDescriptor ;
   dcterms:title "Data vocabulary for DocPub1.0";
@@ -41,7 +42,7 @@ ex:dv1 a prof:ResourceDescriptor ;
   dcterms:format "text/turtle" ;
   dcterms:subject ex:DV1Ontology ;
   prof:hasArtifact ex:DV1File ;
-  prof:hasRole prof:schema, prof:vocabulary .
+  prof:hasRole profrole:schema, profrole:vocabulary .
 
 ex:dv2 a prof:ResourceDescriptor ;
   dcterms:title "Data vocabulary for Dublin Core";
@@ -50,7 +51,7 @@ ex:dv2 a prof:ResourceDescriptor ;
   dcterms:subject dcterms: ;
   dcterms:format "rdf/xml" ;
   prof:hasArtifact <https://www.dublincore.org/specifications/dublin-core/dcmi-terms/dublin_core_terms.rdf> ;
-  prof:hasRole prof:schema, prof:vocabulary .
+  prof:hasRole profrole:schema, profrole:vocabulary .
 
 ex:dv3 a prof:ResourceDescriptor ;
   dcterms:title "Data vocabulary for Friend of a Friend (FOAF)";
@@ -59,7 +60,7 @@ ex:dv3 a prof:ResourceDescriptor ;
   dcterms:subject foaf: ;
   dcterms:format "rdf/xml" ;
   prof:hasArtifact <http://xmlns.com/foaf/spec/index.rdf> ;
-  prof:hasRole prof:schema, prof:vocabulary .
+  prof:hasRole profrole:schema, profrole:vocabulary .
 
 ex:te1 a prof:ResourceDescriptor ;
   dcterms:title "Data themes terminology from EU publication office";
@@ -67,14 +68,14 @@ ex:te1 a prof:ResourceDescriptor ;
   dcterms:subject dtheme: ;
   dcterms:format "text/turtle" ;
   prof:hasArtifact ex:TE1File ;
-  prof:hasRole prof:vocabulary .
+  prof:hasRole profrole:vocabulary .
 
 ex:vi1 a prof:ResourceDescriptor ;
   dcterms:title "Diagram of DocPub1.0";
   dcterms:conformsTo inspec:SVG ;
   dcterms:format "image/svg+xml" ;
   prof:hasArtifact ex:VI1File ;
-  prof:hasRole prof:specification .
+  prof:hasRole profrole:specification .
 ```
 
 The following triples can be provided as part of PROF-INSPEC, alternatively they can be auto generated as part of the harvesting process.
