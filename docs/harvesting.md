@@ -20,7 +20,7 @@ If the terminology is not reused it is attempted to be retrieved from either the
 
 ### Application profile
 
-The application is attempted to be retrieved from either the `prof:hasArtifact` value or the subject. The retrieved RDF datasource is checked against SHACL-INSPEC before proceeding. All public property and node shapes introduced in this application profile should be indicated via the `dcterms:hasPart` from the INSPEC resource. Further metadata about the node and property shapes needs not be added to the triplestore directly. Only the metadata about the INSPEC resource itself from the application profile needs to be added. All classes and properties referenced from node and property shapes should be indicated via the `inspec:reuses` or `inspec:introduces` properties from the INSPEC resource.
+The application is attempted to be retrieved from either the `prof:hasArtifact` value or the subject. The retrieved RDF datasource is checked against SHACL-INSPEC before proceeding. All public property and node shapes introduced in this application profile should be indicated via the `dcterms:hasPart` from the INSPEC resource. Further metadata about the node and property shapes needs not be added to the triplestore directly. Only the metadata about the INSPEC resource itself from the application profile needs to be added. All classes and properties referenced from node and property shapes should be indicated via the `inspec:reuses` or `inspec:introduces` properties from the INSPEC resource. If there is a second application profile referenced via an `inspec:refines` relationship, then this should also be added as a `prof:isProfileOf` relation from the INSPEC resource.
 
 ### Diagram
 

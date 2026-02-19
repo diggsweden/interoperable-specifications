@@ -58,9 +58,12 @@ inspec:refines a rdf:Property ;
   rdfs:isDefinedBy inspec: ;
   rdfs:comment "A shape refines another by adding additional constraints to it"@en ;
   rdfs:subPropertyOf dcterms:relation ;
-  rdfs:domain sh:Shape ;
-  rdfs:range sh:Shape ;
-  rdfs:seeAlso prof:isProfileOf .
+  rdfs:domain [
+	  owl:unionOf (sh:Shape prof:Profile)
+    ] ;
+  rdfs:range [
+	  owl:unionOf (sh:Shape prof:Profile)
+    ].
 
 inspec:reuses a rdf:Property ;
   rdfs:label "reuses"@en ;
