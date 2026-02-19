@@ -88,13 +88,13 @@ SHACL-INSPEC builds on top of the SHACL specification by providing additional re
 
 ><span id="ap10"></span> **Rule AP-10:** A node shape *B* MAY express that it is a **variant** of a public node shape *A* via the `inspec:variant` property only if for every property shape *X* in *A* either *X* or *Y* is in *B* where *Y* is a refinement or a variant of *X*. At least one of the property shapes must be a variant and not a refinement.
 
-><span id="ap11"></span> **Rule AP-11:** An application profile *B* MAY express that it is a **subprofile of** of an application profile *A* via the `prof:isProfileOf` property only if for every node shape *X* in *A* there is a refined node shape *Y* in *B*.
+><span id="ap11"></span> **Rule AP-11:** An application profile *B* MAY express that it is a **subprofile of** of an application profile *A* via the `inspec:refines` property only if for every node shape *X* in *A* there is a refined node shape *Y* in *B*.
 
 ><span id="ap12"></span> **Rule AP-12:** An application profile *B* MAY express that it is a **variant** of a application profile *A* via the `inspec:variant` property only if for every node shape *X* in *A* there is a variant or refined node shape *Y* in *B*, at least one of the node shapes must be a variant and not a refinement.
 
 ><span id="ap13"></span> **Rule AP-13:** All shapes of the application profile MUST point to the "application profile resource" via the `rdfs:isDefinedBy` property
 
-><span id="ap14"></span> **Rule AP-14:** Shapes used for refinement or for variants MAY reside in other RDF Datasets as long as the dataset is pointed to via `owl:imports` AND there is either a `prof:isProfileOf` or a `inspec:variant` relation between the application profile resources.
+><span id="ap14"></span> **Rule AP-14:** Shapes used for refinement or for variants MAY reside in other RDF Datasets as long as the dataset is pointed to via `owl:imports` AND there is either a `inspec:refines` or a `inspec:variant` relation between the application profile resources.
 
 ><span id="ap15"></span> **Rule AP-15:** Shapes from other application profiles used for refinement or for variants MAY be included in the RDF Dataset but MUST NOT point to the same "application profile resource" via the `rdfs:isDefinedBy` property
 
