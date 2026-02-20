@@ -46,7 +46,7 @@ RDFS-INSPEC builds on top of the RDF Schema specification by providing the follo
 
 ><span id="dv4"></span> **Rule DV-4:** All included classes and properties as well as the data vocabulary resource MUST have URIs
 
-><span id="dv5"></span> **Rule DV-5:** Classes and properties from other vocabularies MAY BE included in the RDF Dataset, e.g. when being pointed to via `rdfs:subClassOf` and `rdfs:subProperty`, but MUST NOT point to the same "data vocabulary resource" via the `rdfs:isDefinedBy` property
+><span id="dv5"></span> **Rule DV-5:** Classes and properties from other vocabularies MAY be included in the RDF Dataset, e.g. when being pointed to via `rdfs:subClassOf` and `rdfs:subProperty`, but MUST NOT point to the same "data vocabulary resource" via the `rdfs:isDefinedBy` property
 
 ><span id="dv6"></span> **Rule DV-6:** The "data vocabulary resource" MUST be indicated via the `dcterms:subject` property from the "interoperable specification part" (introduced in Rule INSPEC-2).
 
