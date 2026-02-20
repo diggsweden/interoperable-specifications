@@ -94,14 +94,14 @@ ex:spec1 inspec:reuses foaf:Document ;
 
 # public shapes - AP-3/AP-4, reproduced from SHACL-INSPEC or auto generated as part of the harvesting process
 ex:spec1 dcterms:hasPart ex:ns-document ;
-  dcterms:hasPart ex:ns-title ;
-  dcterms:hasPart ex:ns-created ;
-  dcterms:hasPart ex:ns-publisher ;
-  dcterms:hasPart ex:ns-subject ;
+  dcterms:hasPart ex:ps-title ;
+  dcterms:hasPart ex:ps-created ;
+  dcterms:hasPart ex:ps-publisher ;
+  dcterms:hasPart ex:ps-subject ;
   dcterms:hasPart ex:ns-person ;
-  dcterms:hasPart ex:ns-name ;
-  dcterms:hasPart ex:ns-mbox ;
-  dcterms:hasPart ex:ns-pnr .
+  dcterms:hasPart ex:ps-name ;
+  dcterms:hasPart ex:ps-mbox ;
+  dcterms:hasPart ex:ps-pnr .
 ```
 
 ## RDFS-INSPEC expression
@@ -239,12 +239,12 @@ The following triples may be provided as part of SHACL-INSPEC, alternatively the
 ```turtle
 # public shapes - AP-3/AP-4
 ex:spec1 dcterms:hasPart ex:ns-document ;
-  dcterms:hasPart ex:ns-title ;
-  dcterms:hasPart ex:ns-created ;
-  dcterms:hasPart ex:ns-publisher ;
-  dcterms:hasPart ex:ns-subject ;
+  dcterms:hasPart ex:ps-title ;
+  dcterms:hasPart ex:ps-created ;
+  dcterms:hasPart ex:ps-publisher ;
+  dcterms:hasPart ex:ps-subject ;
   dcterms:hasPart ex:ns-person ;
-  dcterms:hasPart ex:ns-name ;
-  dcterms:hasPart ex:ns-mbox ;
-  dcterms:hasPart ex:ns-pnr .
+  dcterms:hasPart ex:ps-name ;
+  dcterms:hasPart ex:ps-mbox ;
+  dcterms:hasPart ex:ps-pnr .
 ```
