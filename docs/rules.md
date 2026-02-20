@@ -72,9 +72,9 @@ SHACL-INSPEC builds on top of the SHACL specification by providing additional re
 
 ><span id="ap2"></span> **Rule AP-2:** There MUST be a single "application profile resource" with a URI in the RDF Dataset AND it MUST be the same as the "interoperable specification resource" (introduced in Rule INSPEC-1)
 
-><span id="ap3"></span> **Rule AP-3:** All property shapes with a severity of `sh:VIOLATION` and with at least one constraint (`sh:and` for specialization does not count) are considered **public** and they MUST have URIs and MUST also be pointed to from the application profile resource via the `dcterms:hasPart` property
+><span id="ap3"></span> **Rule AP-3:** All property shapes with a severity of `sh:VIOLATION` and with at least one constraint (`sh:and` for specialization does not count) are considered **public** and they MUST have URIs
 
-><span id="ap4"></span> **Rule AP-4:** All node shapes with a severity of `sh:VIOLATION` are considered **public** and MUST have URIs and MUST also be pointed to from the application profile resource via the `dcterms:hasPart` property
+><span id="ap4"></span> **Rule AP-4:** All node shapes with a severity of `sh:VIOLATION` are considered **public** and MUST have URIs
 
 ><span id="ap5"></span> **Rule AP-5:** Public node shapes are considered **main** if they have a target declaration, otherwise they are considered **supportive**
 
@@ -92,9 +92,13 @@ SHACL-INSPEC builds on top of the SHACL specification by providing additional re
 
 ><span id="ap12"></span> **Rule AP-12:** An application profile *B* MAY express that it is a **variant** of a application profile *A* via the `inspec:variant` property only if for every node shape *X* in *A* there is a variant or refined node shape *Y* in *B*, at least one of the node shapes must be a variant and not a refinement.
 
-><span id="ap13"></span> **Rule AP-13:** Shapes used for refinement or for variants MAY reside in other RDF Datasets as long as the dataset is pointed to via `owl:imports` AND there is either a `prof:isProfileOf` or a `inspec:variant` relation between the application profile resources.
+><span id="ap13"></span> **Rule AP-13:** All shapes of the application profile MUST point to the "application profile resource" via the `rdfs:isDefinedBy` property
 
-><span id="ap14"></span> **Rule AP-14:** All classes and properties referred to via shapes SHOULD be explicitly indicated from the "application profile resource". The indication should use `inspec:reuses` if the referred resource is part of a **reused** specification part (see Rule INSPEC-10), otherwise `inspec:introduces` should be used.
+><span id="ap14"></span> **Rule AP-14:** Shapes used for refinement or for variants MAY reside in other RDF Datasets as long as the dataset is pointed to via `owl:imports` AND there is either a `prof:isProfileOf` or a `inspec:variant` relation between the application profile resources.
+
+><span id="ap15"></span> **Rule AP-15:** Shapes from other application profiles used for refinement or for variants MAY be included in the RDF Dataset but MUST NOT point to the same "application profile resource" via the `rdfs:isDefinedBy` property
+
+><span id="ap16"></span> **Rule AP-16:** All classes and properties referred to via shapes SHOULD be explicitly indicated from the "application profile resource". The indication should use `inspec:reuses` if the referred resource is part of a **reused** specification part (see Rule INSPEC-10), otherwise `inspec:introduces` should be used.
 
 ## Rules for diagrams - SVG-INSPEC
 
