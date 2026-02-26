@@ -14,25 +14,25 @@ The rules for interoperable specifications are divided into five parts:
 
 For a specification to be considered a interoperable specification the following must apply:
 
-><span id="inspec1"></span> **Rule INSPEC-1:** The "interoperable specification resource" and its parts MUST have URIs and be described with PROF, the interoperable specification resource MUST be typed as `prof:Profile` or `dcterms:Standard` and have a `dcterms:conformsTo` point to `inspec:PROF`
+><span id="prof1"></span> **Rule PROF-1:** The "interoperable specification resource" and its parts MUST have URIs and be described with PROF, the interoperable specification resource MUST be typed as `prof:Profile` or `dcterms:Standard` and have a `dcterms:conformsTo` point to `inspec:PROF`
 
-><span id="inspec2"></span> **Rule INSPEC-2:** All specification parts MUST be indicated via the `prof:hasResource` property from the interoperable specification and be typed as `prof:ResourceDescriptor`. An interoperable specification part MAY be a data vocabulary, a terminology, an application profile or a diagram. Other parts may exist but have no prescribed meaning by the interoperable specification profile.
+><span id="prof2"></span> **Rule PROF-2:** All specification parts MUST be indicated via the `prof:hasResource` property from the interoperable specification and be typed as `prof:ResourceDescriptor`. An interoperable specification part MAY be a data vocabulary, a terminology, an application profile or a diagram. Other parts may exist but have no prescribed meaning by the interoperable specification profile.
 
-><span id="inspec3"></span> **Rule INSPEC-3:** Each data vocabulary MUST be detected by `dcterms:conformsTo` pointing to `inspec:RDFS` and MUST be possible to interpret as RDFS-INSPEC.
+><span id="prof3"></span> **Rule PROF-3:** Each data vocabulary MUST be detected by `dcterms:conformsTo` pointing to `inspec:RDFS` and MUST be possible to interpret as RDFS-INSPEC.
 
-><span id="inspec4"></span> **Rule INSPEC-4:** Each terminology MUST be detected by `dcterms:conformsTo` pointing to `inspec:SKOS` and MUST be possible to interpret as SKOS-INSPEC.
+><span id="prof4"></span> **Rule PROF-4:** Each terminology MUST be detected by `dcterms:conformsTo` pointing to `inspec:SKOS` and MUST be possible to interpret as SKOS-INSPEC.
 
-><span id="inspec5"></span> **Rule INSPEC-5:** Each application profile MUST be detected by `dcterms:conformsTo` pointing to `inspec:SHACL` and MUST be possible to interpret as SHACL-INSPEC
+><span id="prof5"></span> **Rule PROF-5:** Each application profile MUST be detected by `dcterms:conformsTo` pointing to `inspec:SHACL` and MUST be possible to interpret as SHACL-INSPEC
 
-><span id="inspec6"></span> **Rule INSPEC-6:** A diagram MUST be detected by `dcterms:conformsTo` property pointing to `inspec:SVG` and MUST follow SVG-INSPEC
+><span id="prof6"></span> **Rule PROF-6:** A diagram MUST be detected by `dcterms:conformsTo` property pointing to `inspec:SVG` and MUST follow SVG-INSPEC
 
-><span id="inspec7"></span> **Rule INSPEC-7:** A **foundational** interoperable specification MUST contain at least one data vocabulary or one terminology, MUST NOT contain an application profile and MUST be typed as `dcterms:Standard`
+><span id="prof7"></span> **Rule PROF-7:** A **foundational** interoperable specification MUST contain at least one data vocabulary or one terminology, MUST NOT contain an application profile and MUST be typed as `dcterms:Standard`
 
-><span id="inspec8"></span> **Rule INSPEC-8:** A **profile** interoperable specification MUST contain at least one application profile and MUST be typed as `prof:Profile`
+><span id="prof8"></span> **Rule PROF-8:** A **profile** interoperable specification MUST contain at least one application profile and MUST be typed as `prof:Profile`
 
-><span id="inspec9"></span> **Rule INSPEC-9:** A profile interoperable specification MUST list all data vocabularies and terminologies it **uses** in the application profile explicitly as interoperable specification parts
+><span id="prof9"></span> **Rule PROF-9:** A profile interoperable specification MUST list all data vocabularies and terminologies it **uses** in the application profile explicitly as interoperable specification parts
 
-><span id="inspec10"></span> **Rule INSPEC-10:** Interoperable specification parts that are **reused** (as opposed to **introduced**) SHOULD indicate that by referring to the interoperable specification where they where introduced via the `prof:isInheritedFrom` property
+><span id="prof10"></span> **Rule PROF-10:** Interoperable specification parts that are **reused** (as opposed to **introduced**) SHOULD indicate that by referring to the interoperable specification where they where introduced via the `prof:isInheritedFrom` property
 
 ## Rules for data vocabularies - RDFS-INSPEC
 
@@ -48,7 +48,7 @@ RDFS-INSPEC builds on top of the RDF Schema specification by providing the follo
 
 ><span id="dv5"></span> **Rule DV-5:** Classes and properties from other vocabularies MAY be included in the RDF Dataset, e.g. when being pointed to via `rdfs:subClassOf` and `rdfs:subProperty`, but MUST NOT point to the same "data vocabulary resource" via the `rdfs:isDefinedBy` property
 
-><span id="dv6"></span> **Rule DV-6:** The "data vocabulary resource" MUST be indicated via the `dcterms:subject` property from the "interoperable specification part" (introduced in Rule INSPEC-2).
+><span id="dv6"></span> **Rule DV-6:** The "data vocabulary resource" MUST be indicated via the `dcterms:subject` property from the "interoperable specification part" (introduced in Rule PROF-2).
 
 ## Rules for terminologies - SKOS-INSPEC
 
@@ -62,7 +62,7 @@ SKOS-INSPEC builds on top of the SKOS specification by providing the following a
 
 ><span id="te4"></span> **Rule TE-4:** All concepts, collections as well as the terminology resource MUST have URIs
 
-><span id="te5"></span> **Rule TE-5:** The "terminology resource" MUST be indicated via the `dcterms:subject` property from the "interoperable specification part" (introduced in Rule INSPEC-2).
+><span id="te5"></span> **Rule TE-5:** The "terminology resource" MUST be indicated via the `dcterms:subject` property from the "interoperable specification part" (introduced in Rule PROF-2).
 
 ## Rules for application profiles - SHACL-INSPEC
 
@@ -70,7 +70,7 @@ SHACL-INSPEC builds on top of the SHACL specification by providing additional re
 
 ><span id="ap1"></span> **Rule AP-1:** An application profile MUST be expressed in a single RDF Dataset<sup><a href="#fn2" id="fn2_1">[2]</a></sup>
 
-><span id="ap2"></span> **Rule AP-2:** There MUST be a single "application profile resource" with a URI in the RDF Dataset AND it MUST be the same as the "interoperable specification resource" (introduced in Rule INSPEC-1)
+><span id="ap2"></span> **Rule AP-2:** There MUST be a single "application profile resource" with a URI in the RDF Dataset AND it MUST be the same as the "interoperable specification resource" (introduced in Rule PROF-1)
 
 ><span id="ap3"></span> **Rule AP-3:** All property shapes with a severity of `sh:Violation` and with at least one constraint (`sh:and` for specialization does not count) are considered **public** and they MUST have URIs
 
@@ -98,7 +98,7 @@ SHACL-INSPEC builds on top of the SHACL specification by providing additional re
 
 ><span id="ap15"></span> **Rule AP-15:** Shapes from other application profiles used for refinement or for variants MAY be included in the RDF Dataset but MUST NOT point to the same "application profile resource" via the `rdfs:isDefinedBy` property
 
-><span id="ap16"></span> **Rule AP-16:** All classes and properties referred to via shapes SHOULD be explicitly indicated from the "application profile resource". The indication should use `inspec:reuses` if the referred resource is part of a **reused** specification part (see Rule INSPEC-10), otherwise `inspec:introduces` should be used.
+><span id="ap16"></span> **Rule AP-16:** All classes and properties referred to via shapes SHOULD be explicitly indicated from the "application profile resource". The indication should use `inspec:reuses` if the referred resource is part of a **reused** specification part (see Rule PROF-10), otherwise `inspec:introduces` should be used.
 
 ## Rules for diagrams - SVG-INSPEC
 
