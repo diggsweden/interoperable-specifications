@@ -1,12 +1,13 @@
 # Rules for interoperable specifications
 
-The rules for interoperable specifications are divided into five parts:
+The rules for interoperable specifications are divided into six parts. The first five apply to anyone creating or distributing an interoperable specification, the last one applies mainly to actors harvesting interoperable specifications:
 
 1. Rules for interoperable specifications - PROF-INSPEC - based on [[[DX-PROF]]]
 2. Rules for data vocabularies - RDFS-INSPEC - based on [[[RDF-SCHEMA]]]
-3. Rules for terminologies - SKOS-INSPEC - based on [[[SKOS-REFERENCE]]]]
+3. Rules for terminologies - SKOS-INSPEC - based on [[[SKOS-REFERENCE]]]
 4. Rules for application profiles - SHACL-INSPEC - based on [[[SHACL]]]
-5. Rules for diagrams - SVG-INSPEC - based on  [[[SVG11]]]
+5. Rules for diagrams - SVG-INSPEC - based on [[[SVG11]]]
+6. Rules for enriching the interoperable specifications - ENRICH-INSPEC
 
 ## Rules for interoperable specifications - PROF-INSPEC
 
@@ -98,7 +99,6 @@ SHACL-INSPEC builds on top of the SHACL specification by providing additional re
 
 ><span id="ap15"></span> **Rule AP-15:** Shapes from other application profiles used for refinement or for variants MAY be included in the RDF Dataset but MUST NOT point to the same "application profile resource" via the `rdfs:isDefinedBy` property
 
-><span id="ap16"></span> **Rule AP-16:** All classes and properties referred to via shapes SHOULD be explicitly indicated from the "application profile resource". The indication should use `inspec:reuses` if the referred resource is part of a **reused** specification part (see Rule PROF-10), otherwise `inspec:introduces` should be used.
 
 ## Rules for diagrams - SVG-INSPEC
 
@@ -113,6 +113,18 @@ SVG-INSPEC builds on top of SVG to provide a way to clarify whether objects in a
 ><span id="svg4"></span> **Rule SVG-4:** An element with type node-shape or property-shape MAY have a custom data attribute on the form `data-inspec-public="true"` if it is public according to rule AP-3 or AP-4.
 
 ><span id="svg5"></span> **Rule SVG-5:** An element with type node-shape that is also public MAY have a custom data attribute on the form `data-inspec-weight="WEIGHT"` where WEIGHT is either "main" or "supportive" according to rule AP-5.
+
+## Rules for enriching the interoperable specifications - ENRICH-INSPEC
+
+This set of rules aim to enrich the interoperable specification by analysing the contents of, and interaction between, the different interoperable specification parts in order to surface information which may be valuable for a webb of interoperable specifications.
+
+><span id="enrich1"></span> **Rule ENRICH-1:** Every public property or node shape MAY be pointed to from the "interoperable specification resource" (introduced in Rule PROF-1) via the `dcterms:hasPart` property.
+
+><span id="enrich2"></span> **Rule ENRICH-2:** For a profile interoperable specification all classes and properties referred to via shapes MAY be explicitly indicated from the "interoperable specification resource". The indication SHOULD use `inspec:reuses` if the referred resource is part of a **reused** specification part (see Rule PROF-10), otherwise `inspec:introduces` SHOULD be used.
+
+><span id="enrich3"></span> **Rule ENRICH-3:** For a foundational interoperable specification all classes and properties defined by (see Rule DV-3) an **introduced** data vocabulary MAY be explicitly indicated from the "interoperable specification resource" using `inspec:introduces`.
+
+><span id="enrich4"></span> **Rule ENRICH-4:** If a `inspec:refines` relation is present in the application profile resource the specification introducing the refined application MAY be indicated from the "interoperable specification resource" using `prof:isProfileOf`.
 
 <section id="footnotes" style="font-size:smaller;border-top:1px solid" class="informative">
 <ol>
