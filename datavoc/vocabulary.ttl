@@ -14,31 +14,31 @@ inspec: a owl:Ontology ;
 inspec:PROF a dct:Standard ;
   rdfs:label "PROF"@en ;
   rdfs:isDefinedBy inspec: ;
-  rdfs:comment "This is a specification corresponding to a profile of PROF used to capture an interoperable specification. Corresponds to the rules PROF-1 — PROF-10."@en ;
+  rdfs:comment "This is a specification corresponding to a profile of PROF used to capture an interoperable specification. Corresponds to the PROF rules."@en ;
   rdfs:seeAlso <https://www.w3.org/TR/dx-prof/> .
 
 inspec:RDFS a dct:Standard ;
   rdfs:label "RDFS"@en ;
   rdfs:isDefinedBy inspec: ;
-  rdfs:comment "This is a specification corresponding to a profile of RDFS used to capture an expression of data vocabularies. Corresponds to the rules DV-1 — DV-6."@en ;
+  rdfs:comment "This is a specification corresponding to a profile of RDFS used to capture an expression of data vocabularies. Corresponds to the DV rules."@en ;
   rdfs:seeAlso <https://www.w3.org/TR/rdf12-schema/> .
 
 inspec:SKOS a dct:Standard ;
   rdfs:label "SKOS"@en ;
   rdfs:isDefinedBy inspec: ;
-  rdfs:comment "This is a specification corresponding to a profile of SKOS used to capture an expression of terminologies. Corresponds to the rules TE-1 — TE-5."@en ;
+  rdfs:comment "This is a specification corresponding to a profile of SKOS used to capture an expression of terminologies. Corresponds to the TE rules."@en ;
   rdfs:seeAlso <https://www.w3.org/TR/skos-reference/> .
 
 inspec:SHACL a dct:Standard ;
   rdfs:label "SHACL"@en ;
   rdfs:isDefinedBy inspec: ;
-  rdfs:comment "This is a specification corresponding to a profile of SHACL used to capture an expression of application profiles. Corresponds to the rules AP-1 — AP-16."@en ;
+  rdfs:comment "This is a specification corresponding to a profile of SHACL used to capture an expression of application profiles. Corresponds to the AP rules."@en ;
   rdfs:seeAlso <https://www.w3.org/TR/shacl> .
 
 inspec:SVG a dct:Standard ;
   rdfs:label "SVG"@en ;
   rdfs:isDefinedBy inspec: ;
-  rdfs:comment "This is a specification corresponding to a profile of SVG used to capture an expression of diagrams for interoperable specifications. Corresponds to the rules SVG-1 — SVG-5."@en ;
+  rdfs:comment "This is a specification corresponding to a profile of SVG used to capture an expression of diagrams for interoperable specifications. Corresponds to the SVG rules."@en ;
   rdfs:seeAlso <https://www.w3.org/TR/SVG11/> .
 
 inspec:variant a rdf:Property ;
