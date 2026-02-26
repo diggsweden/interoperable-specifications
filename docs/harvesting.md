@@ -1,10 +1,10 @@
 # Harvesting interoperable specifications
 
-The starting point when you harvest is an expression according to PROF-INSPEC, see rules INSPEC-1 - INSPEC-10.
+The starting point when you harvest is an expression according to PROF-INSPEC, see rules PROF-1 - PROF-10.
 
 ## Native harvesting according to INSPEC profile
 
-Below we will refer to the interoperable specification resource as INSPEC resource, see by INSPEC-1 what we require of it.
+Below we will refer to the interoperable specification resource as INSPEC resource, see by PROF-1 what we require of it.
 
 ### Data vocabulary
 

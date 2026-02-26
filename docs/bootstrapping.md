@@ -10,7 +10,7 @@ inspec | <https://w3id.org/inspec/datavoc/>
 
 ## inspec:PROF
 
-This is a specification corresponding to a profile of PROF used to capture an interoperable specification. Corresponds to the rules INSPEC-1 — INSPEC-10.
+This is a specification corresponding to a profile of PROF used to capture an interoperable specification. Corresponds to the rules PROF-1 — PROF-10.
 
 ## inspec:RDFS
 

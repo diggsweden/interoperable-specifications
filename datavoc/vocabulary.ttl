@@ -14,7 +14,7 @@ inspec: a owl:Ontology ;
 inspec:PROF a dct:Standard ;
   rdfs:label "PROF"@en ;
   rdfs:isDefinedBy inspec: ;
-  rdfs:comment "This is a specification corresponding to a profile of PROF used to capture an interoperable specification. Corresponds to the rules INSPEC-1 — INSPEC-10."@en ;
+  rdfs:comment "This is a specification corresponding to a profile of PROF used to capture an interoperable specification. Corresponds to the rules PROF-1 — PROF-10."@en ;
   rdfs:seeAlso <https://www.w3.org/TR/dx-prof/> .
 
 inspec:RDFS a dct:Standard ;

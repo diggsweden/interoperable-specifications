@@ -12,7 +12,7 @@
   <dcterms:Standard rdf:about="https://w3id.org/inspec/datavoc/PROF">
     <rdfs:label xml:lang="en">PROF</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
-    <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of PROF used to capture an interoperable specification. Corresponds to the rules INSPEC-1 — INSPEC-10.</rdfs:comment>
+    <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of PROF used to capture an interoperable specification. Corresponds to the rules PROF-1 — PROF-10.</rdfs:comment>
     <rdfs:seeAlso rdf:resource="https://www.w3.org/TR/dx-prof/"/>
   </dcterms:Standard>
   <dcterms:Standard rdf:about="https://w3id.org/inspec/datavoc/RDFS">
