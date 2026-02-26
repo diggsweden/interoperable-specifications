@@ -22,7 +22,7 @@ This is a specification corresponding to a profile of SKOS used to capture an ex
 
 ## inspec:SHACL
 
-This is a specification corresponding to a profile of SHACL used to capture an expression of application profiles. Corresponds to the rules AP-1 — AP-14.
+This is a specification corresponding to a profile of SHACL used to capture an expression of application profiles. Corresponds to the rules AP-1 — AP-16.
 
 ## inspec:SVG
 

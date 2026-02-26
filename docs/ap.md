@@ -20,7 +20,7 @@ Let's clarify the words we are using in SHACL-INSPEC:
 
 ## Application Profile expression
 
-If you have not already, take a look at the [fourteen rules of SHACL-INSPEC](rules.md#rules-for-application-profiles---shacl-inspec).
+If you have not already, take a look at the [sixteen rules of SHACL-INSPEC](rules.md#rules-for-application-profiles---shacl-inspec).
 These rules may be a bit hard to take in, especially since SHACL is a complex language. Hence, below we list what is to be expected based on the application profile as a whole as well as on the shapes.
 
 First of all, for simplicity the requirement on multilinguality are not written explicitly below, i.e. labels, description / definition and usage note are all expected to be expressed with a language and potentially translated into several languages.

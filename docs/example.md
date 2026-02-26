@@ -81,7 +81,7 @@ ex:vi1 a prof:ResourceDescriptor ;
 The following triples can be provided as part of PROF-INSPEC, alternatively they can be auto generated as part of the harvesting process.
 
 ```turtle
-# referenced classes and properties - AP-14
+# referenced classes and properties - AP-16
 ex:spec1 inspec:reuses foaf:Document ;
   inspec:reuses dcterms:title ;
   inspec:reuses dcterms:created ;
@@ -92,7 +92,7 @@ ex:spec1 inspec:reuses foaf:Document ;
   inspec:reuses foaf:mbox ;
   inspec:introduces ex:personNumber .
 
-# public shapes - AP-3/AP-4, reproduced from SHACL-INSPEC or auto generated as part of the harvesting process
+# public shapes - generated as part of the harvesting process
 ex:spec1 dcterms:hasPart ex:ns-document ;
   dcterms:hasPart ex:ps-title ;
   dcterms:hasPart ex:ps-created ;
@@ -145,12 +145,18 @@ dtheme: a skos:ConceptScheme ;
 ```turtle
 @prefix ex: <http://example.com/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dtheme: <http://publications.europa.eu/resource/authority/data-theme/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# --------Application profile----------
+ex:spec1 a owl:Ontology;
+  owl:imports sh: .
 
 # --------Document shape----------
 ex:ns-document a sh:NodeShape ;
@@ -163,28 +169,32 @@ ex:ns-document a sh:NodeShape ;
     ex:ps-title,
     ex:ps-created,
     ex:ps-publisher,
-    ex:ps-subject .
+    ex:ps-subject ;
+  rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-title a sh:PropertyShape ;
   sh:path dcterms:title ;
   sh:nodeKind sh:Literal ;
   sh:datatype rdf:langString ;
   sh:name "title"@en ;
-  sh:minCount "1" .
+  sh:minCount "1" ;
+  rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-created a sh:PropertyShape ;
   sh:path dcterms:created ;
   sh:nodeKind sh:Literal ;
   sh:datatype xsd:date ;
   sh:name "Created date"@en ;
-  sh:minCount "1" .
+  sh:minCount "1" ;
+  rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-publisher a sh:PropertyShape ;
   sh:path dcterms:published ;
   sh:nodeKind sh:IRI ;
   sh:name "Publisher"@en ;
   sh:class foaf:Person ;
-  sh:minCount "1" .
+  sh:minCount "1" ;
+  rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-subject a sh:PropertyShape ;
   sh:path dcterms:subject ;
@@ -200,7 +210,8 @@ ex:ps-subject a sh:PropertyShape ;
       sh:path skos:inScheme ;
       sh:hasValue dtheme: ;
     ]
-  ] .
+  ] ;
+  rdfs:isDefinedBy ex:spec1 .
 
 # --------Person shape----------
 ex:ns-person a sh:NodeShape ;
@@ -212,39 +223,28 @@ ex:ns-person a sh:NodeShape ;
     ],
     ex:ps-name,
     ex:ps-mbox,
-    ex:ps-pnr .
+    ex:ps-pnr ;
+  rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-name a sh:PropertyShape ;
   sh:path foaf:name ;
   sh:nodeKind sh:Literal ;
   sh:datatype rdf:langString ;
   sh:name "title"@en ;
-  sh:minCount "1" .
+  sh:minCount "1" ;
+  rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-mbox a sh:PropertyShape ;
   sh:path foaf:mbox ;
   sh:nodeKind sh:IRI ;
   sh:pattern "^mailto:.+@.+" ;
-  sh:name "Email"@en .
+  sh:name "Email"@en ;
+  rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-pnr a sh:PropertyShape ;
   sh:path ex:personNumber ;
   sh:nodeKind sh:Literal ;
   sh:name "Personal number"@en ;
-  sh:minCount "0" .
-```
-
-The following triples may be provided as part of SHACL-INSPEC, alternatively they can be auto generated as part of PROF-INSPEC above.
-
-```turtle
-# public shapes - AP-3/AP-4
-ex:spec1 dcterms:hasPart ex:ns-document ;
-  dcterms:hasPart ex:ps-title ;
-  dcterms:hasPart ex:ps-created ;
-  dcterms:hasPart ex:ps-publisher ;
-  dcterms:hasPart ex:ps-subject ;
-  dcterms:hasPart ex:ns-person ;
-  dcterms:hasPart ex:ps-name ;
-  dcterms:hasPart ex:ps-mbox ;
-  dcterms:hasPart ex:ps-pnr .
+  sh:minCount "0" ;
+  rdfs:isDefinedBy ex:spec1 .
 ```
