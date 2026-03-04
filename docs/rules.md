@@ -72,9 +72,9 @@ SHACL-INSPEC builds on top of the SHACL specification by providing additional re
 
 ><span id="ap2"></span> **Rule AP-2:** There MUST be a single "application profile resource" with a URI in the RDF Dataset AND it MUST be the same as the "interoperable specification resource" (introduced in Rule INSPEC-1)
 
-><span id="ap3"></span> **Rule AP-3:** All property shapes with a severity of `sh:VIOLATION` and with at least one constraint (`sh:and` for specialization does not count) are considered **public** and they MUST have URIs
+><span id="ap3"></span> **Rule AP-3:** All property shapes with a severity of `sh:Violation` and with at least one constraint (`sh:and` for specialization does not count) are considered **public** and they MUST have URIs
 
-><span id="ap4"></span> **Rule AP-4:** All node shapes with a severity of `sh:VIOLATION` are considered **public** and MUST have URIs
+><span id="ap4"></span> **Rule AP-4:** All node shapes with a severity of `sh:Violation` are considered **public** and MUST have URIs
 
 ><span id="ap5"></span> **Rule AP-5:** Public node shapes are considered **main** if they have a target declaration, otherwise they are considered **supportive**
 
