@@ -12,31 +12,31 @@
   <dcterms:Standard rdf:about="https://w3id.org/inspec/datavoc/PROF">
     <rdfs:label xml:lang="en">PROF</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
-    <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of PROF used to capture an interoperable specification. Corresponds to the rules INSPEC-1 — INSPEC-10.</rdfs:comment>
+    <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of PROF used to capture an interoperable specification. Corresponds to the PROF rules.</rdfs:comment>
     <rdfs:seeAlso rdf:resource="https://www.w3.org/TR/dx-prof/"/>
   </dcterms:Standard>
   <dcterms:Standard rdf:about="https://w3id.org/inspec/datavoc/RDFS">
     <rdfs:label xml:lang="en">RDFS</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
-    <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of RDFS used to capture an expression of data vocabularies. Corresponds to the rules DV-1 — DV-6.</rdfs:comment>
+    <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of RDFS used to capture an expression of data vocabularies. Corresponds to the DV rules.</rdfs:comment>
     <rdfs:seeAlso rdf:resource="https://www.w3.org/TR/rdf12-schema/"/>
   </dcterms:Standard>
   <dcterms:Standard rdf:about="https://w3id.org/inspec/datavoc/SKOS">
     <rdfs:label xml:lang="en">SKOS</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
-    <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of SKOS used to capture an expression of terminologies. Corresponds to the rules TE-1 — TE-5.</rdfs:comment>
+    <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of SKOS used to capture an expression of terminologies. Corresponds to the TE rules.</rdfs:comment>
     <rdfs:seeAlso rdf:resource="https://www.w3.org/TR/skos-reference/"/>
   </dcterms:Standard>
   <dcterms:Standard rdf:about="https://w3id.org/inspec/datavoc/SHACL">
     <rdfs:label xml:lang="en">SHACL</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
-    <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of SHACL used to capture an expression of application profiles. Corresponds to the rules AP-1 — AP-16.</rdfs:comment>
+    <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of SHACL used to capture an expression of application profiles. Corresponds to the AP rules.</rdfs:comment>
     <rdfs:seeAlso rdf:resource="https://www.w3.org/TR/shacl"/>
   </dcterms:Standard>
   <dcterms:Standard rdf:about="https://w3id.org/inspec/datavoc/SVG">
     <rdfs:label xml:lang="en">SVG</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
-    <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of SVG used to capture an expression of diagrams for interoperable specifications. Corresponds to the rules SVG-1 — SVG-5.</rdfs:comment>
+    <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of SVG used to capture an expression of diagrams for interoperable specifications. Corresponds to the SVG rules.</rdfs:comment>
     <rdfs:seeAlso rdf:resource="https://www.w3.org/TR/SVG11/"/>
   </dcterms:Standard>
   <rdf:Property rdf:about="https://w3id.org/inspec/datavoc/variant">
@@ -44,32 +44,23 @@
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
     <rdfs:comment xml:lang="en">A shape or profile is a variant of another if it relaxes some of its constraints</rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/relation"/>
-    <rdfs:domain>
-      <rdf:Description rdf:nodeID="naf255206f4f948d1bb5e5f5f0440d55db1">
-        <owl:unionOf rdf:parseType="Collection">
-          <rdf:Description rdf:about="http://www.w3.org/ns/shacl#Shape"/>
-          <rdf:Description rdf:about="http://www.w3.org/ns/dx/prof/Profile"/>
-        </owl:unionOf>
-      </rdf:Description>
-    </rdfs:domain>
-    <rdfs:range>
-      <rdf:Description rdf:nodeID="naf255206f4f948d1bb5e5f5f0440d55db4">
-        <owl:unionOf rdf:parseType="Collection">
-          <rdf:Description rdf:about="http://www.w3.org/ns/shacl#Shape"/>
-          <rdf:Description rdf:about="http://www.w3.org/ns/dx/prof/Profile"/>
-        </owl:unionOf>
-      </rdf:Description>
-    </rdfs:range>
+    <rdfs:domain rdf:nodeID="ShapeOrProfile"/>
+    <rdfs:range rdf:nodeID="ShapeOrProfile"/>
   </rdf:Property>
   <rdf:Property rdf:about="https://w3id.org/inspec/datavoc/refines">
     <rdfs:label xml:lang="en">refines</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
     <rdfs:comment xml:lang="en">A shape refines another by adding additional constraints to it</rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/relation"/>
-    <rdfs:domain rdf:resource="http://www.w3.org/ns/shacl#Shape"/>
-    <rdfs:range rdf:resource="http://www.w3.org/ns/shacl#Shape"/>
-    <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/dx/prof/isProfileOf"/>
+    <rdfs:domain rdf:nodeID="ShapeOrProfile"/>
+    <rdfs:range rdf:nodeID="ShapeOrProfile"/>
   </rdf:Property>
+  <rdf:Description rdf:nodeID="ShapeOrProfile">
+    <owl:unionOf rdf:parseType="Collection">
+      <rdf:Description rdf:about="http://www.w3.org/ns/shacl#Shape"/>
+      <rdf:Description rdf:about="http://www.w3.org/ns/dx/prof/Profile"/>
+    </owl:unionOf>
+  </rdf:Description>
   <rdf:Property rdf:about="https://w3id.org/inspec/datavoc/reuses">
     <rdfs:label xml:lang="en">reuses</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
