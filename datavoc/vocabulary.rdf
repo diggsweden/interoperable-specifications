@@ -44,32 +44,23 @@
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
     <rdfs:comment xml:lang="en">A shape or profile is a variant of another if it relaxes some of its constraints</rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/relation"/>
-    <rdfs:domain>
-      <rdf:Description rdf:nodeID="naf255206f4f948d1bb5e5f5f0440d55db1">
-        <owl:unionOf rdf:parseType="Collection">
-          <rdf:Description rdf:about="http://www.w3.org/ns/shacl#Shape"/>
-          <rdf:Description rdf:about="http://www.w3.org/ns/dx/prof/Profile"/>
-        </owl:unionOf>
-      </rdf:Description>
-    </rdfs:domain>
-    <rdfs:range>
-      <rdf:Description rdf:nodeID="naf255206f4f948d1bb5e5f5f0440d55db4">
-        <owl:unionOf rdf:parseType="Collection">
-          <rdf:Description rdf:about="http://www.w3.org/ns/shacl#Shape"/>
-          <rdf:Description rdf:about="http://www.w3.org/ns/dx/prof/Profile"/>
-        </owl:unionOf>
-      </rdf:Description>
-    </rdfs:range>
+    <rdfs:domain rdf:nodeID="ShapeOrProfile"/>
+    <rdfs:range rdf:nodeID="ShapeOrProfile"/>
   </rdf:Property>
   <rdf:Property rdf:about="https://w3id.org/inspec/datavoc/refines">
     <rdfs:label xml:lang="en">refines</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
     <rdfs:comment xml:lang="en">A shape refines another by adding additional constraints to it</rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/relation"/>
-    <rdfs:domain rdf:resource="http://www.w3.org/ns/shacl#Shape"/>
-    <rdfs:range rdf:resource="http://www.w3.org/ns/shacl#Shape"/>
-    <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/dx/prof/isProfileOf"/>
+    <rdfs:domain rdf:nodeID="ShapeOrProfile"/>
+    <rdfs:range rdf:nodeID="ShapeOrProfile"/>
   </rdf:Property>
+  <rdf:Description rdf:nodeID="ShapeOrProfile">
+    <owl:unionOf rdf:parseType="Collection">
+      <rdf:Description rdf:about="http://www.w3.org/ns/shacl#Shape"/>
+      <rdf:Description rdf:about="http://www.w3.org/ns/dx/prof/Profile"/>
+    </owl:unionOf>
+  </rdf:Description>
   <rdf:Property rdf:about="https://w3id.org/inspec/datavoc/reuses">
     <rdfs:label xml:lang="en">reuses</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
