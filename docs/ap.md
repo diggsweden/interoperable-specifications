@@ -20,7 +20,7 @@ Let's clarify the words we are using in SHACL-INSPEC:
 
 ## Application Profile expression
 
-If you have not already, take a look at the [sixteen rules of SHACL-INSPEC](rules.md#rules-for-application-profiles---shacl-inspec).
+If you have not already, take a look at the [fifteen rules of SHACL-INSPEC](rules.md#rules-for-application-profiles---shacl-inspec).
 These rules may be a bit hard to take in, especially since SHACL is a complex language. Hence, below we list what is to be expected based on the application profile as a whole as well as on the shapes.
 
 First of all, for simplicity the requirement on multilinguality are not written explicitly below, i.e. labels, description / definition and usage note are all expected to be expressed with a language and potentially translated into several languages.
@@ -35,16 +35,13 @@ The following information MUST be provided for an application profile resource:
 * The application profile resource must have a stable identity in the form of a URI (subject position in triples)
 * The application profile resource must be typed as `prof:Profile`
 * A label expressed via the property `sh:name`
-* A list of public node shapes indicated via the property `dcterms:hasPart`
-* A list of public property shapes indicated via the property `dcterms:hasPart`
 
 The following information SHOULD/MAY be provided:
 
-* A list of all classes and properties used in the application profile, indicated via the properties `inspec:reuses` or `inspec:introduces`
 * A description / definition expressed via the property `sh:description`
 * A usage note expressed via the property `skos:scopeNote`
 * A reference to another application profile that expresses that it is a
-  * "subprofile" of another profile via `prof:isProfileOf`
+  * "subprofile" of another profile via `inspec:refines`
   * "variant of" another profile via the `inspec:variant`
 
 Note that for B being a subprofile of A:
@@ -53,6 +50,15 @@ Note that for B being a subprofile of A:
 * Data following application profile A will not always follow application profile B.
 
 Note also that the concepts of Application profiles being subprofiles and variant of each other of are exclusive since for the variant relation there is a requirement that at least one of the node shapes has to be a variant.
+
+### Interoperable specification resource
+
+The following information derived from the Application Profile MAY be provided for a profil interoperable specification resource:
+
+* A list of public node shapes in the application profile, indicated via the property `dcterms:hasPart`
+* A list of public property shapes in the application profile, indicated via the property `dcterms:hasPart`
+* A list of all classes and properties used in the application profile, indicated via the properties `inspec:reuses` or `inspec:introduces`
+* A relation, indicated via the `prof:isProfileOf` property, to any specification introducing an application profile for which there is a subprofile relation from the application profile
 
 ### Main and supportive node shapes
 

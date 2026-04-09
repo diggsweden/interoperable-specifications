@@ -78,21 +78,10 @@ ex:vi1 a prof:ResourceDescriptor ;
   prof:hasRole profrole:specification .
 ```
 
-The following triples can be provided as part of PROF-INSPEC, alternatively they can be auto generated as part of the harvesting process.
+The following triples may be provided as part of the enrichment described in [ENRICH-INSPEC](rules.md#rules-for-enriching-the-interoperable-specifications---enrich-inspec), and are expected to be auto generated as part of the harvesting process.
 
 ```turtle
-# referenced classes and properties - AP-16
-ex:spec1 inspec:reuses foaf:Document ;
-  inspec:reuses dcterms:title ;
-  inspec:reuses dcterms:created ;
-  inspec:reuses dcterms:publisher ;
-  inspec:reuses dcterms:subject ;
-  inspec:reuses foaf:Person ;
-  inspec:reuses foaf:name ;
-  inspec:reuses foaf:mbox ;
-  inspec:introduces ex:personNumber .
-
-# public shapes - generated as part of the harvesting process
+# public shapes - ENRICH-1
 ex:spec1 dcterms:hasPart ex:ns-document ;
   dcterms:hasPart ex:ps-title ;
   dcterms:hasPart ex:ps-created ;
@@ -102,6 +91,17 @@ ex:spec1 dcterms:hasPart ex:ns-document ;
   dcterms:hasPart ex:ps-name ;
   dcterms:hasPart ex:ps-mbox ;
   dcterms:hasPart ex:ps-pnr .
+
+# referenced classes and properties - ENRICH-2
+ex:spec1 inspec:reuses foaf:Document ;
+  inspec:reuses dcterms:title ;
+  inspec:reuses dcterms:created ;
+  inspec:reuses dcterms:publisher ;
+  inspec:reuses dcterms:subject ;
+  inspec:reuses foaf:Person ;
+  inspec:reuses foaf:name ;
+  inspec:reuses foaf:mbox ;
+  inspec:introduces ex:personNumber .
 ```
 
 ## RDFS-INSPEC expression
