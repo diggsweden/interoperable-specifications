@@ -15,7 +15,7 @@ The rules for interoperable specifications are divided into six parts. The first
 
 For a specification to be considered a interoperable specification the following must apply:
 
-><span id="prof1"></span> **Rule PROF-1:** The "interoperable specification resource" and its parts MUST have URIs and be described with PROF, the interoperable specification resource MUST be typed as `prof:Profile` or `dcterms:Standard` and have a `dcterms:conformsTo` point to `inspec:PROF`
+><span id="prof1"></span> **Rule PROF-1:** The "interoperable specification resource" and its parts MUST have URIs and be described with PROF, the interoperable specification resource MUST be typed as exactly one of `prof:Profile` or `dcterms:Standard` and have a `dcterms:conformsTo` point to `inspec:PROF`
 
 ><span id="prof2"></span> **Rule PROF-2:** All specification parts MUST be indicated via the `prof:hasResource` property from the interoperable specification and be typed as `prof:ResourceDescriptor`. An interoperable specification part MAY be a data vocabulary, a terminology, an application profile or a diagram. Other parts may exist but have no prescribed meaning by the interoperable specification profile.
 
