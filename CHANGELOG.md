@@ -12,6 +12,14 @@ even when empty: **Specification rules (`rules.md`)**, **Vocabulary
 
 The formal specification is published at <http://w3id.org/inspec/specification>.
 
+## [1.1.1-dev] - Unreleased
+
+### Specification rules (`rules.md`)
+
+### Vocabulary (`datavoc/`)
+
+### Other changes
+
 ## [1.1.0] - 2026-06-16
 
 ### Specification rules (`rules.md`)
@@ -79,5 +87,6 @@ Initial released version of the INSPEC specification, defining profiles of:
 - SHACL — for application profiles.
 - SVG — for diagrams.
 
+[1.1.1-dev]: https://github.com/diggsweden/interoperable-specifications/compare/v1.1.0...main
 [1.1.0]: https://github.com/diggsweden/interoperable-specifications/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/diggsweden/interoperable-specifications/releases/tag/v1.0.0
