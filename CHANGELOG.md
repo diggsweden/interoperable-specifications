@@ -12,7 +12,7 @@ even when empty: **Specification rules (`rules.md`)**, **Vocabulary
 
 The formal specification is published at <http://w3id.org/inspec/specification>.
 
-## [1.0.1-dev] - Unreleased
+## [1.1.0] - 2026-06-16
 
 ### Specification rules (`rules.md`)
 
@@ -36,16 +36,18 @@ The formal specification is published at <http://w3id.org/inspec/specification>.
 
 - Relabelled the `INSPEC-#` rules as `PROF-#`.
 - `inspec:refines` is now also used between application profile resources,
-  replacing the previous `prof:isProfileOf` recommendation. `prof:isProfileOf`
-  is left unchanged from the Profiles vocabulary (e.g. between a `prof:Profile`
-  and a `dcterms:Standard`).
+  replacing the previous `prof:isProfileOf` recommendation; `prof:isProfileOf`
+  is left unchanged from the Profiles vocabulary.
 - Relaxed `AP-3` and `AP-4`: setting `dcterms:hasPart` is no longer required;
   this is now described as part of the harvesting process (see `ENRICH-1`).
+- Clarified `PROF-1` that the `prof:Profile` / `dcterms:Standard` typing is an
+  exclusive choice.
+- Added a note to `AP-3` discouraging implicit class targets.
 
 #### Fixed
 
-- Fixed capitalisation of `sh:Severity` instances.
-- Fixed capitalisation so that only "MAY" is treated as a keyword in "MAY BE".
+- Fixed capitalisation of `sh:Severity` instances and of "MAY BE" (only "MAY"
+  is a keyword).
 
 ### Vocabulary (`datavoc/`)
 
@@ -62,8 +64,7 @@ The formal specification is published at <http://w3id.org/inspec/specification>.
 - Corrected the namespace for `profrole` in the examples.
 - Fixed `dcterms:hasPart` references to property shapes in the examples.
 - Updated the examples and harvesting documentation to reflect the rule and
-  vocabulary changes. During harvesting a derived `prof:isProfileOf` relation
-  is additionally added.
+  vocabulary changes.
 - Made `main` the working draft and `deploy` the deployed/released branch.
 - Archive specification under e.g. `docs/1.0.0/` to keep older versions available.
 - Add a CHANGELOG.
@@ -78,5 +79,5 @@ Initial released version of the INSPEC specification, defining profiles of:
 - SHACL — for application profiles.
 - SVG — for diagrams.
 
-[1.0.1-dev]: https://github.com/diggsweden/interoperable-specifications/compare/v1.0.0...main
+[1.1.0]: https://github.com/diggsweden/interoperable-specifications/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/diggsweden/interoperable-specifications/releases/tag/v1.0.0

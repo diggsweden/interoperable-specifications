@@ -77,8 +77,8 @@ var respecConfig = {
   ],
   // non-standard respec
   title: "Interoperable Specifications Profile",
-  version: "1.0.1-dev",
-  copyright: 'Copyright © 2025 <a href="https://www.digg.se">DIGG</a>.',
+  version: "1.1.0",
+  copyright: 'Copyright © 2026 <a href="https://www.digg.se">DIGG</a>.',
   abstract: "A specification describes how data should be expressed and understood. The Interoperable Specifications Profile (INSPEC) has been developed to ensure that specifications are interoperable, reusable, and machine-readable. It follows a more modern approach, viewing a specification as a package of resources or components, some intended for human consumption and others for machine processing — resources, described using RDF, that are pre-defined to facilitate both semantic and technical interoperability.",
 }
 
