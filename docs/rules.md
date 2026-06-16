@@ -93,7 +93,7 @@ SHACL-INSPEC builds on top of the SHACL specification by providing additional re
 
 ><span id="ap12"></span> **Rule AP-12:** An application profile *B* MAY express that it is a **variant** of a application profile *A* via the `inspec:variant` property only if for every node shape *X* in *A* there is a variant or refined node shape *Y* in *B*, at least one of the node shapes must be a variant and not a refinement.
 
-><span id="ap13"></span> **Rule AP-13:** All shapes of the application profile MUST point to the "application profile resource" via the `rdfs:isDefinedBy` property
+><span id="ap13"></span> **Rule AP-13:** All public shapes of the application profile MUST point to the "application profile resource" via the `rdfs:isDefinedBy` property
 
 ><span id="ap14"></span> **Rule AP-14:** Shapes used for refinement or for variants MAY reside in other RDF Datasets as long as the dataset is pointed to via `owl:imports` AND there is either a `inspec:refines` or a `inspec:variant` relation between the application profile resources.
 
