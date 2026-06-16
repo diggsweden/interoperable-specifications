@@ -2,6 +2,7 @@ var respecConfig = {
   format: "markdown",
   shortName: "inspec",
   latestVersion: "http://w3id.org/inspec/specification",
+  publishDate: "2026-06-16",
   specStatus: "base",
   edDraftURI: null,  // to prevent automatic generation
   historyURI: null,
