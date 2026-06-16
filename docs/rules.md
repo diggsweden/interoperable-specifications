@@ -69,6 +69,8 @@ SKOS-INSPEC builds on top of the SKOS specification by providing the following a
 
 SHACL-INSPEC builds on top of the SHACL specification by providing additional restrictions. Since SHACL is a rich language the following rules does not cover all situations. For instance, the following rules does not indicate how to specify how to restrict to concepts from a specific terminology. For a more complete treatment see the [SHACL-INSPEC separate document](ap.md) for patterns on how to use the profile in various situations.
 
+<img src="pics/application_profile_overview.svg" width="800">
+
 ><span id="ap1"></span> **Rule AP-1:** An application profile MUST be expressed in a single RDF Dataset<sup><a href="#fn2" id="fn2_1">[2]</a></sup>
 
 ><span id="ap2"></span> **Rule AP-2:** There MUST be a single "application profile resource" with a URI in the RDF Dataset AND it MUST be the same as the "interoperable specification resource" (introduced in Rule PROF-1)
@@ -98,7 +100,6 @@ SHACL-INSPEC builds on top of the SHACL specification by providing additional re
 ><span id="ap14"></span> **Rule AP-14:** Shapes used for refinement or for variants MAY reside in other RDF Datasets as long as the dataset is pointed to via `owl:imports` AND there is either a `inspec:refines` or a `inspec:variant` relation between the application profile resources.
 
 ><span id="ap15"></span> **Rule AP-15:** Shapes from other application profiles used for refinement or for variants MAY be included in the RDF Dataset but MUST NOT point to the same "application profile resource" via the `rdfs:isDefinedBy` property
-
 
 ## Rules for diagrams - SVG-INSPEC
 
