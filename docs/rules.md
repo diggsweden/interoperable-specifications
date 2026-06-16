@@ -11,7 +11,7 @@ The rules for interoperable specifications are divided into six parts. The first
 
 ## Rules for interoperable specifications - PROF-INSPEC
 
-<img src="pics/interoperable_specifications_overview.svg" width="800">
+<img src="pics/interoperable_specifications_overview.svg" width="800" alt="A UML-style class diagram. Interoperable specification is a kind of Specification, and has two subtypes: Foundational interoperable specification and Profile interoperable specification. An interoperable specification is composed of Specification parts, which can be a Data vocabulary, a Terminology, a Diagram, or an Application profile. A profile interoperable specification additionally aggregates an Application profile.">
 
 For a specification to be considered a interoperable specification the following must apply:
 
@@ -69,11 +69,13 @@ SKOS-INSPEC builds on top of the SKOS specification by providing the following a
 
 SHACL-INSPEC builds on top of the SHACL specification by providing additional restrictions. Since SHACL is a rich language the following rules does not cover all situations. For instance, the following rules does not indicate how to specify how to restrict to concepts from a specific terminology. For a more complete treatment see the [SHACL-INSPEC separate document](ap.md) for patterns on how to use the profile in various situations.
 
+<img src="pics/application_profile_overview.svg" width="800" alt="A diagram of the structure of an Application Profile. The profile is identified by URIs and can be the source of variants or refinements. It contains two groups of shapes. Public Shapes must have Violation severity, are identified by URIs, must have a label, and can be the source of refinements or variants; they comprise Main Node Shapes (with a target declaration), Supportive Node Shapes (no target declaration), and Property Shapes. Private Shapes are often blank nodes used for advanced constraints and ordering of property shapes, and comprise Node Shapes and Property Shapes.">
+
 ><span id="ap1"></span> **Rule AP-1:** An application profile MUST be expressed in a single RDF Dataset<sup><a href="#fn2" id="fn2_1">[2]</a></sup>
 
 ><span id="ap2"></span> **Rule AP-2:** There MUST be a single "application profile resource" with a URI in the RDF Dataset AND it MUST be the same as the "interoperable specification resource" (introduced in Rule PROF-1)
 
-><span id="ap3"></span> **Rule AP-3:** All property shapes with a severity of `sh:Violation` and with at least one constraint (`sh:and` for specialization does not count) are considered **public** and they MUST have URIs
+><span id="ap3"></span> **Rule AP-3:** All property shapes with a severity of `sh:Violation` and with at least one constraint (`sh:and` for specialization does not count) are considered **public** and they MUST have URIs. Use unique URIs for the shapes, avoid re-using the URI of the target class.<sup><a href="#fn3" id="fn3_1">[3]</a></sup>
 
 ><span id="ap4"></span> **Rule AP-4:** All node shapes with a severity of `sh:Violation` are considered **public** and MUST have URIs
 
@@ -93,12 +95,11 @@ SHACL-INSPEC builds on top of the SHACL specification by providing additional re
 
 ><span id="ap12"></span> **Rule AP-12:** An application profile *B* MAY express that it is a **variant** of a application profile *A* via the `inspec:variant` property only if for every node shape *X* in *A* there is a variant or refined node shape *Y* in *B*, at least one of the node shapes must be a variant and not a refinement.
 
-><span id="ap13"></span> **Rule AP-13:** All shapes of the application profile MUST point to the "application profile resource" via the `rdfs:isDefinedBy` property
+><span id="ap13"></span> **Rule AP-13:** All public shapes of the application profile MUST point to the "application profile resource" via the `rdfs:isDefinedBy` property
 
 ><span id="ap14"></span> **Rule AP-14:** Shapes used for refinement or for variants MAY reside in other RDF Datasets as long as the dataset is pointed to via `owl:imports` AND there is either a `inspec:refines` or a `inspec:variant` relation between the application profile resources.
 
 ><span id="ap15"></span> **Rule AP-15:** Shapes from other application profiles used for refinement or for variants MAY be included in the RDF Dataset but MUST NOT point to the same "application profile resource" via the `rdfs:isDefinedBy` property
-
 
 ## Rules for diagrams - SVG-INSPEC
 
@@ -108,7 +109,7 @@ SVG-INSPEC builds on top of SVG to provide a way to clarify whether objects in a
 
 ><span id="svg2"></span> **Rule SVG-2:** An element corresponding to an INSPEC entity MUST have a custom data attribute on the form `data-inspec-type="TYPE"` where TYPE is one of foundational, application-profile, diagram, data-vocabulary, class, property, node-shape, property-shape, concept, terminology and concept-collection. If the element corresponds to two things, e.g. both a class and a node-shape they can be listed both with a separating comma, the first should be considered dominant.
 
-><span id="svg3"></span> **Rule SVG-3:** An element corresponding to an INSPEC entity MAY have an id on the form `id="d_EID"` where EID is the md5 sum<sup><a href="#fn3" id="fn3_1">[3]</a></sup> of the entity's URI.
+><span id="svg3"></span> **Rule SVG-3:** An element corresponding to an INSPEC entity MAY have an id on the form `id="d_EID"` where EID is the md5 sum<sup><a href="#fn4" id="fn4_1">[4]</a></sup> of the entity's URI.
 
 ><span id="svg4"></span> **Rule SVG-4:** An element with type node-shape or property-shape MAY have a custom data attribute on the form `data-inspec-public="true"` if it is public according to rule AP-3 or AP-4.
 
@@ -130,6 +131,7 @@ This set of rules aim to enrich the interoperable specification by analysing the
 <ol>
  <li id="fn1">Both RDFS and SKOS introduce building blocks (classes and properties) for defining things (other classes, properties, concepts, collections) in an open world manner. However, both vocabularies and terminologies needs to work in the context of semantic specifications where it is stated explicitly what is included, hence it corresponds to a closed world perspective. Hence, in both RDFS-INSPEC and SKOS-INSPEC there is a restriction to assume that everything needed is provided in the indicated RDF Datasets. <a href="#fn1_1">↩<sup>1</sup></a><a href="#fn1_2">↩<sup>2</sup></a></li>
  <li id="fn2">SHACL supports imports declared via `owl:imports`, the rules are written from the perspective that these are respected and all RDF Datasets (potentially recursively) are imported first into a single RDF Dataset. <a href="#fn2_1">↩</a></li>
- <li id="fn3">The id value could in principle be the URI, however, it is highly likely that we want to write CSS rules targeting individual elements and then we need to be more restrictive as CSS rules cannot use URIs as part of selectors. <a href="#fn3_1">↩</a></li>
+ <li id="fn3">Using implicit class targets makes it harder to re-use and extend the shape. It is therefore recommended to rather use an explicit `sh:targetClass` statement. <a href="#fn3_1">↩</a></li>
+ <li id="fn4">The id value could in principle be the URI, however, it is highly likely that we want to write CSS rules targeting individual elements and then we need to be more restrictive as CSS rules cannot use URIs as part of selectors. <a href="#fn4_1">↩</a></li>
 </ol>
 </section>
