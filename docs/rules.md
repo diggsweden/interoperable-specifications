@@ -11,7 +11,7 @@ The rules for interoperable specifications are divided into six parts. The first
 
 ## Rules for interoperable specifications - PROF-INSPEC
 
-<img src="pics/interoperable_specifications_overview.svg" width="800">
+<img src="pics/interoperable_specifications_overview.svg" width="800" alt="A UML-style class diagram. Interoperable specification is a kind of Specification, and has two subtypes: Foundational interoperable specification and Profile interoperable specification. An interoperable specification is composed of Specification parts, which can be a Data vocabulary, a Terminology, a Diagram, or an Application profile. A profile interoperable specification additionally aggregates an Application profile.">
 
 For a specification to be considered a interoperable specification the following must apply:
 
@@ -69,7 +69,7 @@ SKOS-INSPEC builds on top of the SKOS specification by providing the following a
 
 SHACL-INSPEC builds on top of the SHACL specification by providing additional restrictions. Since SHACL is a rich language the following rules does not cover all situations. For instance, the following rules does not indicate how to specify how to restrict to concepts from a specific terminology. For a more complete treatment see the [SHACL-INSPEC separate document](ap.md) for patterns on how to use the profile in various situations.
 
-<img src="pics/application_profile_overview.svg" width="800">
+<img src="pics/application_profile_overview.svg" width="800" alt="A diagram of the structure of an Application Profile. The profile is identified by URIs and can be the source of variants or refinements. It contains two groups of shapes. Public Shapes must have Violation severity, are identified by URIs, must have a label, and can be the source of refinements or variants; they comprise Main Node Shapes (with a target declaration), Supportive Node Shapes (no target declaration), and Property Shapes. Private Shapes are often blank nodes used for advanced constraints and ordering of property shapes, and comprise Node Shapes and Property Shapes.">
 
 ><span id="ap1"></span> **Rule AP-1:** An application profile MUST be expressed in a single RDF Dataset<sup><a href="#fn2" id="fn2_1">[2]</a></sup>
 
