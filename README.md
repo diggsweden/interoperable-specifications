@@ -23,7 +23,7 @@ The formal specification can be found at <http://w3id.org/inspec/specification>.
 
 A specification has historically often been seen as a specification document containing a mixture of background, motivation and more formal descriptions. A more modern way of looking at a specification is that it is a package of resources, some targeted towards human consumption while others towards processing by machines.
 
-At the core of most specification is an **information model** that describes how data is expressed. An information model can be described informally in a specification document but can also be expressed more formally using a modeling language such as UML, ER-diagrams, OWL or RDFS. The information model is often expressed in terms of **classes**, **properties** (attributes and relations) as well as **concepts**. In addition, there is nearly always a visualization, typically in the form of a UML class **diagram**.
+At the core of most specification is an **information model** that describes how data is expressed. An information model can be described informally in a specification document but can also be expressed more formally using a modelling language such as UML, ER-diagrams, OWL or RDFS. The information model is often expressed in terms of **classes**, **properties** (attributes and relations) as well as **concepts**. In addition, there is nearly always a visualization, typically in the form of a UML class **diagram**.
 
 A consequence of aiming for reuse of classes and properties is that they need to defined more loosely so they are flexible enough to be combined in different ways. For instance, the property `publisher` from the Dublin Core Metadata Initiative is described in a sufficient generic manner so it can be applied to both a `Text` and a `Dataset`. Consequently, there is a need to describe how they are combined in a specific setting, we refer to this as an **application profile**.
 
@@ -46,7 +46,7 @@ Note 2 - an interoperable specification may contain more resources than those me
 
 ## Who this profile targets
 
-The interoperable specification profile targets anyone who has the task of describing an information model and is either required to or sees an added value in reusing classes, properties and concepts when possible. An added value could be improved quality, quicker development time and/or a supportive community with a shared knowledge base to lean on. An example of a more demanding requirement is *"the result should be interoperable with existing intiatives"*. Sometimes such requirement are expressed in law.
+The interoperable specification profile targets anyone who has the task of describing an information model and is either required to or sees an added value in reusing classes, properties and concepts when possible. An added value could be improved quality, quicker development time and/or a supportive community with a shared knowledge base to lean on. An example of a more demanding requirement is *"the result should be interoperable with existing initiatives"*. Sometimes such requirement are expressed in law.
 
 ## Delimitations
 
@@ -59,6 +59,12 @@ The work is led by [Agency for Digital Government (Digg)](https://www.digg.se).
 
 For more details, see the [separate page with planned meetings, slides, notes, reference group etc.](process/index.md).
 
+### Releases
+
+Minor releases do not go through the more thorough review process involving the full reference group.
+
+Differences to the previous release are documented in the [Changelog](CHANGELOG.md). The latest release is reached at [w3id.org/inspec/specification](https://w3id.org/inspec/specification) while older releases remain reachable under `https://w3id.org/inspec/specification/<version>`, e.g. [1.0.0](https://w3id.org/inspec/specification/1.0.0).
+
 ## How to give feedback
 
 * Create and comment on issues in [Github](https://github.com/diggsweden/interoperable-specifications)
@@ -67,4 +73,3 @@ For more details, see the [separate page with planned meetings, slides, notes, r
 * Send mail to [info@digg.se](mailto:info@digg.se) for other questions or to reach out to get involved
 
 The `main` branch of this repository contains the latest working draft of the specification whereas `deploy` contains the latest released version. Please consult the working draft before creating a new issue and use the `main` branch as the target for any pull-request.
-
