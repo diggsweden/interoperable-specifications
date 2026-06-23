@@ -158,13 +158,13 @@ dtheme: a skos:ConceptScheme ;
 ex:spec1 a owl:Ontology;
   owl:imports sh: .
 
-# --------Document shape----------
+# --------Document shape (main)----------
 ex:ns-document a sh:NodeShape ;
   sh:targetClass foaf:Document ;
   sh:name "Document"@en ;
   sh:property [
       sh:path rdf:type ;
-      sh:in ( foaf:Document ) ;
+      sh:hasValue foaf:Document ;
     ],
     ex:ps-title,
     ex:ps-created,
@@ -213,13 +213,12 @@ ex:ps-subject a sh:PropertyShape ;
   ] ;
   rdfs:isDefinedBy ex:spec1 .
 
-# --------Person shape----------
+# --------Person shape (supportive)----------
 ex:ns-person a sh:NodeShape ;
-  sh:targetClass foaf:Person ;
   sh:name "Person"@en ;
   sh:property [
       sh:path rdf:type ;
-      sh:in ( foaf:Person ) ;
+      sh:hasValue foaf:Person ;
     ],
     ex:ps-name,
     ex:ps-mbox,
