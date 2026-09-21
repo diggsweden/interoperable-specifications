@@ -180,7 +180,7 @@ ex:ps-title a sh:PropertyShape ;
   sh:nodeKind sh:Literal ;
   sh:datatype rdf:langString ;
   sh:name "title"@en ;
-  sh:minCount "1" ;
+  sh:minCount 1 ;
   rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-created a sh:PropertyShape ;
@@ -188,7 +188,7 @@ ex:ps-created a sh:PropertyShape ;
   sh:nodeKind sh:Literal ;
   sh:datatype xsd:date ;
   sh:name "Created date"@en ;
-  sh:minCount "1" ;
+  sh:minCount 1 ;
   rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-publisher a sh:PropertyShape ;
@@ -196,7 +196,7 @@ ex:ps-publisher a sh:PropertyShape ;
   sh:nodeKind sh:IRI ;
   sh:name "Publisher"@en ;
   sh:class foaf:Person ;
-  sh:minCount "1" ;
+  sh:minCount 1 ;
   rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-subject a sh:PropertyShape ;
@@ -233,7 +233,7 @@ ex:ps-name a sh:PropertyShape ;
   sh:nodeKind sh:Literal ;
   sh:datatype rdf:langString ;
   sh:name "title"@en ;
-  sh:minCount "1" ;
+  sh:minCount 1 ;
   rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-mbox a sh:PropertyShape ;
@@ -247,6 +247,6 @@ ex:ps-pnr a sh:PropertyShape ;
   sh:path ex:personNumber ;
   sh:nodeKind sh:Literal ;
   sh:name "Personal number"@en ;
-  sh:minCount "0" ;
+  sh:minCount 0 ;
   rdfs:isDefinedBy ex:spec1 .
 ```
