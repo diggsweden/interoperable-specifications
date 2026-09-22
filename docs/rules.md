@@ -121,7 +121,7 @@ This set of rules aim to enrich the interoperable specification by analysing the
 
 ><span id="enrich1"></span> **Rule ENRICH-1:** Every public property or node shape MAY be pointed to from the "interoperable specification resource" (introduced in Rule PROF-1) via the `dcterms:hasPart` property.
 
-><span id="enrich2"></span> **Rule ENRICH-2:** For a profile interoperable specification all classes and properties referred to via shapes MAY be explicitly indicated from the "interoperable specification resource". The indication SHOULD use `inspec:reuses` if the referred resource is part of a **reused** specification part (see Rule PROF-10), otherwise `inspec:introduces` SHOULD be used.
+><span id="enrich2"></span> **Rule ENRICH-2:** For a profile interoperable specification all classes and properties referred to via public shapes MAY be explicitly indicated from the "interoperable specification resource". The indication SHOULD use `inspec:reuses` if the referred resource is part of a **reused** specification part (see Rule PROF-10), otherwise `inspec:introduces` SHOULD be used.
 
 ><span id="enrich3"></span> **Rule ENRICH-3:** For a foundational interoperable specification all classes and properties defined by (see Rule DV-3) an **introduced** data vocabulary MAY be explicitly indicated from the "interoperable specification resource" using `inspec:introduces`.
 
