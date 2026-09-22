@@ -34,7 +34,7 @@ ex:ap1 a prof:ResourceDescriptor ;
   dcterms:conformsTo inspec:SHACL ;
   dcterms:format "text/turtle" ;
   prof:hasArtifact ex:AP1File ;
-  prof:hasRole profrole:schema, profrole:constraints ;
+  prof:hasRole profrole:schema, profrole:constraints .
 
 ex:dv1 a prof:ResourceDescriptor ;
   dcterms:title "Data vocabulary for DocPub1.0";
@@ -107,7 +107,10 @@ ex:spec1 inspec:reuses foaf:Document ;
 ## RDFS-INSPEC expression
 
 ```turtle
+@prefix ex: <http://example.com/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 
@@ -177,7 +180,7 @@ ex:ps-title a sh:PropertyShape ;
   sh:nodeKind sh:Literal ;
   sh:datatype rdf:langString ;
   sh:name "title"@en ;
-  sh:minCount "1" ;
+  sh:minCount 1 ;
   rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-created a sh:PropertyShape ;
@@ -185,15 +188,15 @@ ex:ps-created a sh:PropertyShape ;
   sh:nodeKind sh:Literal ;
   sh:datatype xsd:date ;
   sh:name "Created date"@en ;
-  sh:minCount "1" ;
+  sh:minCount 1 ;
   rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-publisher a sh:PropertyShape ;
-  sh:path dcterms:published ;
+  sh:path dcterms:publisher ;
   sh:nodeKind sh:IRI ;
   sh:name "Publisher"@en ;
   sh:class foaf:Person ;
-  sh:minCount "1" ;
+  sh:minCount 1 ;
   rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-subject a sh:PropertyShape ;
@@ -230,7 +233,7 @@ ex:ps-name a sh:PropertyShape ;
   sh:nodeKind sh:Literal ;
   sh:datatype rdf:langString ;
   sh:name "title"@en ;
-  sh:minCount "1" ;
+  sh:minCount 1 ;
   rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-mbox a sh:PropertyShape ;
@@ -244,6 +247,6 @@ ex:ps-pnr a sh:PropertyShape ;
   sh:path ex:personNumber ;
   sh:nodeKind sh:Literal ;
   sh:name "Personal number"@en ;
-  sh:minCount "0" ;
+  sh:minCount 0 ;
   rdfs:isDefinedBy ex:spec1 .
 ```

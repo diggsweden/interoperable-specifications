@@ -12,6 +12,32 @@ even when empty: **Specification rules (`rules.md`)**, **Vocabulary
 
 The formal specification is published at <http://w3id.org/inspec/specification>.
 
+## [1.1.1] - 2026-09-22
+
+### Specification rules (`rules.md`)
+
+#### Changed
+
+- Clarified `ENRICH-2` to cover only classes and properties referred to via
+  **public** shapes, aligning it with `ENRICH-1` and `AP-13`.
+
+### Vocabulary (`datavoc/`)
+
+### Other changes
+
+- Updated the harvesting documentation to reflect the `ENRICH-2` restriction to
+  public shapes.
+- Used `sh:hasValue` rather than `sh:in` for `rdf:type` in the examples, and
+  exemplified main and supportive node shapes.
+- Made minor corrections to the examples.
+- Declared the document language (`lang="en"`) on the specification pages,
+  including the archived copies, to meet WCAG 3.1.1 (Language of Page, level A).
+- Documented the release process in the README: that minor releases skip the
+  full reference group review, that differences are documented in the
+  changelog, and that older releases remain reachable under
+  `https://w3id.org/inspec/specification/<version>`.
+- Set an explicit publish date for the archived 1.0.0 specification.
+
 ## [1.1.0] - 2026-06-16
 
 ### Specification rules (`rules.md`)
@@ -79,5 +105,6 @@ Initial released version of the INSPEC specification, defining profiles of:
 - SHACL — for application profiles.
 - SVG — for diagrams.
 
+[1.1.1]: https://github.com/diggsweden/interoperable-specifications/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/diggsweden/interoperable-specifications/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/diggsweden/interoperable-specifications/releases/tag/v1.0.0

@@ -125,7 +125,7 @@ ex:ps-publisher a sh:PropertyShape ;
   sh:label "Publisher" ;
   sh:path dcterms:publisher ;
   sh:nodeKind sh:IRI ;
-  sh:minCount "1" ;
+  sh:minCount 1 ;
   sh:class foaf:Agent .
 ```
 
@@ -179,7 +179,7 @@ ex:ps-publisher a sh:PropertyShape ;
   sh:label "Publisher" ;
   sh:path dcterms:publisher ;
   sh:nodeKind sh:IRI ;
-  sh:minCount "1" ;
+  sh:minCount 1 ;
   sh:class foaf:Agent .
 ```
 
@@ -216,7 +216,7 @@ ex:ps-publisher a sh:PropertyShape ;
   sh:label "Publisher" ;
   sh:path dcterms:publisher ;
   sh:nodeKind sh:IRI ;
-  sh:minCount "1" ;
+  sh:minCount 1 ;
   sh:class foaf:Agent .
 ```
 
@@ -242,7 +242,7 @@ ex:ps-publisher3 a sh:PropertyShape ;
 An important aspect of application profiles is to generate specification documents in a predictable manner. Furthermore, since we aim for multilinguality the order cannot be based on alphabetical sorting of labels. Consequently we outline two rules:
 
 1. Provide an explicit order of all property shapes via `sh:order`.
-2. Sort all property shapes that have no sh:order via the alphabetical order of the localname of the property given via sh:path.
+2. Sort all property shapes that have no sh:order via the alphabetical order of the local name of the property given via sh:path.
 
 Note that if two property shapes have the same property, they must be separated by an explicit `sh:order`.
 
@@ -360,7 +360,7 @@ ex:ps1 a sh:PropertyShape ;
   sh:nodeKind sh:Literal .
 ex:ps2 a sh:PropertyShape ;
   sh:path foaf:givenName ;
-  sh:minCount "1" .
+  sh:minCount 1 .
 ```
 
 Instead the expression should be done via a single property shape:
@@ -372,7 +372,7 @@ ex:ns1 a sh:NodeShape ;
 ex:ps1 a sh:PropertyShape ;
   sh:label "Name" ;
   sh:path foaf:givenName ;
-  sh:minCount "1" .
+  sh:minCount 1 ;
   sh:nodeKind sh:Literal .
 ```
 
