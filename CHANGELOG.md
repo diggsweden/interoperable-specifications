@@ -18,6 +18,12 @@ The formal specification is published at <http://w3id.org/inspec/specification>.
 
 ### Vocabulary (`datavoc/`)
 
+#### Fixed
+
+- Typed the profile standards (`inspec:PROF`, `inspec:RDFS`, `inspec:SKOS`,
+  `inspec:SHACL`, `inspec:SVG`) as `dcterms:Standard` instead of using the
+  undeclared `dct:` prefix, which made `vocabulary.ttl` invalid Turtle.
+
 ### Other changes
 
 ## [1.1.1] - 2026-09-22

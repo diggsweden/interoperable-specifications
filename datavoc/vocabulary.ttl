@@ -11,31 +11,31 @@ inspec: a owl:Ontology ;
   rdfs:label "The Interoperable Specifications Profile (INSPEC) Vocabulary"@en ;
   rdfs:comment "This vocabulary defines terms used in INSPEC."@en .
 
-inspec:PROF a dct:Standard ;
+inspec:PROF a dcterms:Standard ;
   rdfs:label "PROF"@en ;
   rdfs:isDefinedBy inspec: ;
   rdfs:comment "This is a specification corresponding to a profile of PROF used to capture an interoperable specification. Corresponds to the PROF rules."@en ;
   rdfs:seeAlso <https://www.w3.org/TR/dx-prof/> .
 
-inspec:RDFS a dct:Standard ;
+inspec:RDFS a dcterms:Standard ;
   rdfs:label "RDFS"@en ;
   rdfs:isDefinedBy inspec: ;
   rdfs:comment "This is a specification corresponding to a profile of RDFS used to capture an expression of data vocabularies. Corresponds to the DV rules."@en ;
   rdfs:seeAlso <https://www.w3.org/TR/rdf12-schema/> .
 
-inspec:SKOS a dct:Standard ;
+inspec:SKOS a dcterms:Standard ;
   rdfs:label "SKOS"@en ;
   rdfs:isDefinedBy inspec: ;
   rdfs:comment "This is a specification corresponding to a profile of SKOS used to capture an expression of terminologies. Corresponds to the TE rules."@en ;
   rdfs:seeAlso <https://www.w3.org/TR/skos-reference/> .
 
-inspec:SHACL a dct:Standard ;
+inspec:SHACL a dcterms:Standard ;
   rdfs:label "SHACL"@en ;
   rdfs:isDefinedBy inspec: ;
   rdfs:comment "This is a specification corresponding to a profile of SHACL used to capture an expression of application profiles. Corresponds to the AP rules."@en ;
   rdfs:seeAlso <https://www.w3.org/TR/shacl> .
 
-inspec:SVG a dct:Standard ;
+inspec:SVG a dcterms:Standard ;
   rdfs:label "SVG"@en ;
   rdfs:isDefinedBy inspec: ;
   rdfs:comment "This is a specification corresponding to a profile of SVG used to capture an expression of diagrams for interoperable specifications. Corresponds to the SVG rules."@en ;
