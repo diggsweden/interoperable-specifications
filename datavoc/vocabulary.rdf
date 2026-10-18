@@ -39,6 +39,26 @@
     <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of SVG used to capture an expression of diagrams for interoperable specifications. Corresponds to the SVG rules.</rdfs:comment>
     <rdfs:seeAlso rdf:resource="https://www.w3.org/TR/SVG11/"/>
   </dcterms:Standard>
+  <dcterms:Standard rdf:about="https://w3id.org/inspec/datavoc/UML">
+    <rdfs:label xml:lang="en">UML</rdfs:label>
+    <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
+    <rdfs:comment xml:lang="en">This is a specification corresponding to a profile of UML used to capture the source model of an interoperable specification. The model follows the INSPEC UML tag convention, so that interoperable specification parts can be extracted from it. Corresponds to the relevant EXTRACT rules.</rdfs:comment>
+    <rdfs:seeAlso rdf:resource="https://www.omg.org/spec/UML/"/>
+  </dcterms:Standard>
+  <rdf:Property rdf:about="https://w3id.org/inspec/datavoc/umlOntology">
+    <rdfs:label xml:lang="en">UML ontology</rdfs:label>
+    <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
+    <rdfs:comment xml:lang="en">A data vocabulary to extract from the UML model, identified by the URI of its data vocabulary resource. The data vocabulary is extracted from the terms introduced by the model's package whose ontologyURI tag, or else baseURI tag, is this URI. Repeat the property for each data vocabulary.</rdfs:comment>
+    <rdfs:domain rdf:resource="http://www.w3.org/ns/dx/prof/ResourceDescriptor"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://w3id.org/inspec/datavoc/umlDiagram">
+    <rdfs:label xml:lang="en">UML diagram</rdfs:label>
+    <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
+    <rdfs:comment xml:lang="en">The diagram, identified by name or GUID, in the UML model from which the application profile is extracted.</rdfs:comment>
+    <rdfs:domain rdf:resource="http://www.w3.org/ns/dx/prof/ResourceDescriptor"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+  </rdf:Property>
   <rdf:Property rdf:about="https://w3id.org/inspec/datavoc/variant">
     <rdfs:label xml:lang="en">variant</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>

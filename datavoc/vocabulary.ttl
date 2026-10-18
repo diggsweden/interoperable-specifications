@@ -41,6 +41,26 @@ inspec:SVG a dcterms:Standard ;
   rdfs:comment "This is a specification corresponding to a profile of SVG used to capture an expression of diagrams for interoperable specifications. Corresponds to the SVG rules."@en ;
   rdfs:seeAlso <https://www.w3.org/TR/SVG11/> .
 
+inspec:UML a dcterms:Standard ;
+  rdfs:label "UML"@en ;
+  rdfs:isDefinedBy inspec: ;
+  rdfs:comment "This is a specification corresponding to a profile of UML used to capture the source model of an interoperable specification. The model follows the INSPEC UML tag convention, so that interoperable specification parts can be extracted from it. Corresponds to the relevant EXTRACT rules."@en ;
+  rdfs:seeAlso <https://www.omg.org/spec/UML/> .
+
+inspec:umlOntology a rdf:Property ;
+  rdfs:label "UML ontology"@en ;
+  rdfs:isDefinedBy inspec: ;
+  rdfs:comment "A data vocabulary to extract from the UML model, identified by the URI of its data vocabulary resource. The data vocabulary is extracted from the terms introduced by the model's package whose ontologyURI tag, or else baseURI tag, is this URI. Repeat the property for each data vocabulary."@en ;
+  rdfs:domain prof:ResourceDescriptor ;
+  rdfs:range owl:Ontology .
+
+inspec:umlDiagram a rdf:Property ;
+  rdfs:label "UML diagram"@en ;
+  rdfs:isDefinedBy inspec: ;
+  rdfs:comment "The diagram, identified by name or GUID, in the UML model from which the application profile is extracted."@en ;
+  rdfs:domain prof:ResourceDescriptor ;
+  rdfs:range rdfs:Literal .
+
 inspec:variant a rdf:Property ;
   rdfs:label "variant"@en ;
   rdfs:isDefinedBy inspec: ;

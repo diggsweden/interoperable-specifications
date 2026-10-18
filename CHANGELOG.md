@@ -18,6 +18,11 @@ The formal specification is published at <http://w3id.org/inspec/specification>.
 
 ### Vocabulary (`datavoc/`)
 
+#### Added
+
+- `inspec:UML`, `inspec:umlOntology` and `inspec:umlDiagram` for describing a
+  UML model from which interoperable specification parts are extracted.
+
 #### Fixed
 
 - Typed the profile standards (`inspec:PROF`, `inspec:RDFS`, `inspec:SKOS`,
@@ -25,6 +30,9 @@ The formal specification is published at <http://w3id.org/inspec/specification>.
   undeclared `dct:` prefix, which made `vocabulary.ttl` invalid Turtle.
 
 ### Other changes
+
+- Replaced the `inspec:UML_OSLO` placeholder in the bootstrapping
+  specifications with `inspec:UML`.
 
 ## [1.1.1] - 2026-09-22
 
