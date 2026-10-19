@@ -30,7 +30,7 @@ This is a specification corresponding to a profile of SVG used to capture an exp
 
 ## inspec:UML
 
-This is a specification corresponding to a profile of UML used to capture the source model of an interoperable specification. The model follows the INSPEC UML tag convention, so that interoperable specification parts can be extracted from it. Corresponds to the relevant EXTRACT rules.
+This is a specification corresponding to a profile of UML used to capture the source model of an interoperable specification. The model follows the [INSPEC UML tag convention](uml.md), so that interoperable specification parts can be extracted from it. Corresponds to the relevant EXTRACT rules.
 
 ## inspec:CSV
 

@@ -13,11 +13,12 @@ The formal specification can be found at <http://w3id.org/inspec/specification>.
 3. [Conceptual design and definitions↗](docs/design.md)
 4. [Rules for interoperable specifications↗](docs/rules.md) ⇐ (**the contents of the formal specification**)
 5. [Application Profiles as SHACL-INSPEC↗](docs/ap.md)
-6. [Bootstrapping specifications↗](docs/bootstrapping.md)
-7. [Harvesting interoperable specifications↗](docs/harvesting.md)
-8. [Example specification according to the profile↗](docs/example.md)
-9. [Application profiles and subclassing↗](docs/subclassing.md)
-10. [Using the same property for different purposes↗](docs/property-reuse.md)
+6. [UML models and the INSPEC UML tag convention↗](docs/uml.md)
+7. [Bootstrapping specifications↗](docs/bootstrapping.md)
+8. [Harvesting interoperable specifications↗](docs/harvesting.md)
+9. [Example specification according to the profile↗](docs/example.md)
+10. [Application profiles and subclassing↗](docs/subclassing.md)
+11. [Using the same property for different purposes↗](docs/property-reuse.md)
 
 ## INSPEC in a nutshell
 

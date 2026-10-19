@@ -1,13 +1,14 @@
 # Rules for interoperable specifications
 
-The rules for interoperable specifications are divided into six parts. The first five apply to anyone creating or distributing an interoperable specification, the last one applies mainly to actors harvesting interoperable specifications:
+The rules for interoperable specifications are divided into seven parts. The first five apply to anyone creating or distributing an interoperable specification, the sixth applies when interoperable specification parts are extracted from other specification parts, and the last one applies mainly to actors harvesting interoperable specifications:
 
 1. Rules for interoperable specifications - PROF-INSPEC - based on [[[DX-PROF]]]
 2. Rules for data vocabularies - RDFS-INSPEC - based on [[[RDF-SCHEMA]]]
 3. Rules for terminologies - SKOS-INSPEC - based on [[[SKOS-REFERENCE]]]
 4. Rules for application profiles - SHACL-INSPEC - based on [[[SHACL]]]
 5. Rules for diagrams - SVG-INSPEC - based on [[[SVG11]]]
-6. Rules for enriching the interoperable specifications - ENRICH-INSPEC
+6. Rules for extracting specification parts - EXTRACT-INSPEC
+7. Rules for enriching the interoperable specifications - ENRICH-INSPEC
 
 ## Rules for interoperable specifications - PROF-INSPEC
 
@@ -17,7 +18,7 @@ For a specification to be considered a interoperable specification the following
 
 ><span id="prof1"></span> **Rule PROF-1:** The "interoperable specification resource" and its parts MUST have URIs and be described with PROF, the interoperable specification resource MUST be typed either as `prof:Profile` (superclass `dcterms:Standard` is implicit) or only as `dcterms:Standard`, and have a `dcterms:conformsTo` point to `inspec:PROF`
 
-><span id="prof2"></span> **Rule PROF-2:** All specification parts MUST be indicated via the `prof:hasResource` property from the interoperable specification and be typed as `prof:ResourceDescriptor`. An interoperable specification part MAY be a data vocabulary, a terminology, an application profile or a diagram. Other parts may exist but have no prescribed meaning by the interoperable specification profile.
+><span id="prof2"></span> **Rule PROF-2:** All specification parts MUST be indicated via the `prof:hasResource` property from the interoperable specification and be typed as `prof:ResourceDescriptor`. An interoperable specification part MAY be a data vocabulary, a terminology, an application profile or a diagram. Other parts may exist but have no prescribed meaning by PROF-INSPEC.
 
 ><span id="prof3"></span> **Rule PROF-3:** Each data vocabulary MUST be detected by `dcterms:conformsTo` pointing to `inspec:RDFS` and MUST be possible to interpret as RDFS-INSPEC.
 
@@ -114,6 +115,16 @@ SVG-INSPEC builds on top of SVG to provide a way to clarify whether objects in a
 ><span id="svg4"></span> **Rule SVG-4:** An element with type node-shape or property-shape MAY have a custom data attribute on the form `data-inspec-public="true"` if it is public according to rule AP-3 or AP-4.
 
 ><span id="svg5"></span> **Rule SVG-5:** An element with type node-shape that is also public MAY have a custom data attribute on the form `data-inspec-weight="WEIGHT"` where WEIGHT is either "main" or "supportive" according to rule AP-5.
+
+## Rules for extracting specification parts - EXTRACT-INSPEC
+
+This set of rules describes how interoperable specification parts can be extracted from other specification parts, e.g. a UML model. Extraction is a preparatory step, the extracted parts are treated and validated like any other interoperable specification parts.
+
+><span id="extract1"></span> **Rule EXTRACT-1:** An extracted interoperable specification part MUST follow the rules for its kind, i.e. Rules PROF-3 to PROF-6, and MUST point to the specification part it was extracted from via `dcterms:source`.
+
+><span id="extract2"></span> **Rule EXTRACT-2:** An extracted specification part MAY be indicated via `prof:hasResource` from the "interoperable specification resource" (introduced in Rule PROF-1). If it is, it is considered the result of the extraction, otherwise it is added by the extraction.
+
+><span id="extract3"></span> **Rule EXTRACT-3:** A UML model specification part from which interoperable specification parts are to be extracted MUST be detected by `dcterms:conformsTo` pointing to `inspec:UML`, and the model indicated via `prof:hasArtifact` MUST follow the [INSPEC UML tag convention](uml.md#tag-convention). A data vocabulary is extracted for each `inspec:umlOntology` of the specification part and an application profile is extracted from its `inspec:umlDiagram`. Nothing else is extracted, regardless of the `prof:hasRole` values of the specification part.
 
 ## Rules for enriching the interoperable specifications - ENRICH-INSPEC
 
