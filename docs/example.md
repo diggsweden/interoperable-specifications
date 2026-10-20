@@ -6,6 +6,8 @@ The document must have a title, creation date and a publisher. It also recommend
 
 The publisher should be typed as a person, have a name, an email that is recommended and an optional special identifier expressed via a custom property in a specific data vocabulary.
 
+The document may be part of a document series, a class introduced in the data vocabulary, which must have a title.
+
 ## PROF-INSPEC expression
 
 ```turtle
@@ -90,7 +92,10 @@ ex:spec1 dcterms:hasPart ex:ns-document ;
   dcterms:hasPart ex:ns-person ;
   dcterms:hasPart ex:ps-name ;
   dcterms:hasPart ex:ps-mbox ;
-  dcterms:hasPart ex:ps-pnr .
+  dcterms:hasPart ex:ps-pnr ;
+  dcterms:hasPart ex:ps-series ;
+  dcterms:hasPart ex:ns-series ;
+  dcterms:hasPart ex:ps-series-title .
 
 # referenced classes and properties - ENRICH-2
 ex:spec1 inspec:reuses foaf:Document ;
@@ -98,10 +103,12 @@ ex:spec1 inspec:reuses foaf:Document ;
   inspec:reuses dcterms:created ;
   inspec:reuses dcterms:publisher ;
   inspec:reuses dcterms:subject ;
+  inspec:reuses dcterms:isPartOf ;
   inspec:reuses foaf:Person ;
   inspec:reuses foaf:name ;
   inspec:reuses foaf:mbox ;
-  inspec:introduces ex:personNumber .
+  inspec:introduces ex:personNumber ;
+  inspec:introduces ex:DocumentSeries .
 ```
 
 ## RDFS-INSPEC expression
@@ -113,11 +120,19 @@ ex:spec1 inspec:reuses foaf:Document ;
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:personNumber a rdf:Property ;
   rdfs:label "Personal number"@en ;
+  rdfs:label "Personnummer"@sv ;
   rdfs:domain foaf:Person ;
-  rdfs:range  rdf:Literal ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy ex:DV1Ontology .
+
+ex:DocumentSeries a rdfs:Class ;
+  rdfs:label "Document series"@en ;
+  rdfs:label "Dokumentserie"@sv ;
+  rdfs:comment "A series of documents published together, such as a report series."@en ;
   rdfs:isDefinedBy ex:DV1Ontology .
 
 ex:DV1Ontology a owl:Ontology ;
@@ -164,7 +179,10 @@ ex:spec1 a owl:Ontology;
 # --------Document shape (main)----------
 ex:ns-document a sh:NodeShape ;
   sh:targetClass foaf:Document ;
+  sh:nodeKind sh:IRI ;
   sh:name "Document"@en ;
+  sh:description "A document of any kind."@en ;
+  skos:scopeNote "The document may be expressed in any format, i.e. pdf, word, open document format etc."@en ;
   sh:property [
       sh:path rdf:type ;
       sh:hasValue foaf:Document ;
@@ -172,6 +190,7 @@ ex:ns-document a sh:NodeShape ;
     ex:ps-title,
     ex:ps-created,
     ex:ps-publisher,
+    ex:ps-series,
     ex:ps-subject ;
   rdfs:isDefinedBy ex:spec1 .
 
@@ -179,7 +198,9 @@ ex:ps-title a sh:PropertyShape ;
   sh:path dcterms:title ;
   sh:nodeKind sh:Literal ;
   sh:datatype rdf:langString ;
-  sh:name "title"@en ;
+  sh:name "Title"@en ;
+  sh:description "A title for the document."@en ;
+  skos:scopeNote "Provide a language for your title, multiple titles are allowed only if they are considered translations."@en ;
   sh:minCount 1 ;
   rdfs:isDefinedBy ex:spec1 .
 
@@ -189,14 +210,25 @@ ex:ps-created a sh:PropertyShape ;
   sh:datatype xsd:date ;
   sh:name "Created date"@en ;
   sh:minCount 1 ;
+  sh:maxCount 1 ;
   rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-publisher a sh:PropertyShape ;
   sh:path dcterms:publisher ;
-  sh:nodeKind sh:IRI ;
+  sh:nodeKind sh:BlankNodeOrIRI ;
   sh:name "Publisher"@en ;
   sh:class foaf:Person ;
+  sh:node ex:ns-person ;
   sh:minCount 1 ;
+  rdfs:isDefinedBy ex:spec1 .
+
+ex:ps-series a sh:PropertyShape ;
+  sh:path dcterms:isPartOf ;
+  sh:nodeKind sh:IRI ;
+  sh:name "Series"@en ;
+  sh:class ex:DocumentSeries ;
+  sh:node ex:ns-series ;
+  sh:maxCount 1 ;
   rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-subject a sh:PropertyShape ;
@@ -218,7 +250,9 @@ ex:ps-subject a sh:PropertyShape ;
 
 # --------Person shape (supportive)----------
 ex:ns-person a sh:NodeShape ;
+  sh:nodeKind sh:BlankNodeOrIRI ;
   sh:name "Person"@en ;
+  sh:name "Person"@sv ;
   sh:property [
       sh:path rdf:type ;
       sh:hasValue foaf:Person ;
@@ -232,8 +266,10 @@ ex:ps-name a sh:PropertyShape ;
   sh:path foaf:name ;
   sh:nodeKind sh:Literal ;
   sh:datatype rdf:langString ;
-  sh:name "title"@en ;
+  sh:name "Name"@en ;
+  sh:name "Namn"@sv ;
   sh:minCount 1 ;
+  sh:order "0"^^xsd:decimal ;
   rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-mbox a sh:PropertyShape ;
@@ -241,12 +277,37 @@ ex:ps-mbox a sh:PropertyShape ;
   sh:nodeKind sh:IRI ;
   sh:pattern "^mailto:.+@.+" ;
   sh:name "Email"@en ;
+  sh:name "E-post"@sv ;
+  sh:order "1"^^xsd:decimal ;
   rdfs:isDefinedBy ex:spec1 .
 
 ex:ps-pnr a sh:PropertyShape ;
   sh:path ex:personNumber ;
   sh:nodeKind sh:Literal ;
-  sh:name "Personal number"@en ;
+  sh:datatype xsd:string ;
+  sh:name "Personal identity number"@en ;
+  sh:name "Personnummer"@sv ;
   sh:minCount 0 ;
+  sh:maxCount 1 ;
+  sh:order "2"^^xsd:decimal ;
+  rdfs:isDefinedBy ex:spec1 .
+
+# --------Document series shape (supportive)----------
+ex:ns-series a sh:NodeShape ;
+  sh:nodeKind sh:BlankNodeOrIRI ;
+  sh:name "Document series"@en ;
+  sh:property [
+      sh:path rdf:type ;
+      sh:hasValue ex:DocumentSeries ;
+    ],
+    ex:ps-series-title ;
+  rdfs:isDefinedBy ex:spec1 .
+
+ex:ps-series-title a sh:PropertyShape ;
+  sh:path dcterms:title ;
+  sh:nodeKind sh:Literal ;
+  sh:datatype rdf:langString ;
+  sh:name "Title"@en ;
+  sh:minCount 1 ;
   rdfs:isDefinedBy ex:spec1 .
 ```
