@@ -16,7 +16,23 @@ The formal specification is published at <http://w3id.org/inspec/specification>.
 
 ### Specification rules (`rules.md`)
 
+#### Added
+
+- New extraction rule set `EXTRACT-INSPEC` (`EXTRACT-1`–`EXTRACT-3`) for
+  extracting interoperable specification parts from other specification parts,
+  starting with UML models following the INSPEC UML tag convention.
+
+#### Changed
+
+- Clarified in `PROF-2` that other parts have no prescribed meaning by
+  PROF-INSPEC, as other rule sets such as EXTRACT-INSPEC may give them one.
+
 ### Vocabulary (`datavoc/`)
+
+#### Added
+
+- `inspec:UML`, `inspec:umlOntology` and `inspec:umlDiagram` for describing a
+  UML model from which interoperable specification parts are extracted.
 
 #### Fixed
 
@@ -25,6 +41,12 @@ The formal specification is published at <http://w3id.org/inspec/specification>.
   undeclared `dct:` prefix, which made `vocabulary.ttl` invalid Turtle.
 
 ### Other changes
+
+- Replaced the `inspec:UML_OSLO` placeholder in the bootstrapping
+  specifications with `inspec:UML`.
+- Added the INSPEC UML tag convention (`uml.md`), linked from the README and
+  the bootstrapping specifications, and archived with each release.
+- Described harvesting from UML models in the harvesting documentation.
 
 ## [1.1.1] - 2026-09-22
 

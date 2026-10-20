@@ -26,6 +26,13 @@ The application is attempted to be retrieved from either the `prof:hasArtifact` 
 
 The SVG file need not be loaded into the system as it is not a RDF file, however, it might be a good idea to cache it to minimize external dependencies.
 
-## Harvesting from UML according to OSLO principles
+## Harvesting from UML models
+
+A UML model specification part is detected by `dcterms:conformsTo` pointing to `inspec:UML`, see Rule EXTRACT-3. The model itself need not be loaded into the system, instead interoperable specification parts are extracted from it before harvesting proceeds:
+
+* A data vocabulary is extracted for each `inspec:umlOntology` and an application profile from the `inspec:umlDiagram`, nothing else is extracted regardless of the `prof:hasRole` values.
+* If an extracted part is already indicated from the INSPEC resource, i.e. a specification part pointing to the UML model specification part via `dcterms:source`, it is used as it is. Otherwise the extracted part is added, with a `dcterms:source` pointing to the UML model specification part (see Rules EXTRACT-1 and EXTRACT-2).
+
+The extracted data vocabularies and application profile are then harvested as described in the sections above. How the model is interpreted is described in the [INSPEC UML tag convention](uml.md).
 
 ## Harvesting from tabular annotations (CSV on the web)
