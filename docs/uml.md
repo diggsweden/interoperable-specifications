@@ -93,7 +93,7 @@ Occurrences whose terms resolve elsewhere are uses of other vocabularies and pro
 
 The data vocabulary resource (see Rule DV-2 in the [rules](rules.md#dv2)) is the ontology URI of the packages. The text tags of the packages describe it: the label gives `dcterms:title`, the definition `dcterms:description` and the usage note `skos:scopeNote`. When several packages make up the data vocabulary, each kind of text is taken from the packages that have the corresponding tag, which must give the same text, otherwise it is an error. When none of them has it, it is taken from the first of the packages, in the order of the model file. A converter should warn when the text of another package is left out.
 
-An introduced term must be identical in all its defining occurrences. If the same class or property is defined in several places in the packages, every RDFS statement it gives must be the same, i.e. domain and range after tags, texts, and superclasses or superproperties. Otherwise it is an error. A redefining attribute is not a defining occurrence, see [Inheritance](#inheritance).
+An introduced term must be identical in all its defining occurrences. If the same class or property is defined in several places in the packages, its texts and its superclasses or superproperties must be the same in each. Otherwise it is an error. A property whose occurrences differ in domain or range, after `domain` and `range` tags, gets no domain or range respectively; a converter should warn about it and recommend a `domain` or `range` tag. A redefining attribute is not a defining occurrence, see [Inheritance](#inheritance).
 
 ### Domain and range
 
