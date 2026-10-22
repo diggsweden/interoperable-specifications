@@ -63,11 +63,13 @@ URIs are never minted from UML element names. A term is identified by:
 * a `package` and a `name` tag, the name being resolved against the `baseURI` of the given package, or
 * a `name` tag, resolved against the `baseURI` of the package the term is located in.
 
+A `uri` tag takes precedence: a `package` tag given with it is not used. A `uri` tag given with a `name` tag must agree with it.
+
 A class or attribute is located in its owning package. An association has no owner and is located through the diagrams that draw it. It is an error:
 
 * if an introduced term has none of the tags above,
 * if a `name` tag has characters not allowed in a URI, or
-* if a `package` tag names a package that is not in the model file.
+* if a `package` tag, given without a `uri` tag, names a package that is not in the model file.
 
 ### Packages
 
