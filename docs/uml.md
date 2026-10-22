@@ -61,11 +61,11 @@ URIs are never minted from UML element names. A term is identified by:
 
 * a `uri` tag,
 * a `package` and a `name` tag, the name being resolved against the `baseURI` of the given package, or
-* a `name` tag, resolved against the `baseURI` of the package the term is located in.
+* a `name` tag, resolved against the `baseURI` of the package that owns the class or attribute or, for an association, of the package it is located in.
 
 A `uri` tag takes precedence: a `package` tag given with it is not used. A `uri` tag given with a `name` tag must agree with it.
 
-A class or attribute is located in its owning package. An association has no owner and is located through the diagrams that draw it. It is an error:
+A class or attribute is located in its owning package, or, when the diagrams of a data vocabulary's packages draw it and another package owns it, in one of those packages, see [Packages](#packages). An association has no owner and is located through the diagrams that draw it. It is an error:
 
 * if an introduced term has none of the tags above,
 * if a `name` tag has characters not allowed in a URI, or
@@ -78,6 +78,7 @@ The ontology URI of a package is its `ontologyURI` tag, or else its `baseURI` ta
 The extraction for the packages identified via `inspec:umlOntology` looks only at the occurrences located in them:
 
 * the classes owned by the packages (as shown in Enterprise Architect's Project Browser), regardless of which diagrams they are drawn on, including classes drawn on no diagram,
+* the classes owned by other packages and drawn on the packages' own diagrams. Such a class is located in the first of the packages whose diagrams draw it, in the order of the model file, while its terms are still resolved in its owning package,
 * the attributes of those classes, and
 * the associations drawn visibly on the packages' own diagrams (a hidden link does not count). An association drawn by the diagrams of several of the packages is located in the first of them, in the order of the model file.
 
@@ -85,7 +86,7 @@ Only class elements, abstract ones included, define terms. Data types and enumer
 
 The packages introduce the terms of those occurrences whose URI resolves into one of them, i.e. that have:
 
-* a `name` tag alone,
+* a `name` tag alone, resolved in one of the packages,
 * a `package` tag naming one of the packages, together with a `name` tag, or
 * a `uri` tag that is the `baseURI` of one of the packages followed by a local name, not by a sub-namespace.
 
