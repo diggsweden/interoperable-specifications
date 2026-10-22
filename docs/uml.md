@@ -13,11 +13,11 @@ Statement | Meaning
 `dcterms:conformsTo inspec:UML` [1] | Identifies the specification part as a UML model following the INSPEC UML tag convention.
 `dcterms:format` [0..1] | Identifies the kind of model file.
 `prof:hasArtifact` [1] | The model file.
-`inspec:umlOntology` [0..*] | The URI of a data vocabulary resource. The packages of the model with this `ontologyURI`, or else `baseURI`, are extracted, and their **introduced** terms make up the data vocabulary, see [Packages](#packages). It never points out reused terms.
+`inspec:umlOntology` [0..1] | The URI of a data vocabulary resource. The packages of the model with this `ontologyURI`, or else `baseURI`, are extracted, and their **introduced** terms make up the data vocabulary, see [Packages](#packages). It never points out reused terms.
 `inspec:umlDiagram` [0..1] | The diagram the application profile is extracted from.
 `prof:hasRole` [0..*] | What the model describes: `profrole:vocabulary`, `profrole:constraints` and/or `profrole:specification` (a diagram).
 
-Each specification part has a single artifact, so that `dcterms:format` is unambiguous. The same model in several formats, e.g. an Enterprise Architect file and its XMI export, is described by one specification part per file. Only one of them should carry `inspec:umlOntology` and `inspec:umlDiagram`, so that the model is extracted only once. The others may still indicate what the model describes via `prof:hasRole`, see [Roles](#roles).
+Each specification part has a single artifact, so that `dcterms:format` is unambiguous, and names at most one data vocabulary. A model that holds several data vocabularies is described by one specification part per vocabulary, each with the same `prof:hasArtifact`. The same model in several formats, e.g. an Enterprise Architect file and its XMI export, is described by one specification part per file. Each data vocabulary and the diagram should be named by only one specification part, so that each is extracted only once. The other parts may still indicate what the model describes via `prof:hasRole`, see [Roles](#roles).
 
 ### Roles
 
@@ -29,7 +29,7 @@ Diagrams are identified by name or by GUID. A name must be unique within the mod
 
 ### Several models
 
-An interoperable specification may have several UML specification parts, one per model file, for example when the data vocabularies are kept in separate files. The diagram names and data vocabulary URIs of each specification part are resolved in its own model file.
+An interoperable specification may have several UML specification parts, for example one per data vocabulary, or one per model file when the data vocabularies are kept in separate files. The diagram names and data vocabulary URIs of each specification part are resolved in its own model file.
 
 ### Data vocabulary specification parts
 
