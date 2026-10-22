@@ -14,6 +14,7 @@ Statement | Meaning
 `dcterms:format` [0..1] | Identifies the kind of model file.
 `prof:hasArtifact` [1] | The model file.
 `inspec:umlOntology` [0..1] | The URI of a data vocabulary resource. The packages of the model with this `ontologyURI`, or else `baseURI`, are extracted, and their **introduced** terms make up the data vocabulary, see [Packages](#packages). It never points out reused terms.
+`inspec:umlOntologyDiagram` [0..1] | A diagram that limits the extraction of the data vocabulary to what it draws, see [Ontology diagram](#ontology-diagram). It is given only together with `inspec:umlOntology`.
 `inspec:umlDiagram` [0..1] | The diagram the application profile is extracted from.
 `prof:hasRole` [0..*] | What the model describes: `profrole:vocabulary`, `profrole:constraints` and/or `profrole:specification` (a diagram).
 
@@ -25,7 +26,7 @@ Each specification part has a single artifact, so that `dcterms:format` is unamb
 
 ### Names
 
-Diagrams are identified by name or by GUID. A name must be unique within the model file, otherwise the GUID must be used. Data vocabularies are identified by URI, see `inspec:umlOntology`.
+Diagrams are identified by name or by GUID. A name must be unique within the model file, otherwise the GUID must be used. The name of an ontology diagram needs only to be unique among the diagrams of the data vocabulary's packages. Data vocabularies are identified by URI, see `inspec:umlOntology`.
 
 ### Several models
 
@@ -75,7 +76,7 @@ A class or attribute is located in its owning package, or, when the diagrams of 
 
 The ontology URI of a package is its `ontologyURI` tag, or else its `baseURI` tag. Several packages may have the same ontology URI. Together they make up one data vocabulary, and an `inspec:umlOntology` identifies all of them. It is an error if no package has the ontology URI given by an `inspec:umlOntology`.
 
-The extraction for the packages identified via `inspec:umlOntology` looks only at the occurrences located in them:
+Without an ontology diagram, the extraction for the packages identified via `inspec:umlOntology` looks only at the occurrences located in them:
 
 * the classes owned by the packages (as shown in Enterprise Architect's Project Browser), regardless of which diagrams they are drawn on, including classes drawn on no diagram,
 * the classes owned by other packages and drawn on the packages' own diagrams. Such a class is located in the first of the packages whose diagrams draw it, in the order of the model file, while its terms are still resolved in its owning package,
@@ -95,6 +96,17 @@ Occurrences whose terms resolve elsewhere are uses of other vocabularies and pro
 The data vocabulary resource (see Rule DV-2 in the [rules](rules.md#dv2)) is the ontology URI of the packages. The text tags of the packages describe it: the label gives `dcterms:title`, the definition `dcterms:description` and the usage note `skos:scopeNote`. When several packages make up the data vocabulary, each kind of text is taken from the packages that have the corresponding tag, which must give the same text, otherwise it is an error. When none of them has it, it is taken from the first of the packages, in the order of the model file. A converter should warn when the text of another package is left out.
 
 An introduced term must be identical in all its defining occurrences. If the same class or property is defined in several places in the packages, its texts and its superclasses or superproperties must be the same in each. Otherwise it is an error. A property whose occurrences differ in domain or range, after `domain` and `range` tags, gets no domain or range respectively; a converter should warn about it and recommend a `domain` or `range` tag. A redefining attribute is not a defining occurrence, see [Inheritance](#inheritance).
+
+### <span id="ontology-diagram"></span>Ontology diagram
+
+An `inspec:umlOntologyDiagram` limits the extraction to the occurrences the diagram draws, instead of those located in the packages:
+
+* the classes drawn on the diagram, wherever they are owned, and the attributes of those classes, and
+* the associations drawn visibly on the diagram.
+
+One of the packages identified via `inspec:umlOntology` must own the diagram, otherwise it is an error. A class owned by one of the packages is located in it. Any other class, and every association, is located in the package that owns the diagram. The terms of a class and its attributes are still resolved in the class's owning package, and the terms of an association in the package that owns the diagram. Which terms are introduced is decided as without an ontology diagram.
+
+The data vocabulary resource is described by the texts of the package that owns the diagram. A kind of text that package has none of is taken as without an ontology diagram.
 
 ### Domain and range
 
@@ -212,6 +224,7 @@ The convention starts from the tag names used by the [OSLO](https://github.com/I
 * Only the tags listed above are interpreted, other OSLO tags are ignored.
 * The `domain` tag is taken from OSLO's earlier toolchain (OSLO-EA-to-RDF), it is not supported by the current one.
 * The `language` tag and the application profile tags `ap-weight`, `ap-nodeKind`, `ap-preferred`, `ap-order`, `ap-pattern`, `ap-refines` and `ap-variant` are added by INSPEC. In OSLO the language is a setting of the converter.
+* OSLO extracts a vocabulary from one target diagram. Here a data vocabulary is scoped by its packages, or by an ontology diagram given via `inspec:umlOntologyDiagram`.
 * OSLO falls back on the UML element name when there is no `name` tag. Here, URIs are never minted from element names.
 * OSLO's `Domain.prop` naming of properties and its `-rev-` tags for association classes are not supported.
 * A generalization becomes `rdfs:subClassOf` only.
