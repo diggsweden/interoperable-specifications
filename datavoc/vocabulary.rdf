@@ -48,7 +48,7 @@
   <rdf:Property rdf:about="https://w3id.org/inspec/datavoc/umlOntology">
     <rdfs:label xml:lang="en">UML ontology</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/"/>
-    <rdfs:comment xml:lang="en">A data vocabulary to extract from the UML model, identified by the URI of its data vocabulary resource. The data vocabulary is extracted from the terms introduced by the model's package whose ontologyURI tag, or else baseURI tag, is this URI. Repeat the property for each data vocabulary.</rdfs:comment>
+    <rdfs:comment xml:lang="en">A data vocabulary to extract from the UML model, identified by the URI of its data vocabulary resource. The data vocabulary is extracted from the terms introduced by the model's packages whose ontologyURI tag, or else baseURI tag, is this URI. Repeat the property for each data vocabulary.</rdfs:comment>
     <rdfs:domain rdf:resource="http://www.w3.org/ns/dx/prof/ResourceDescriptor"/>
     <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
   </rdf:Property>
