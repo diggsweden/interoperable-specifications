@@ -130,7 +130,7 @@ When the model leaves navigability unspecified, which is the default in Enterpri
 
 A term may be tagged on the connector instead of on its ends, giving one property for every direction. A connector `name` tag with no roles and no direction gives one property from source to target. A connector-tagged property that is navigable in both directions between different classes needs `domain` and `range` tags. It is an error to give a `name` or `uri` tag on both the connector and one of its ends.
 
-In the application profile, an association term with only a `name` tag is resolved in the package of the profile diagram if that diagram draws the association. Otherwise it is resolved in the single package whose diagrams draw it. If the diagrams of several packages draw it, the term needs a `uri` or `package` tag.
+In the application profile, an association term with only a `name` tag is resolved in the package of the profile diagram, which draws every association of the profile.
 
 The class of an association class is skipped with a warning, together with its attributes and the associations attached to it. The connector of the association class is still converted as an ordinary association.
 
@@ -179,7 +179,7 @@ When the term of an association is tagged on the connector, the texts of an end 
 
 The classes drawn on the diagram given by `inspec:umlDiagram` become node shapes, abstract ones included. A node shape is main unless the class is marked as supportive, either by the `«supportive»` stereotype or by the tag `ap-weight` = `supportive`, see Rule AP-5 in the [rules](rules.md#ap5). The `«main»` stereotype and `ap-weight` = `main` mark a class as main explicitly. A stereotype and an `ap-weight` tag that disagree are an error, and a stereotype other than `«main»` or `«supportive»` gives a warning.
 
-Main node shapes get `sh:targetClass` and `sh:nodeKind sh:IRI`. Supportive node shapes get no target declaration, are reached via `sh:node` and get `sh:nodeKind sh:BlankNodeOrIRI`. Both indicate their class with a property shape with `sh:path rdf:type` and `sh:hasValue` the class. A node shape contains only the attributes and associations of its own class. How shape URIs are minted is not part of the convention.
+Main node shapes get `sh:targetClass` and `sh:nodeKind sh:IRI`. Supportive node shapes get no target declaration, are reached via `sh:node` and get `sh:nodeKind sh:BlankNodeOrIRI`. Both indicate their class with a property shape with `sh:path rdf:type` and `sh:hasValue` the class. A node shape contains only the attributes of its own class and the associations of its own class drawn visibly on the diagram (a hidden link does not count). An association drawn only on other diagrams is left out. How shape URIs are minted is not part of the convention.
 
 #### Property shapes
 
@@ -224,7 +224,7 @@ The convention starts from the tag names used by the [OSLO](https://github.com/I
 * Only the tags listed above are interpreted, other OSLO tags are ignored.
 * The `domain` tag is taken from OSLO's earlier toolchain (OSLO-EA-to-RDF), it is not supported by the current one.
 * The `language` tag and the application profile tags `ap-weight`, `ap-nodeKind`, `ap-preferred`, `ap-order`, `ap-pattern`, `ap-refines` and `ap-variant` are added by INSPEC. In OSLO the language is a setting of the converter.
-* OSLO extracts a vocabulary from one target diagram. Here a data vocabulary is scoped by its packages, or by an ontology diagram given via `inspec:umlOntologyDiagram`.
+* OSLO extracts a vocabulary from one target diagram. Here a data vocabulary is scoped by its packages, or by an ontology diagram given via `inspec:umlOntologyDiagram`. An application profile, as in OSLO, takes only the associations its diagram draws.
 * OSLO falls back on the UML element name when there is no `name` tag. Here, URIs are never minted from element names.
 * OSLO's `Domain.prop` naming of properties and its `-rev-` tags for association classes are not supported.
 * A generalization becomes `rdfs:subClassOf` only.
