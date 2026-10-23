@@ -50,7 +50,7 @@ inspec:UML a dcterms:Standard ;
 inspec:umlOntology a rdf:Property ;
   rdfs:label "UML ontology"@en ;
   rdfs:isDefinedBy inspec: ;
-  rdfs:comment "A data vocabulary to extract from the UML model, identified by the URI of its data vocabulary resource. The data vocabulary is extracted from the terms introduced by the model's packages whose ontologyURI tag, or else baseURI tag, is this URI. A UML specification part names at most one data vocabulary."@en ;
+  rdfs:comment "A data vocabulary to extract from the UML model, identified by the URI of its data vocabulary resource. The data vocabulary is extracted from the terms introduced by the model's packages whose ontologyURI tag is this URI, and those without an ontologyURI tag whose baseURI tag is this URI or this URI followed by / or #. A UML specification part names at most one data vocabulary."@en ;
   rdfs:domain prof:ResourceDescriptor ;
   rdfs:range owl:Ontology .
 
