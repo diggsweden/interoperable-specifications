@@ -164,7 +164,7 @@ ex:spec1 a owl:Ontology;
 # --------Document shape (main)----------
 ex:ns-document a sh:NodeShape ;
   sh:targetClass foaf:Document ;
-  sh:name "Document"@en ;
+  rdfs:label "Document"@en ;
   sh:property [
       sh:path rdf:type ;
       sh:hasValue foaf:Document ;
@@ -218,7 +218,7 @@ ex:ps-subject a sh:PropertyShape ;
 
 # --------Person shape (supportive)----------
 ex:ns-person a sh:NodeShape ;
-  sh:name "Person"@en ;
+  rdfs:label "Person"@en ;
   sh:property [
       sh:path rdf:type ;
       sh:hasValue foaf:Person ;

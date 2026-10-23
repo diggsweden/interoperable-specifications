@@ -67,17 +67,19 @@ Note that there are node shapes of more technical nature that are excluded from 
 The following information MUST be provided for a node shape:
 
 * A stable identity in the form of a URI (subject position in triples)
-* A label expressed via the property `sh:name`
+* A label expressed via the property `rdfs:label` (RECOMMENDED) or `sh:name`
 * A list of property shapes via the property `sh:property` (see [section on defining order](#order))
 * (For main node shapes) The class it corresponds to via the target declaration `sh:targetClass`
 
 The following information SHOULD/MAY be provided:
 
-* A description / definition expressed via the property `sh:description`
+* A description / definition expressed via the property `rdfs:comment` (RECOMMENDED) or `sh:description`
 * A usage note expressed via the property `skos:scopeNote`
 * A reference to another node shape it
   * "refines" via `inspec:refines` AND `sh:and` with a SHACL list containing the refined node shape (see [section on refinement](#node_refinement)), OR
   * "is a variant of" via the `inspec:variant` property (see [section on variants](#node_variant))
+
+Note: SHACL 1.0 defines `sh:name` and `sh:description` for property shapes only, as their `rdfs:domain` is `sh:PropertyShape`, so under RDFS inference a node shape carrying them is typed as a property shape. The SHACL 1.2 draft allows them on node shapes. Until it is a Recommendation, `rdfs:label` and `rdfs:comment` are recommended on node shapes, and consumers should accept either.
 
 ### Property Shapes pointed to from main and supportive node shapes
 
