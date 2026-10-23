@@ -13,7 +13,7 @@ Statement | Meaning
 `dcterms:conformsTo inspec:UML` [1] | Identifies the specification part as a UML model following the INSPEC UML tag convention.
 `dcterms:format` [0..1] | Identifies the kind of model file.
 `prof:hasArtifact` [1] | The model file.
-`inspec:umlOntology` [0..1] | The URI of a data vocabulary resource. The packages of the model with this `ontologyURI`, or else `baseURI`, are extracted, and their **introduced** terms make up the data vocabulary, see [Packages](#packages). It never points out reused terms.
+`inspec:umlOntology` [0..1] | The URI of a data vocabulary resource. The packages of the model with this `ontologyURI`, and those without an `ontologyURI` whose `baseURI` is this URI or this URI followed by `/` or `#`, are extracted, and their **introduced** terms make up the data vocabulary, see [Packages](#packages). It never points out reused terms.
 `inspec:umlOntologyDiagram` [0..1] | A diagram that limits the extraction of the data vocabulary to what it draws, see [Ontology diagram](#ontology-diagram). It is given only together with `inspec:umlOntology`.
 `inspec:umlDiagram` [0..1] | The diagram the application profile is extracted from.
 `inspec:umlExtractionOption` [0..*] | An option for how the model is read, see [Extraction options](#extraction-options).
@@ -84,7 +84,7 @@ A class or attribute is located in its owning package, or, when the diagrams of 
 
 ### Packages
 
-The ontology URI of a package is its `ontologyURI` tag, or else its `baseURI` tag. Several packages may have the same ontology URI. Together they make up one data vocabulary, and an `inspec:umlOntology` identifies all of them. It is an error if no package has the ontology URI given by an `inspec:umlOntology`.
+The ontology URI of a package is its `ontologyURI` tag, or else its `baseURI` tag. An `inspec:umlOntology` `U` identifies the packages whose `ontologyURI` tag is `U`, and the packages without an `ontologyURI` tag whose `baseURI` is `U`, `U/` or `U#`, as an ontology conventionally mints its terms under such a namespace. Together they make up one data vocabulary, and their `baseURI`s are allowed to differ. It is an error if `U` identifies no package.
 
 Without an ontology diagram, the extraction for the packages identified via `inspec:umlOntology` looks only at the occurrences located in them:
 
@@ -103,7 +103,7 @@ The packages introduce the terms of those occurrences whose URI resolves into on
 
 Occurrences whose terms resolve elsewhere are uses of other vocabularies and produce nothing in the data vocabulary. The data vocabulary contains only the introduced terms.
 
-The data vocabulary resource (see Rule DV-2 in the [rules](rules.md#dv2)) is the ontology URI of the packages. The text tags of the packages describe it: the label gives `dcterms:title`, the definition `dcterms:description` and the usage note `skos:scopeNote`. When several packages make up the data vocabulary, each kind of text is taken from the packages that have the corresponding tag, which must give the same text, otherwise it is an error. When none of them has it, it is taken from the first of the packages, in the order of the model file. A converter should warn when the text of another package is left out.
+The data vocabulary resource (see Rule DV-2 in the [rules](rules.md#dv2)) is the URI given by `inspec:umlOntology`. The text tags of the packages describe it: the label gives `dcterms:title`, the definition `dcterms:description` and the usage note `skos:scopeNote`. When several packages make up the data vocabulary, each kind of text is taken from the packages that have the corresponding tag, which must give the same text, otherwise it is an error. When none of them has it, it is taken from the first of the packages, in the order of the model file. A converter should warn when the text of another package is left out.
 
 An introduced term must be identical in all its defining occurrences. If the same class or property is defined in several places in the packages, its texts and its superclasses or superproperties must be the same in each. Otherwise it is an error. A property whose occurrences differ in domain or range, after `domain` and `range` tags, gets no domain or range respectively; a converter should warn about it and recommend a `domain` or `range` tag. A redefining attribute is not a defining occurrence, see [Inheritance](#inheritance).
 
