@@ -172,11 +172,13 @@ Each kind of text, i.e. label, definition and usage note, is taken as a whole fr
 
 Statement | Taken from, in order
 --- | ---
-`rdfs:label` | `label-xx`, else the UML name (for an association, the connector's name)
-`rdfs:comment` | `definition-xx`, else the Enterprise Architect notes with markup stripped
+`rdfs:label` (data vocabulary) | `label-xx`, else the UML name (for an association, the connector's name)
+`rdfs:comment` (data vocabulary) | `definition-xx`, else the Enterprise Architect notes with markup stripped
 `skos:scopeNote` (data vocabulary) | `usageNote-xx`
-`sh:name` | `ap-label-xx`, else `label-xx`, else the UML name (for an association end, its role)
-`sh:description` | `ap-definition-xx`, else `definition-xx`, else the Enterprise Architect notes
+`rdfs:label` (node shape) | `ap-label-xx`, else `label-xx`, else the UML name
+`rdfs:comment` (node shape) | `ap-definition-xx`, else `definition-xx`, else the Enterprise Architect notes
+`sh:name` (property shape) | `ap-label-xx`, else `label-xx`, else the UML name (for an association end, its role)
+`sh:description` (property shape) | `ap-definition-xx`, else `definition-xx`, else the Enterprise Architect notes
 `skos:scopeNote` (application profile) | `ap-usageNote-xx`, else `usageNote-xx`
 
 Untagged texts (UML names and notes) and text tags without a language suffix are in the language given by the `language` tag of the package they are located in. A converter may let the caller supply a default language when there is none. A text tag without a language suffix gives way, with a warning, to a suffixed tag for the same language.
