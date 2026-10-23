@@ -48,6 +48,10 @@ The formal specification is published at <http://w3id.org/inspec/specification>.
 - Added the INSPEC UML tag convention (`uml.md`), linked from the README and
   the bootstrapping specifications, and archived with each release.
 - Described harvesting from UML models in the harvesting documentation.
+- Recommended `rdfs:label` and `rdfs:comment` over `sh:name` and
+  `sh:description` on node shapes in the application profile documentation,
+  since SHACL 1.0 defines the latter for property shapes only. Either is
+  allowed. Updated the example and the UML tag convention to match.
 
 ## [1.1.1] - 2026-09-22
 
