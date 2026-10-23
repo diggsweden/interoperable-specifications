@@ -68,6 +68,13 @@ inspec:umlDiagram a rdf:Property ;
   rdfs:domain prof:ResourceDescriptor ;
   rdfs:range rdfs:Literal .
 
+inspec:umlExtractionOption a rdf:Property ;
+  rdfs:label "UML extraction option"@en ;
+  rdfs:isDefinedBy inspec: ;
+  rdfs:comment "An option for how the UML model is read when interoperable specification parts are extracted from it. The values are listed in the INSPEC UML tag convention."@en ;
+  rdfs:domain prof:ResourceDescriptor ;
+  rdfs:range rdfs:Literal .
+
 inspec:variant a rdf:Property ;
   rdfs:label "variant"@en ;
   rdfs:isDefinedBy inspec: ;
