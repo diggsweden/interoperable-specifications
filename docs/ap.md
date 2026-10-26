@@ -34,11 +34,11 @@ The following information MUST be provided for an application profile resource:
 
 * The application profile resource must have a stable identity in the form of a URI (subject position in triples)
 * The application profile resource must be typed as `prof:Profile`
-* A label expressed via the property `sh:name`
+* A label expressed via the property `dcterms:title`
 
 The following information SHOULD/MAY be provided:
 
-* A description / definition expressed via the property `sh:description`
+* A description / definition expressed via the property `dcterms:description`
 * A usage note expressed via the property `skos:scopeNote`
 * A reference to another application profile that expresses that it is a
   * "subprofile" of another profile via `inspec:refines`
