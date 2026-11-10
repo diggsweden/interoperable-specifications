@@ -180,9 +180,10 @@ ex:spec1 a owl:Ontology;
 ex:ns-document a sh:NodeShape ;
   sh:targetClass foaf:Document ;
   sh:nodeKind sh:IRI ;
-  sh:name "Document"@en ;
-  sh:description "A document of any kind."@en ;
+  rdfs:label "Document"@en ;
+  rdfs:comment "A document of any kind."@en ;
   skos:scopeNote "The document may be expressed in any format, i.e. pdf, word, open document format etc."@en ;
+
   sh:property [
       sh:path rdf:type ;
       sh:hasValue foaf:Document ;
@@ -251,8 +252,8 @@ ex:ps-subject a sh:PropertyShape ;
 # --------Person shape (supportive)----------
 ex:ns-person a sh:NodeShape ;
   sh:nodeKind sh:BlankNodeOrIRI ;
-  sh:name "Person"@en ;
-  sh:name "Person"@sv ;
+  rdfs:label "Person"@en ;
+  rdfs:label "Person"@sv ;
   sh:property [
       sh:path rdf:type ;
       sh:hasValue foaf:Person ;
@@ -295,7 +296,7 @@ ex:ps-pnr a sh:PropertyShape ;
 # --------Document series shape (supportive)----------
 ex:ns-series a sh:NodeShape ;
   sh:nodeKind sh:BlankNodeOrIRI ;
-  sh:name "Document series"@en ;
+  rdfs:label "Document series"@en ;
   sh:property [
       sh:path rdf:type ;
       sh:hasValue ex:DocumentSeries ;
