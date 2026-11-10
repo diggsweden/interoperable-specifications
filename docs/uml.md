@@ -16,6 +16,7 @@ Statement | Meaning
 `inspec:umlOntology` [0..1] | The URI of a data vocabulary resource. The packages of the model with this `ontologyURI`, or else `baseURI`, are extracted, and their **introduced** terms make up the data vocabulary, see [Packages](#packages). It never points out reused terms.
 `inspec:umlOntologyDiagram` [0..1] | A diagram that limits the extraction of the data vocabulary to what it draws, see [Ontology diagram](#ontology-diagram). It is given only together with `inspec:umlOntology`.
 `inspec:umlDiagram` [0..1] | The diagram the application profile is extracted from.
+`inspec:umlExtractionOption` [0..*] | An option for how the model is read, see [Extraction options](#extraction-options).
 `prof:hasRole` [0..*] | What the model describes: `profrole:vocabulary`, `profrole:constraints` and/or `profrole:specification` (a diagram).
 
 Each specification part has a single artifact, so that `dcterms:format` is unambiguous, and names at most one data vocabulary. A model that holds several data vocabularies is described by one specification part per vocabulary, each with the same `prof:hasArtifact`. The same model in several formats, e.g. an Enterprise Architect file and its XMI export, is described by one specification part per file. Each data vocabulary and the diagram should be named by only one specification part, so that each is extracted only once. The other parts may still indicate what the model describes via `prof:hasRole`, see [Roles](#roles).
@@ -27,6 +28,15 @@ Each specification part has a single artifact, so that `dcterms:format` is unamb
 ### Names
 
 Diagrams are identified by name or by GUID. A name must be unique within the model file, otherwise the GUID must be used. The name of an ontology diagram needs only to be unique among the diagrams of the data vocabulary's packages. Data vocabularies are identified by URI, see `inspec:umlOntology`.
+
+### <span id="extraction-options"></span>Extraction options
+
+An `inspec:umlExtractionOption` names an option for how the model is read. Its values are literals:
+
+* `osloUris` - a class or attribute with neither a `uri` nor a `name` tag is named from its UML name, as the OSLO toolchain does: a class in upper camel case (e.g. "legal entity" gives `LegalEntity`), an attribute in lower camel case (e.g. "Legal Name" gives `legalName`), with a leading `^` dropped and whitespace removed. The name is then treated as a `name` tag, see [Term URIs](#term-uris). It applies to both the data vocabulary and the application profile. Associations still need a `uri` or `name` tag.
+* `implicitOrder` - in the application profile, an attribute's property shape without an `ap-order` tag is ordered by the attribute's position in its class. It has no effect on a specification part without `inspec:umlDiagram`.
+
+The specification parts with the same `prof:hasArtifact` must agree on `osloUris`, so that the data vocabulary and the application profile use the same term URIs. A converter should warn about a value it does not recognise and ignore it.
 
 ### Several models
 
@@ -58,7 +68,7 @@ The values of `domain`, `range` and `parentURI` are absolute IRIs.
 
 ### Term URIs
 
-URIs are never minted from UML element names. A term is identified by:
+URIs are not minted from UML element names, except with the `osloUris` extraction option, see [Extraction options](#extraction-options). A term is identified by:
 
 * a `uri` tag,
 * a `package` and a `name` tag, the name being resolved against the `baseURI` of the given package, or
@@ -205,7 +215,7 @@ Without an `ap-nodeKind` tag, the node kind is inferred:
 * `ap-weight` - `main` or `supportive`, see [Node shapes](#node-shapes).
 * `ap-nodeKind` - gives `sh:nodeKind`. Takes `BlankNode`, `IRI`, `Literal`, `BlankNodeOrIRI`, `BlankNodeOrLiteral` or `IRIOrLiteral`, matched case-insensitively.
 * `ap-preferred` - the value `true` gives `sh:minCount 0` regardless of the lower bound, i.e. the property is preferred (recommended but not required).
-* `ap-order` - gives `sh:order`, must be an integer. Property shapes have no implicit order from their position in the model.
+* `ap-order` - gives `sh:order`, must be an integer. Without the `implicitOrder` extraction option, property shapes have no implicit order from their position in the model.
 * `ap-pattern` - gives `sh:pattern`, must be a valid regular expression. `sh:pattern` is only given by this tag, not by constraints in the model.
 * `ap-codelist` - on an attribute or association end, the concept scheme whose concepts are allowed as values. Gives `sh:nodeKind sh:IRI` and an anonymous `sh:node` with `sh:severity sh:Info` requiring `rdf:type skos:Concept` and `skos:inScheme` the concept scheme. It is an error on an attribute typed with a literal datatype, so leave the type empty or use `uri`.
 * `ap-refines` - a shape URI, gives `inspec:refines` and `sh:and` with a list containing the same shape, see Rules [AP-7](rules.md#ap7) and [AP-9](rules.md#ap9).
@@ -225,7 +235,7 @@ The convention starts from the tag names used by the [OSLO](https://github.com/I
 * The `domain` tag is taken from OSLO's earlier toolchain (OSLO-EA-to-RDF), it is not supported by the current one.
 * The `language` tag and the application profile tags `ap-weight`, `ap-nodeKind`, `ap-preferred`, `ap-order`, `ap-pattern`, `ap-refines` and `ap-variant` are added by INSPEC. In OSLO the language is a setting of the converter.
 * OSLO extracts a vocabulary from one target diagram. Here a data vocabulary is scoped by its packages, or by an ontology diagram given via `inspec:umlOntologyDiagram`. An application profile, as in OSLO, takes only the associations its diagram draws.
-* OSLO falls back on the UML element name when there is no `name` tag. Here, URIs are never minted from element names.
+* OSLO falls back on the UML element name when there is no `name` tag. Here, URIs are only minted from element names with the `osloUris` extraction option, and only for classes and attributes.
 * OSLO's `Domain.prop` naming of properties and its `-rev-` tags for association classes are not supported.
 * A generalization becomes `rdfs:subClassOf` only.
 * In OSLO the `range` tag sets the range in both the vocabulary and the application profile. Here it replaces the `rdfs:range` only, the range in the application profile always follows the model.
