@@ -124,7 +124,7 @@ This set of rules describes how interoperable specification parts can be extract
 
 ><span id="extract2"></span> **Rule EXTRACT-2:** An extracted specification part MAY be indicated via `prof:hasResource` from the "interoperable specification resource" (introduced in Rule PROF-1). If it is, it is considered the result of the extraction, otherwise it is added by the extraction.
 
-><span id="extract3"></span> **Rule EXTRACT-3:** A UML model specification part from which interoperable specification parts are to be extracted MUST be detected by `dcterms:conformsTo` pointing to `inspec:UML`, and the model indicated via `prof:hasArtifact` MUST follow the [INSPEC UML tag convention](uml.md#tag-convention). A data vocabulary is extracted from the `inspec:umlOntology` of the specification part and an application profile from its `inspec:umlDiagram`. Nothing else is extracted, regardless of the `prof:hasRole` values of the specification part.
+><span id="extract3"></span> **Rule EXTRACT-3:** A UML model specification part from which interoperable specification parts are to be extracted MUST be detected by `dcterms:conformsTo` pointing to `inspec:UML`, and the model indicated via `prof:hasArtifact` MUST follow the [INSPEC UML tag convention](uml.md#tag-convention). A data vocabulary is extracted from the `inspec:umlOntology` of the specification part, limited to what its `inspec:umlOntologyDiagram` draws when one is given, and an application profile from its `inspec:umlDiagram`. Nothing else is extracted, regardless of the `prof:hasRole` values of the specification part.
 
 ## Rules for enriching the interoperable specifications - ENRICH-INSPEC
 

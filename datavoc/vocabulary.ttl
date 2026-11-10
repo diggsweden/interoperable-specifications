@@ -54,6 +54,13 @@ inspec:umlOntology a rdf:Property ;
   rdfs:domain prof:ResourceDescriptor ;
   rdfs:range owl:Ontology .
 
+inspec:umlOntologyDiagram a rdf:Property ;
+  rdfs:label "UML ontology diagram"@en ;
+  rdfs:isDefinedBy inspec: ;
+  rdfs:comment "A diagram, identified by name or GUID, in the UML model that limits the extraction of the specification part's data vocabulary to the classes and associations it draws. It is given only together with inspec:umlOntology."@en ;
+  rdfs:domain prof:ResourceDescriptor ;
+  rdfs:range rdfs:Literal .
+
 inspec:umlDiagram a rdf:Property ;
   rdfs:label "UML diagram"@en ;
   rdfs:isDefinedBy inspec: ;

@@ -31,8 +31,9 @@ The formal specification is published at <http://w3id.org/inspec/specification>.
 
 #### Added
 
-- `inspec:UML`, `inspec:umlOntology` and `inspec:umlDiagram` for describing a
-  UML model from which interoperable specification parts are extracted.
+- `inspec:UML`, `inspec:umlOntology`, `inspec:umlOntologyDiagram` and
+  `inspec:umlDiagram` for describing a UML model from which interoperable
+  specification parts are extracted.
 
 #### Fixed
 
