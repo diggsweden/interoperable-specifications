@@ -13,11 +13,11 @@ Statement | Meaning
 `dcterms:conformsTo inspec:UML` [1] | Identifies the specification part as a UML model following the INSPEC UML tag convention.
 `dcterms:format` [0..1] | Identifies the kind of model file.
 `prof:hasArtifact` [1] | The model file.
-`inspec:umlOntology` [0..*] | The URI of a data vocabulary resource. The package of the model with this `ontologyURI`, or else `baseURI`, is extracted, and its **introduced** terms make up the data vocabulary, see [Packages](#packages). It never points out reused terms.
+`inspec:umlOntology` [0..1] | The URI of a data vocabulary resource. The packages of the model with this `ontologyURI`, or else `baseURI`, are extracted, and their **introduced** terms make up the data vocabulary, see [Packages](#packages). It never points out reused terms.
 `inspec:umlDiagram` [0..1] | The diagram the application profile is extracted from.
 `prof:hasRole` [0..*] | What the model describes: `profrole:vocabulary`, `profrole:constraints` and/or `profrole:specification` (a diagram).
 
-Each specification part has a single artifact, so that `dcterms:format` is unambiguous. The same model in several formats, e.g. an Enterprise Architect file and its XMI export, is described by one specification part per file. Only one of them should carry `inspec:umlOntology` and `inspec:umlDiagram`, so that the model is extracted only once. The others may still indicate what the model describes via `prof:hasRole`, see [Roles](#roles).
+Each specification part has a single artifact, so that `dcterms:format` is unambiguous, and names at most one data vocabulary. A model that holds several data vocabularies is described by one specification part per vocabulary, each with the same `prof:hasArtifact`. The same model in several formats, e.g. an Enterprise Architect file and its XMI export, is described by one specification part per file. Each data vocabulary and the diagram should be named by only one specification part, so that each is extracted only once. The other parts may still indicate what the model describes via `prof:hasRole`, see [Roles](#roles).
 
 ### Roles
 
@@ -29,7 +29,7 @@ Diagrams are identified by name or by GUID. A name must be unique within the mod
 
 ### Several models
 
-An interoperable specification may have several UML specification parts, one per model file, for example when the data vocabularies are kept in separate files. The diagram names and data vocabulary URIs of each specification part are resolved in its own model file.
+An interoperable specification may have several UML specification parts, for example one per data vocabulary, or one per model file when the data vocabularies are kept in separate files. The diagram names and data vocabulary URIs of each specification part are resolved in its own model file.
 
 ### Data vocabulary specification parts
 
@@ -61,37 +61,40 @@ URIs are never minted from UML element names. A term is identified by:
 
 * a `uri` tag,
 * a `package` and a `name` tag, the name being resolved against the `baseURI` of the given package, or
-* a `name` tag, resolved against the `baseURI` of the package the term is located in.
+* a `name` tag, resolved against the `baseURI` of the package that owns the class or attribute or, for an association, of the package it is located in.
 
-A class or attribute is located in its owning package. An association has no owner and is located through the diagrams that draw it. It is an error:
+A `uri` tag takes precedence: a `package` tag given with it is not used. A `uri` tag given with a `name` tag must agree with it.
+
+A class or attribute is located in its owning package, or, when the diagrams of a data vocabulary's packages draw it and another package owns it, in one of those packages, see [Packages](#packages). An association has no owner and is located through the diagrams that draw it. It is an error:
 
 * if an introduced term has none of the tags above,
 * if a `name` tag has characters not allowed in a URI, or
-* if a `package` tag names a package that is not in the model file.
+* if a `package` tag, given without a `uri` tag, names a package that is not in the model file.
 
 ### Packages
 
-The ontology URI of a package is its `ontologyURI` tag, or else its `baseURI` tag. The ontology URIs of the packages in a model must be unique, so that each `inspec:umlOntology` identifies one package. It is an error if no package has the ontology URI given by an `inspec:umlOntology`.
+The ontology URI of a package is its `ontologyURI` tag, or else its `baseURI` tag. Several packages may have the same ontology URI. Together they make up one data vocabulary, and an `inspec:umlOntology` identifies all of them. It is an error if no package has the ontology URI given by an `inspec:umlOntology`.
 
-The extraction for a package identified via `inspec:umlOntology` looks only at the occurrences located in the package:
+The extraction for the packages identified via `inspec:umlOntology` looks only at the occurrences located in them:
 
-* the classes owned by the package (as shown in Enterprise Architect's Project Browser), regardless of which diagrams they are drawn on, including classes drawn on no diagram,
+* the classes owned by the packages (as shown in Enterprise Architect's Project Browser), regardless of which diagrams they are drawn on, including classes drawn on no diagram,
+* the classes owned by other packages and drawn on the packages' own diagrams. Such a class is located in the first of the packages whose diagrams draw it, in the order of the model file, while its terms are still resolved in its owning package,
 * the attributes of those classes, and
-* the associations drawn visibly on the package's own diagrams (a hidden link does not count).
+* the associations drawn visibly on the packages' own diagrams (a hidden link does not count). An association drawn by the diagrams of several of the packages is located in the first of them, in the order of the model file.
 
 Only class elements, abstract ones included, define terms. Data types and enumerations are only used as ranges, and other element types are skipped. Ignored elements are left out.
 
-The package introduces the terms of those occurrences whose URI resolves into it, i.e. that have:
+The packages introduce the terms of those occurrences whose URI resolves into one of them, i.e. that have:
 
-* a `name` tag alone,
-* a `package` tag naming this package, together with a `name` tag, or
-* a `uri` tag that is the package's `baseURI` followed by a local name, not by a sub-namespace.
+* a `name` tag alone, resolved in one of the packages,
+* a `package` tag naming one of the packages, together with a `name` tag, or
+* a `uri` tag that is the `baseURI` of one of the packages followed by a local name, not by a sub-namespace.
 
 Occurrences whose terms resolve elsewhere are uses of other vocabularies and produce nothing in the data vocabulary. The data vocabulary contains only the introduced terms.
 
-The data vocabulary resource (see Rule DV-2 in the [rules](rules.md#dv2)) is the ontology URI of the package. The text tags of the package describe it: the label gives `dcterms:title`, the definition `dcterms:description` and the usage note `skos:scopeNote`.
+The data vocabulary resource (see Rule DV-2 in the [rules](rules.md#dv2)) is the ontology URI of the packages. The text tags of the packages describe it: the label gives `dcterms:title`, the definition `dcterms:description` and the usage note `skos:scopeNote`. When several packages make up the data vocabulary, each kind of text is taken from the packages that have the corresponding tag, which must give the same text, otherwise it is an error. When none of them has it, it is taken from the first of the packages, in the order of the model file. A converter should warn when the text of another package is left out.
 
-An introduced term must be identical in all its defining occurrences. If the same class or property is defined in several places in the package, every RDFS statement it gives must be the same, i.e. domain and range after tags, texts, and superclasses or superproperties. Otherwise it is an error. A redefining attribute is not a defining occurrence, see [Inheritance](#inheritance).
+An introduced term must be identical in all its defining occurrences. If the same class or property is defined in several places in the packages, its texts and its superclasses or superproperties must be the same in each. Otherwise it is an error. A property whose occurrences differ in domain or range, after `domain` and `range` tags, gets no domain or range respectively; a converter should warn about it and recommend a `domain` or `range` tag. A redefining attribute is not a defining occurrence, see [Inheritance](#inheritance).
 
 ### Domain and range
 
@@ -154,7 +157,7 @@ Statement | Taken from, in order
 `sh:description` | `ap-definition-xx`, else `definition-xx`, else the Enterprise Architect notes
 `skos:scopeNote` (application profile) | `ap-usageNote-xx`, else `usageNote-xx`
 
-Untagged texts (UML names and notes) and text tags without a language suffix are in the language given by the `language` tag of the package. A converter may let the caller supply a default language when there is none. A text tag without a language suffix gives way, with a warning, to a suffixed tag for the same language.
+Untagged texts (UML names and notes) and text tags without a language suffix are in the language given by the `language` tag of the package they are located in. A converter may let the caller supply a default language when there is none. A text tag without a language suffix gives way, with a warning, to a suffixed tag for the same language.
 
 When the term of an association is tagged on the connector, the texts of an end are taken from the end, else from the connector, else from the role of the end, and then from the name of the connector.
 
@@ -244,5 +247,5 @@ ex:spec-uml a prof:ResourceDescriptor ;
 ## Open questions
 
 * Nested packages - whether an `inspec:umlOntology` includes the terms of packages nested in the package it identifies.
-* Association terms drawn in several packages - how the data vocabularies should handle an association term whose association is drawn by the diagrams of several packages.
+* Association terms drawn in several packages - how the data vocabularies should handle an association term whose association is drawn by the diagrams of packages with different ontology URIs.
 * Association classes - whether and how to support association classes.
