@@ -66,7 +66,7 @@ SKOS-INSPEC builds on top of the SKOS specification by providing the following a
 
 ## Rules for application profiles - SHACL-INSPEC
 
-SHACL-INSPEC builds on top of the SHACL specification by providing additional restrictions. Since SHACL is a rich language the following rules does not cover all situations. For instance, the following rules does not indicate how to specify how to restrict to concepts from a specific terminology. For a more complete treatment see the [SHACL-INSPEC separate document](ap.md) for patterns on how to use the profile in various situations.
+SHACL-INSPEC builds on top of the SHACL specification by providing additional restrictions. Since SHACL is a rich language the following rules does not cover all situations. For instance, the following rules does not indicate how to specify how to restrict to concepts from a specific terminology. For a more complete treatment see the [SHACL-INSPEC separate document](https://diggsweden.github.io/interoperable-specifications/docs/ap.html) for patterns on how to use the profile in various situations.
 
 ><span id="ap1"></span> **Rule AP-1:** An application profile MUST be expressed in a single RDF Dataset<sup><a href="#fn2" id="fn2_1">[2]</a></sup>
 
