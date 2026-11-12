@@ -13,7 +13,7 @@ The formal specification can be found at <http://w3id.org/inspec/specification>.
 3. [Conceptual design and definitions↗](docs/design.md)
 4. [Rules for interoperable specifications↗](docs/rules.md) ⇐ (**the contents of the formal specification**)
 5. [Application Profiles as SHACL-INSPEC↗](docs/ap.md)
-6. [UML models and the INSPEC UML tag convention↗](docs/uml.md)
+6. [Extractors, e.g. for UML models↗](docs/extractors/) (not part of the formal specification)
 7. [Bootstrapping specifications↗](docs/bootstrapping.md)
 8. [Harvesting interoperable specifications↗](docs/harvesting.md)
 9. [Example specification according to the profile↗](docs/example.md)

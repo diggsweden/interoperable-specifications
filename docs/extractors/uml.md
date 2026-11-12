@@ -1,8 +1,15 @@
-# INSPEC UML tag convention
+# INSPEC UML extraction standard
 
-Interoperable specifications are often authored as UML models, typically as Enterprise Architect files or XMI exports from them. The data vocabularies and the application profile of the specification are then extracted from the model. This page describes how such a model is described as a specification part, and the tag convention the model must follow for interoperable specification parts to be extracted from it. `inspec:UML` is an extraction standard in the sense of [Rule EXTRACT-1](rules.md#extract1).
+Interoperable specifications are often authored as UML models, typically as Enterprise Architect files or XMI exports from them. The data vocabularies and the application profile of the specification are then extracted from the model. This page describes how such a model is described as a specification part, and the tag convention the model must follow for interoperable specification parts to be extracted from it. `inspec-uml:UML` is an extraction standard in the sense of [Rule EXTRACT-1](../rules.md#extract1).
 
 Extraction is a preparatory step. The extracted data vocabularies and application profile are interoperable specification parts like any other, and are described and validated according to the rules for their kind.
+
+This extraction standard uses the following namespaces:
+
+namespace | expansion
+--- | ---
+inspec | <https://w3id.org/inspec/datavoc/>
+inspec-uml | <https://w3id.org/inspec/datavoc/extractors/uml/>
 
 ## The UML specification part
 
@@ -10,31 +17,31 @@ A UML model is described by a `prof:ResourceDescriptor`, indicated via `prof:has
 
 Statement | Meaning
 --- | ---
-`dcterms:conformsTo inspec:UML` [1] | Identifies the specification part as a UML model following the INSPEC UML tag convention.
+`dcterms:conformsTo inspec-uml:UML` [1] | Identifies the specification part as a UML model following the INSPEC UML extraction standard.
 `dcterms:format` [0..1] | Identifies the kind of model file.
 `prof:hasArtifact` [1] | The model file.
-`inspec:umlOntology` [0..1] | The URI of a data vocabulary resource. The packages of the model with this `ontologyURI`, and those without an `ontologyURI` whose `baseURI` is this URI or this URI followed by `/` or `#`, are extracted, and their **introduced** terms make up the data vocabulary, see [Packages](#packages). It never points out reused terms.
-`inspec:umlOntologyDiagram` [0..1] | A diagram that limits the extraction of the data vocabulary to what it draws, see [Ontology diagram](#ontology-diagram). It is given only together with `inspec:umlOntology`.
-`inspec:umlDiagram` [0..1] | The diagram the application profile is extracted from.
-`inspec:umlExtractionOption` [0..*] | An option for how the model is read, see [Extraction options](#extraction-options).
+`inspec-uml:ontology` [0..1] | The URI of a data vocabulary resource. The packages of the model with this `ontologyURI`, and those without an `ontologyURI` whose `baseURI` is this URI or this URI followed by `/` or `#`, are extracted, and their **introduced** terms make up the data vocabulary, see [Packages](#packages). It never points out reused terms.
+`inspec-uml:ontologyDiagram` [0..1] | A diagram that limits the extraction of the data vocabulary to what it draws, see [Ontology diagram](#ontology-diagram). It is given only together with `inspec-uml:ontology`.
+`inspec-uml:apDiagram` [0..1] | The diagram the application profile is extracted from.
+`inspec-uml:extractionOption` [0..*] | An option for how the model is read, see [Extraction options](#extraction-options).
 `prof:hasRole` [0..*] | What the model describes: `profrole:vocabulary`, `profrole:constraints` and/or `profrole:specification` (a diagram).
 
 Each specification part has a single artifact, so that `dcterms:format` is unambiguous, and names at most one data vocabulary. A model that holds several data vocabularies is described by one specification part per vocabulary, each with the same `prof:hasArtifact`. The same model in several formats, e.g. an Enterprise Architect file and its XMI export, is described by one specification part per file. Each data vocabulary and the diagram should be named by only one specification part, so that each is extracted only once. The other parts may still indicate what the model describes via `prof:hasRole`, see [Roles](#roles).
 
 ### Roles
 
-`inspec:umlOntology` and `inspec:umlDiagram` decide what is extracted, the values of `prof:hasRole` do not. A role without its corresponding property is valid and means that the model describes this, but is not its source. For example, `profrole:constraints` without `inspec:umlDiagram` says that the model describes the application profile while a separately maintained SHACL specification part is authoritative. The same goes for `profrole:vocabulary` without `inspec:umlOntology`.
+`inspec-uml:ontology` and `inspec-uml:apDiagram` decide what is extracted, the values of `prof:hasRole` do not. A role without its corresponding property is valid and means that the model describes this, but is not its source. For example, `profrole:constraints` without `inspec-uml:apDiagram` says that the model describes the application profile while a separately maintained SHACL specification part is authoritative. The same goes for `profrole:vocabulary` without `inspec-uml:ontology`.
 
 ### Names
 
-Diagrams are identified by name or by GUID. A name must be unique within the model file, otherwise the GUID must be used. The name of an ontology diagram needs only to be unique among the diagrams of the data vocabulary's packages. Data vocabularies are identified by URI, see `inspec:umlOntology`.
+Diagrams are identified by name or by GUID. A name must be unique within the model file, otherwise the GUID must be used. The name of an ontology diagram needs only to be unique among the diagrams of the data vocabulary's packages. Data vocabularies are identified by URI, see `inspec-uml:ontology`.
 
 ### <span id="extraction-options"></span>Extraction options
 
-An `inspec:umlExtractionOption` names an option for how the model is read. Its values are literals:
+An `inspec-uml:extractionOption` names an option for how the model is read. Its values are literals:
 
 * `osloUris` - a class or attribute with neither a `uri` nor a `name` tag is named from its UML name, as the OSLO toolchain does: a class in upper camel case (e.g. "legal entity" gives `LegalEntity`), an attribute in lower camel case (e.g. "Legal Name" gives `legalName`), with a leading `^` dropped and whitespace removed. The name is then treated as a `name` tag, see [Term URIs](#term-uris). It applies to both the data vocabulary and the application profile. Associations still need a `uri` or `name` tag.
-* `implicitOrder` - in the application profile, an attribute's property shape without an `ap-order` tag is ordered by the attribute's position in its class. It has no effect on a specification part without `inspec:umlDiagram`.
+* `implicitOrder` - in the application profile, an attribute's property shape without an `ap-order` tag is ordered by the attribute's position in its class. It has no effect on a specification part without `inspec-uml:apDiagram`.
 
 The specification parts with the same `prof:hasArtifact` must agree on `osloUris`, so that the data vocabulary and the application profile use the same term URIs. A converter should warn about a value it does not recognise and ignore it.
 
@@ -44,7 +51,7 @@ An interoperable specification may have several UML specification parts, for exa
 
 ### Data vocabulary specification parts
 
-`dcterms:subject` has no role in the extraction from a UML model. The specification part of an extracted data vocabulary still points to its data vocabulary resource via `dcterms:subject`, see Rule DV-6 in the [rules](rules.md#dv6).
+`dcterms:subject` has no role in the extraction from a UML model. The specification part of an extracted data vocabulary still points to its data vocabulary resource via `dcterms:subject`, see Rule DV-6 in the [rules](../rules.md#dv6).
 
 ## <span id="tag-convention"></span>The tag convention
 
@@ -84,9 +91,9 @@ A class or attribute is located in its owning package, or, when the diagrams of 
 
 ### Packages
 
-The ontology URI of a package is its `ontologyURI` tag, or else its `baseURI` tag. An `inspec:umlOntology` `U` identifies the packages whose `ontologyURI` tag is `U`, and the packages without an `ontologyURI` tag whose `baseURI` is `U`, `U/` or `U#`, as an ontology conventionally mints its terms under such a namespace. Together they make up one data vocabulary, and their `baseURI`s are allowed to differ. It is an error if `U` identifies no package.
+The ontology URI of a package is its `ontologyURI` tag, or else its `baseURI` tag. An `inspec-uml:ontology` `U` identifies the packages whose `ontologyURI` tag is `U`, and the packages without an `ontologyURI` tag whose `baseURI` is `U`, `U/` or `U#`, as an ontology conventionally mints its terms under such a namespace. Together they make up one data vocabulary, and their `baseURI`s are allowed to differ. It is an error if `U` identifies no package.
 
-Without an ontology diagram, the extraction for the packages identified via `inspec:umlOntology` looks only at the occurrences located in them:
+Without an ontology diagram, the extraction for the packages identified via `inspec-uml:ontology` looks only at the occurrences located in them:
 
 * the classes owned by the packages (as shown in Enterprise Architect's Project Browser), regardless of which diagrams they are drawn on, including classes drawn on no diagram,
 * the classes owned by other packages and drawn on the packages' own diagrams. Such a class is located in the first of the packages whose diagrams draw it, in the order of the model file, while its terms are still resolved in its owning package,
@@ -103,18 +110,18 @@ The packages introduce the terms of those occurrences whose URI resolves into on
 
 Occurrences whose terms resolve elsewhere are uses of other vocabularies and produce nothing in the data vocabulary. The data vocabulary contains only the introduced terms.
 
-The data vocabulary resource (see Rule DV-2 in the [rules](rules.md#dv2)) is the URI given by `inspec:umlOntology`. The text tags of the packages describe it: the label gives `dcterms:title`, the definition `dcterms:description` and the usage note `skos:scopeNote`. When several packages make up the data vocabulary, each kind of text is taken from the packages that have the corresponding tag, which must give the same text, otherwise it is an error. When none of them has it, it is taken from the first of the packages, in the order of the model file. A converter should warn when the text of another package is left out.
+The data vocabulary resource (see Rule DV-2 in the [rules](../rules.md#dv2)) is the URI given by `inspec-uml:ontology`. The text tags of the packages describe it: the label gives `dcterms:title`, the definition `dcterms:description` and the usage note `skos:scopeNote`. When several packages make up the data vocabulary, each kind of text is taken from the packages that have the corresponding tag, which must give the same text, otherwise it is an error. When none of them has it, it is taken from the first of the packages, in the order of the model file. A converter should warn when the text of another package is left out.
 
 An introduced term must be identical in all its defining occurrences. If the same class or property is defined in several places in the packages, its texts and its superclasses or superproperties must be the same in each. Otherwise it is an error. A property whose occurrences differ in domain or range, after `domain` and `range` tags, gets no domain or range respectively; a converter should warn about it and recommend a `domain` or `range` tag. A redefining attribute is not a defining occurrence, see [Inheritance](#inheritance).
 
 ### <span id="ontology-diagram"></span>Ontology diagram
 
-An `inspec:umlOntologyDiagram` limits the extraction to the occurrences the diagram draws, instead of those located in the packages:
+An `inspec-uml:ontologyDiagram` limits the extraction to the occurrences the diagram draws, instead of those located in the packages:
 
 * the classes drawn on the diagram, wherever they are owned, and the attributes of those classes, and
 * the associations drawn visibly on the diagram.
 
-One of the packages identified via `inspec:umlOntology` must own the diagram, otherwise it is an error. A class owned by one of the packages is located in it. Any other class, and every association, is located in the package that owns the diagram. The terms of a class and its attributes are still resolved in the class's owning package, and the terms of an association in the package that owns the diagram. Which terms are introduced is decided as without an ontology diagram.
+One of the packages identified via `inspec-uml:ontology` must own the diagram, otherwise it is an error. A class owned by one of the packages is located in it. Any other class, and every association, is located in the package that owns the diagram. The terms of a class and its attributes are still resolved in the class's owning package, and the terms of an association in the package that owns the diagram. Which terms are introduced is decided as without an ontology diagram.
 
 The data vocabulary resource is described by the texts of the package that owns the diagram. A kind of text that package has none of is taken as without an ontology diagram.
 
@@ -189,7 +196,7 @@ When the term of an association is tagged on the connector, the texts of an end 
 
 #### Node shapes
 
-The classes drawn on the diagram given by `inspec:umlDiagram` become node shapes, abstract ones included. A node shape is main unless the class is marked as supportive, either by the `«supportive»` stereotype or by the tag `ap-weight` = `supportive`, see Rule AP-5 in the [rules](rules.md#ap5). The `«main»` stereotype and `ap-weight` = `main` mark a class as main explicitly. A stereotype and an `ap-weight` tag that disagree are an error, and a stereotype other than `«main»` or `«supportive»` gives a warning.
+The classes drawn on the diagram given by `inspec-uml:apDiagram` become node shapes, abstract ones included. A node shape is main unless the class is marked as supportive, either by the `«supportive»` stereotype or by the tag `ap-weight` = `supportive`, see Rule AP-5 in the [rules](../rules.md#ap5). The `«main»` stereotype and `ap-weight` = `main` mark a class as main explicitly. A stereotype and an `ap-weight` tag that disagree are an error, and a stereotype other than `«main»` or `«supportive»` gives a warning.
 
 Main node shapes get `sh:targetClass` and `sh:nodeKind sh:IRI`. Supportive node shapes get no target declaration, are reached via `sh:node` and get `sh:nodeKind sh:BlankNodeOrIRI`. Both indicate their class with a property shape with `sh:path rdf:type` and `sh:hasValue` the class. A node shape contains only the attributes of its own class and the associations of its own class drawn visibly on the diagram (a hidden link does not count). An association drawn only on other diagrams is left out. How shape URIs are minted is not part of the convention.
 
@@ -220,8 +227,8 @@ Without an `ap-nodeKind` tag, the node kind is inferred:
 * `ap-order` - gives `sh:order`, must be an integer. Without the `implicitOrder` extraction option, property shapes have no implicit order from their position in the model.
 * `ap-pattern` - gives `sh:pattern`, must be a valid regular expression. `sh:pattern` is only given by this tag, not by constraints in the model.
 * `ap-codelist` - on an attribute or association end, the concept scheme whose concepts are allowed as values. Gives `sh:nodeKind sh:IRI` and an anonymous `sh:node` with `sh:severity sh:Info` requiring `rdf:type skos:Concept` and `skos:inScheme` the concept scheme. It is an error on an attribute typed with a literal datatype, so leave the type empty or use `uri`.
-* `ap-refines` - a shape URI, gives `inspec:refines` and `sh:and` with a list containing the same shape, see Rules [AP-7](rules.md#ap7) and [AP-9](rules.md#ap9).
-* `ap-variant` - a shape URI, gives `inspec:variant`, see Rules [AP-8](rules.md#ap8) and [AP-10](rules.md#ap10).
+* `ap-refines` - a shape URI, gives `inspec:refines` and `sh:and` with a list containing the same shape, see Rules [AP-7](../rules.md#ap7) and [AP-9](../rules.md#ap9).
+* `ap-variant` - a shape URI, gives `inspec:variant`, see Rules [AP-8](../rules.md#ap8) and [AP-10](../rules.md#ap10).
 
 `ap-refines` and `ap-variant` are allowed on classes (node shapes) as well as on attributes and association ends (property shapes).
 
@@ -236,7 +243,7 @@ The convention starts from the tag names used by the [OSLO](https://github.com/I
 * Only the tags listed above are interpreted, other OSLO tags are ignored.
 * The `domain` tag is taken from OSLO's earlier toolchain (OSLO-EA-to-RDF), it is not supported by the current one.
 * The `language` tag and the application profile tags `ap-weight`, `ap-nodeKind`, `ap-preferred`, `ap-order`, `ap-pattern`, `ap-refines` and `ap-variant` are added by INSPEC. In OSLO the language is a setting of the converter.
-* OSLO extracts a vocabulary from one target diagram. Here a data vocabulary is scoped by its packages, or by an ontology diagram given via `inspec:umlOntologyDiagram`. An application profile, as in OSLO, takes only the associations its diagram draws.
+* OSLO extracts a vocabulary from one target diagram. Here a data vocabulary is scoped by its packages, or by an ontology diagram given via `inspec-uml:ontologyDiagram`. An application profile, as in OSLO, takes only the associations its diagram draws.
 * OSLO falls back on the UML element name when there is no `name` tag. Here, URIs are only minted from element names with the `osloUris` extraction option, and only for classes and attributes.
 * OSLO's `Domain.prop` naming of properties and its `-rev-` tags for association classes are not supported.
 * A generalization becomes `rdfs:subClassOf` only.
@@ -254,6 +261,7 @@ A profile interoperable specification whose data vocabulary and application prof
 @prefix prof: <http://www.w3.org/ns/dx/prof/> .
 @prefix profrole: <http://www.w3.org/ns/dx/prof/role/> .
 @prefix inspec: <https://w3id.org/inspec/datavoc/> .
+@prefix inspec-uml: <https://w3id.org/inspec/datavoc/extractors/uml/> .
 @prefix ex: <https://example.org/> .
 
 ex:spec a prof:Profile ;
@@ -261,16 +269,16 @@ ex:spec a prof:Profile ;
   prof:hasResource ex:spec-uml .
 
 ex:spec-uml a prof:ResourceDescriptor ;
-  dcterms:conformsTo inspec:UML ;
+  dcterms:conformsTo inspec-uml:UML ;
   dcterms:format "application/vnd.xmi+xml" ;
   prof:hasArtifact <https://example.org/spec/model.xmi> ;
   prof:hasRole profrole:vocabulary, profrole:constraints ;
-  inspec:umlOntology <https://example.org/ns/book/> ;
-  inspec:umlDiagram "Book profile" .
+  inspec-uml:ontology <https://example.org/ns/book/> ;
+  inspec-uml:apDiagram "Book profile" .
 ```
 
 ## Open questions
 
-* Nested packages - whether an `inspec:umlOntology` includes the terms of packages nested in the package it identifies.
+* Nested packages - whether an `inspec-uml:ontology` includes the terms of packages nested in the package it identifies.
 * Association terms drawn in several packages - how the data vocabularies should handle an association term whose association is drawn by the diagrams of packages with different ontology URIs.
 * Association classes - whether and how to support association classes.

@@ -120,13 +120,13 @@ SVG-INSPEC builds on top of SVG to provide a way to clarify whether objects in a
 
 This set of rules describes how interoperable specification parts can be extracted from other specification parts, e.g. a UML model. Extraction is a preparatory step; the extracted parts are treated and validated like any other interoperable specification parts. A consumer is expected to declare which extraction standards it supports.
 
-><span id="extract1"></span> **Rule EXTRACT-1:** An *extraction standard* is a `dcterms:Standard`, defined outside this specification, that describes how interoperable specification parts are extracted from an artifact and which conventions that artifact must follow. An *extraction source* is a specification part whose `dcterms:conformsTo` points to an extraction standard. The resource indicated via its `prof:hasArtifact` MUST follow the conventions indicated by that standard.
+><span id="extract1"></span> **Rule EXTRACT-1:** An *extraction standard* is a `dcterms:Standard`, defined outside this specification,<sup><a href="#fn5" id="fn5_1">[5]</a></sup> that describes how interoperable specification parts are extracted from an artifact and which conventions that artifact must follow. An *extraction source* is a specification part whose `dcterms:conformsTo` points to an extraction standard. The resource indicated via its `prof:hasArtifact` MUST follow the conventions indicated by that standard.
 
 ><span id="extract2"></span> **Rule EXTRACT-2:** The extraction results MAY be added, by the publisher or a consumer, as new specification parts (introduced in Rule PROF-2), and MUST then point to the extraction source via `dcterms:source`.
 
 ><span id="extract3"></span> **Rule EXTRACT-3:** If a specification part has `dcterms:source` pointing to an extraction source, that extraction source SHOULD be treated as fully extracted and SHOULD NOT be extracted again.
 
-><span id="extract4"></span> **Rule EXTRACT-4:** Rules PROF-3 to PROF-10 MUST NOT be evaluated for an interoperable specification before all its extraction sources have been extracted.<sup><a href="#fn5" id="fn5_1">[5]</a></sup>
+><span id="extract4"></span> **Rule EXTRACT-4:** Rules PROF-3 to PROF-10 MUST NOT be evaluated for an interoperable specification before all its extraction sources have been extracted.<sup><a href="#fn6" id="fn6_1">[6]</a></sup>
 
 ## Rules for enriching the interoperable specifications - ENRICH-INSPEC
 
@@ -146,6 +146,7 @@ This set of rules aim to enrich the interoperable specification by analysing the
  <li id="fn2">SHACL supports imports declared via `owl:imports`, the rules are written from the perspective that these are respected and all RDF Datasets (potentially recursively) are imported first into a single RDF Dataset. <a href="#fn2_1">↩</a></li>
  <li id="fn3">Using implicit class targets makes it harder to re-use and extend the shape. It is therefore recommended to rather use an explicit `sh:targetClass` statement. <a href="#fn3_1">↩</a></li>
  <li id="fn4">The id value could in principle be the URI, however, it is highly likely that we want to write CSS rules targeting individual elements and then we need to be more restrictive as CSS rules cannot use URIs as part of selectors. <a href="#fn4_1">↩</a></li>
- <li id="fn5">A consumer that does not support an extraction standard cannot establish conformance to PROF-INSPEC for specifications that depend on it. <a href="#fn5_1">↩</a></li>
+ <li id="fn5">Extraction standards maintained alongside INSPEC, such as the INSPEC UML extraction standard, are listed at <a href="https://w3id.org/inspec/extractors">https://w3id.org/inspec/extractors</a>. The list is not exhaustive and is not part of this specification. <a href="#fn5_1">↩</a></li>
+ <li id="fn6">A consumer that does not support an extraction standard cannot establish conformance to PROF-INSPEC for specifications that depend on it. <a href="#fn6_1">↩</a></li>
 </ol>
 </section>

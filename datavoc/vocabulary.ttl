@@ -41,40 +41,6 @@ inspec:SVG a dcterms:Standard ;
   rdfs:comment "This is a specification corresponding to a profile of SVG used to capture an expression of diagrams for interoperable specifications. Corresponds to the SVG rules."@en ;
   rdfs:seeAlso <https://www.w3.org/TR/SVG11/> .
 
-inspec:UML a dcterms:Standard ;
-  rdfs:label "UML"@en ;
-  rdfs:isDefinedBy inspec: ;
-  rdfs:comment "This is a specification corresponding to a profile of UML used to capture the source model of an interoperable specification. The model follows the INSPEC UML tag convention, so that interoperable specification parts can be extracted from it. Corresponds to the relevant EXTRACT rules."@en ;
-  rdfs:seeAlso <https://www.omg.org/spec/UML/> .
-
-inspec:umlOntology a rdf:Property ;
-  rdfs:label "UML ontology"@en ;
-  rdfs:isDefinedBy inspec: ;
-  rdfs:comment "A data vocabulary to extract from the UML model, identified by the URI of its data vocabulary resource. The data vocabulary is extracted from the terms introduced by the model's packages whose ontologyURI tag is this URI, and those without an ontologyURI tag whose baseURI tag is this URI or this URI followed by / or #. A UML specification part names at most one data vocabulary."@en ;
-  rdfs:domain prof:ResourceDescriptor ;
-  rdfs:range owl:Ontology .
-
-inspec:umlOntologyDiagram a rdf:Property ;
-  rdfs:label "UML ontology diagram"@en ;
-  rdfs:isDefinedBy inspec: ;
-  rdfs:comment "A diagram, identified by name or GUID, in the UML model that limits the extraction of the specification part's data vocabulary to the classes and associations it draws. It is given only together with inspec:umlOntology."@en ;
-  rdfs:domain prof:ResourceDescriptor ;
-  rdfs:range rdfs:Literal .
-
-inspec:umlDiagram a rdf:Property ;
-  rdfs:label "UML diagram"@en ;
-  rdfs:isDefinedBy inspec: ;
-  rdfs:comment "The diagram, identified by name or GUID, in the UML model from which the application profile is extracted."@en ;
-  rdfs:domain prof:ResourceDescriptor ;
-  rdfs:range rdfs:Literal .
-
-inspec:umlExtractionOption a rdf:Property ;
-  rdfs:label "UML extraction option"@en ;
-  rdfs:isDefinedBy inspec: ;
-  rdfs:comment "An option for how the UML model is read when interoperable specification parts are extracted from it. The values are listed in the INSPEC UML tag convention."@en ;
-  rdfs:domain prof:ResourceDescriptor ;
-  rdfs:range rdfs:Literal .
-
 inspec:variant a rdf:Property ;
   rdfs:label "variant"@en ;
   rdfs:isDefinedBy inspec: ;
