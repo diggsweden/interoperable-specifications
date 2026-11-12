@@ -18,9 +18,10 @@ The formal specification is published at <http://w3id.org/inspec/specification>.
 
 #### Added
 
-- New extraction rule set `EXTRACT-INSPEC` (`EXTRACT-1`–`EXTRACT-3`) for
+- New extraction rule set `EXTRACT-INSPEC` (`EXTRACT-1`–`EXTRACT-4`) for
   extracting interoperable specification parts from other specification parts,
-  starting with UML models following the INSPEC UML tag convention.
+  with a non-normative pointer to the extraction standards maintained
+  alongside INSPEC.
 
 #### Changed
 
@@ -31,9 +32,13 @@ The formal specification is published at <http://w3id.org/inspec/specification>.
 
 #### Added
 
-- `inspec:UML`, `inspec:umlOntology`, `inspec:umlOntologyDiagram`,
-  `inspec:umlDiagram` and `inspec:umlExtractionOption` for describing a UML
-  model from which interoperable specification parts are extracted.
+- New extractors data vocabulary (`datavoc/extractors/`), separate from the
+  core INSPEC vocabulary, with `inspec-uml:UML`, `inspec-uml:ontology`,
+  `inspec-uml:ontologyDiagram`, `inspec-uml:apDiagram` and
+  `inspec-uml:extractionOption` for describing a UML model from which
+  interoperable specification parts are extracted, and the concept scheme
+  `inspec-uml:ExtractionOptions` with the extraction options
+  `inspec-uml:osloUris` and `inspec-uml:implicitOrder`.
 
 #### Fixed
 
@@ -43,10 +48,12 @@ The formal specification is published at <http://w3id.org/inspec/specification>.
 
 ### Other changes
 
-- Replaced the `inspec:UML_OSLO` placeholder in the bootstrapping
-  specifications with `inspec:UML`.
-- Added the INSPEC UML tag convention (`uml.md`), linked from the README and
-  the bootstrapping specifications, and archived with each release.
+- Removed the `inspec:UML_OSLO` and `inspec:CSV` placeholders from the
+  bootstrapping specifications, as extraction standards are defined outside
+  the core specification.
+- Added an extractors landing page (`docs/extractors/`), linked from the
+  README, listing the extraction standards maintained alongside INSPEC.
+- Added the INSPEC UML extraction standard (`docs/extractors/uml.md`).
 - Described harvesting from UML models in the harvesting documentation.
 - Recommended `rdfs:label` and `rdfs:comment` over `sh:name` and
   `sh:description` on node shapes in the application profile documentation,

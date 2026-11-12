@@ -28,11 +28,12 @@ The SVG file need not be loaded into the system as it is not a RDF file, however
 
 ## Harvesting from UML models
 
-A UML model specification part is detected by `dcterms:conformsTo` pointing to `inspec:UML`, see Rule EXTRACT-3. The model itself need not be loaded into the system, instead interoperable specification parts are extracted from it before harvesting proceeds:
+A UML model specification part is detected by `dcterms:conformsTo` pointing to `inspec-uml:UML`, see Rule EXTRACT-1. Here `inspec-uml` is short for <https://w3id.org/inspec/datavoc/extractors/uml/>. What is extracted, and how the model is interpreted, is described in the [INSPEC UML extraction standard](extractors/uml.md). The model itself need not be loaded into the system, instead interoperable specification parts are extracted from it, unless already extracted, before harvesting proceeds:
 
-* A data vocabulary is extracted from the `inspec:umlOntology`, limited to what the `inspec:umlOntologyDiagram` draws when one is given, and an application profile from the `inspec:umlDiagram`, nothing else is extracted regardless of the `prof:hasRole` values.
-* If an extracted part is already indicated from the INSPEC resource, i.e. a specification part pointing to the UML model specification part via `dcterms:source`, it is used as it is. Otherwise the extracted part is added, with a `dcterms:source` pointing to the UML model specification part (see Rules EXTRACT-1 and EXTRACT-2).
+* A data vocabulary is extracted from the `inspec-uml:ontology`, limited to what the `inspec-uml:ontologyDiagram` draws when one is given, and an application profile from the `inspec-uml:apDiagram`, nothing else is extracted regardless of the `prof:hasRole` values.
+* If there is already a specification part pointing to the UML model specification part via `dcterms:source`, the model is treated as already extracted and the existing parts are used as they are (see Rule EXTRACT-3). Otherwise the extracted parts are added, each with a `dcterms:source` pointing to the UML model specification part (see Rule EXTRACT-2).
+* Rules PROF-3 to PROF-10 are only checked once extraction is done, so that e.g. a profile whose application profile comes from the UML model is evaluated with it in place (see Rule EXTRACT-4).
 
-The extracted data vocabularies and application profile are then harvested as described in the sections above. How the model is interpreted is described in the [INSPEC UML tag convention](uml.md).
+The extracted data vocabularies and application profile are then harvested as described in the sections above.
 
 ## Harvesting from tabular annotations (CSV on the web)

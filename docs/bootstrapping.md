@@ -27,11 +27,3 @@ This is a specification corresponding to a profile of SHACL used to capture an e
 ## inspec:SVG
 
 This is a specification corresponding to a profile of SVG used to capture an expression of diagrams for interoperable specifications. Corresponds to the SVG rules.
-
-## inspec:UML
-
-This is a specification corresponding to a profile of UML used to capture the source model of an interoperable specification. The model follows the [INSPEC UML tag convention](uml.md), so that interoperable specification parts can be extracted from it. Corresponds to the relevant EXTRACT rules.
-
-## inspec:CSV
-
-TODO

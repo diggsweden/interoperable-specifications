@@ -1,0 +1,64 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prof: <http://www.w3.org/ns/dx/prof/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+@prefix inspec-extractors: <https://w3id.org/inspec/datavoc/extractors/> .
+@prefix inspec-uml: <https://w3id.org/inspec/datavoc/extractors/uml/> .
+
+inspec-extractors: a owl:Ontology ;
+  rdfs:label "The Interoperable Specifications Profile (INSPEC) Vocabulary - Extractors"@en ;
+  rdfs:comment "This vocabulary defines INSPEC extraction standards and the properties and concepts they use."@en .
+
+inspec-uml:UML a dcterms:Standard ;
+  rdfs:label "UML"@en ;
+  rdfs:isDefinedBy inspec-extractors: ;
+  rdfs:comment "This is a specification corresponding to a profile of UML used to capture the source model of an interoperable specification. The model follows the tag convention of the INSPEC UML extraction standard, so that interoperable specification parts can be extracted from it. Corresponds to the relevant EXTRACT rules."@en ;
+  rdfs:seeAlso <https://w3id.org/inspec/extractors/uml.html> <https://www.omg.org/spec/UML/> .
+
+inspec-uml:ontology a rdf:Property ;
+  rdfs:label "UML ontology"@en ;
+  rdfs:isDefinedBy inspec-extractors: ;
+  rdfs:comment "A data vocabulary to extract from the UML model, identified by the URI of its data vocabulary resource. The data vocabulary is extracted from the terms introduced by the model's packages whose ontologyURI tag is this URI, and those without an ontologyURI tag whose baseURI tag is this URI or this URI followed by / or #. A UML specification part names at most one data vocabulary."@en ;
+  rdfs:domain prof:ResourceDescriptor ;
+  rdfs:range owl:Ontology .
+
+inspec-uml:ontologyDiagram a rdf:Property ;
+  rdfs:label "UML ontology diagram"@en ;
+  rdfs:isDefinedBy inspec-extractors: ;
+  rdfs:comment "A diagram, identified by name or GUID, in the UML model that limits the extraction of the specification part's data vocabulary to the classes and associations it draws. It is given only together with https://w3id.org/inspec/datavoc/extractors/uml/ontology."@en ;
+  rdfs:domain prof:ResourceDescriptor ;
+  rdfs:range rdfs:Literal .
+
+inspec-uml:apDiagram a rdf:Property ;
+  rdfs:label "UML application profile diagram"@en ;
+  rdfs:isDefinedBy inspec-extractors: ;
+  rdfs:comment "The diagram, identified by name or GUID, in the UML model from which the application profile is extracted."@en ;
+  rdfs:domain prof:ResourceDescriptor ;
+  rdfs:range rdfs:Literal .
+
+inspec-uml:extractionOption a rdf:Property ;
+  rdfs:label "UML extraction option"@en ;
+  rdfs:isDefinedBy inspec-extractors: ;
+  rdfs:comment "An option for how the UML model is read when interoperable specification parts are extracted from it. The values are concepts in inspec-uml:ExtractionOptions, described in the INSPEC UML extraction standard."@en ;
+  rdfs:domain prof:ResourceDescriptor ;
+  rdfs:range skos:Concept .
+
+inspec-uml:ExtractionOptions a skos:ConceptScheme ;
+  skos:prefLabel "UML extraction options"@en ;
+  skos:definition "The options for how a UML model is read when interoperable specification parts are extracted from it, used as values of inspec-uml:extractionOption."@en ;
+  skos:hasTopConcept inspec-uml:osloUris, inspec-uml:implicitOrder .
+
+inspec-uml:osloUris a skos:Concept ;
+  skos:prefLabel "OSLO URIs"@en ;
+  skos:definition "A class or attribute with neither a uri nor a name tag is named from its UML name, as the OSLO toolchain does. It applies to both the data vocabulary and the application profile."@en ;
+  skos:inScheme inspec-uml:ExtractionOptions ;
+  skos:topConceptOf inspec-uml:ExtractionOptions .
+
+inspec-uml:implicitOrder a skos:Concept ;
+  skos:prefLabel "Implicit order"@en ;
+  skos:definition "In the application profile, an attribute's property shape without an ap-order tag is ordered by the attribute's position in its class."@en ;
+  skos:inScheme inspec-uml:ExtractionOptions ;
+  skos:topConceptOf inspec-uml:ExtractionOptions .
