@@ -1,6 +1,6 @@
 # INSPEC UML tag convention
 
-Interoperable specifications are often authored as UML models, typically as Enterprise Architect files or XMI exports from them. The data vocabularies and the application profile of the specification are then extracted from the model. This page describes how such a model is described as a specification part, and the tag convention the model must follow for interoperable specification parts to be extracted from it, see the [rules for extracting specification parts - EXTRACT-INSPEC](rules.md#rules-for-extracting-specification-parts---extract-inspec).
+Interoperable specifications are often authored as UML models, typically as Enterprise Architect files or XMI exports from them. The data vocabularies and the application profile of the specification are then extracted from the model. This page describes how such a model is described as a specification part, and the tag convention the model must follow for interoperable specification parts to be extracted from it. `inspec:UML` is an extraction standard in the sense of [Rule EXTRACT-1](rules.md#extract1).
 
 Extraction is a preparatory step. The extracted data vocabularies and application profile are interoperable specification parts like any other, and are described and validated according to the rules for their kind.
 
