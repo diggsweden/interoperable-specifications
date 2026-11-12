@@ -124,7 +124,7 @@ SHACL allows shapes to be combined via `sh:and`. This can be used to specialize 
 
 ```turtle
 ex:ps-publisher a sh:PropertyShape ;
-  sh:label "Publisher" ;
+  sh:name "Publisher" ;
   sh:path dcterms:publisher ;
   sh:nodeKind sh:IRI ;
   sh:minCount 1 ;
@@ -134,7 +134,7 @@ ex:ps-publisher a sh:PropertyShape ;
 we can further constrain it to the subclass `foaf:Organization` via the following construction:
 
 ```turtle
-ex:ps-publisher2 a sh:PropertyShape
+ex:ps-publisher2 a sh:PropertyShape ;
   sh:path dcterms:publisher ;
   sh:class foaf:Organization ;
   inspec:refines ex:ps-publisher ;
@@ -151,7 +151,7 @@ Note that we are not allowed to relax constraints via the refinement constructio
 
 ```turtle
 ex:ps-publisher3 a sh:PropertyShape ;
-  sh:label "Publisher" ;
+  sh:name "Publisher" ;
   sh:path dcterms:publisher ;
   sh:nodeKind sh:IRI ;
   sh:class foaf:Agent ;
@@ -170,15 +170,15 @@ Let us introduce a node shape for a book profile that we want to extend includin
 
 ```turtle
 ex:ns-book a sh:NodeShape ;
-  sh:label "Book"@en ;
+  rdfs:label "Book"@en ;
   sh:property ex:ps-title, ex:ps-publisher .
 ex:ps-title a sh:PropertyShape ;
   sh:path dcterms:title ;
   sh:nodeKind sh:Literal ;
-  sh:label "Title"@en ;
-  sh:order "1"^^xsd:decimal ;
+  sh:name "Title"@en ;
+  sh:order "1"^^xsd:decimal .
 ex:ps-publisher a sh:PropertyShape ;
-  sh:label "Publisher" ;
+  sh:name "Publisher" ;
   sh:path dcterms:publisher ;
   sh:nodeKind sh:IRI ;
   sh:minCount 1 ;
@@ -189,10 +189,10 @@ Now we want to extend the book profile with the publisher restricted to organiza
 
 ```turtle
 ex:ns-book2 a sh:NodeShape ;
-  sh:label "Book2"@en ;
+  rdfs:label "Book2"@en ;
   inspec:refines ex:ns-book ;
   sh:property ex:ps-title, ex:ps-publisher2 .
-ex:ps-publisher2 a sh:PropertyShape
+ex:ps-publisher2 a sh:PropertyShape ;
   sh:path dcterms:publisher ;
   sh:class foaf:Organization ;
   inspec:refines ex:ps-publisher ;
@@ -207,15 +207,15 @@ The solution for node shape variants is very similar to refinements, we can look
 
 ```turtle
 ex:ns-book a sh:NodeShape ;
-  sh:label "Book"@en ;
+  rdfs:label "Book"@en ;
   sh:property ex:ps-title, ex:ps-publisher .
 ex:ps-title a sh:PropertyShape ;
   sh:path dcterms:title ;
   sh:nodeKind sh:Literal ;
-  sh:label "Title"@en ;
-  sh:order "1"^^xsd:decimal ;
+  sh:name "Title"@en ;
+  sh:order "1"^^xsd:decimal .
 ex:ps-publisher a sh:PropertyShape ;
-  sh:label "Publisher" ;
+  sh:name "Publisher" ;
   sh:path dcterms:publisher ;
   sh:nodeKind sh:IRI ;
   sh:minCount 1 ;
@@ -226,11 +226,11 @@ Now to provide a variant of the book profile we use the `inspec:variant` propert
 
 ```turtle
 ex:ns-book3 a sh:NodeShape ;
-  sh:label "Book2"@en ;
+  rdfs:label "Book3"@en ;
   inspec:variant ex:ns-book ;
   sh:property ex:ps-title, ex:ps-publisher3 .
 ex:ps-publisher3 a sh:PropertyShape ;
-  sh:label "Publisher" ;
+  sh:name "Publisher" ;
   sh:path dcterms:publisher ;
   sh:nodeKind sh:IRI ;
   sh:class foaf:Agent ;
@@ -254,29 +254,29 @@ If you are reusing property shapes in new settings (e.g. in specialization of no
 
 ```turtle
 ex:ns2 a sh:NodeShape ;
-  sh:label "Book"@en ;
+  rdfs:label "Book"@en ;
   sh:property ex:ps-title, ex:ps-identifier .
 ex:ps-title a sh:PropertyShape ;
   sh:path dcterms:title ;
   sh:nodeKind sh:Literal ;
-  sh:label "Title"@en ;
-  sh:order "1"^^xsd:decimal ;
+  sh:name "Title"@en ;
+  sh:order "1"^^xsd:decimal .
 ex:ps-identifier a sh:PropertyShape ;
   sh:path dcterms:identifier ;
   sh:nodeKind sh:Literal ;
-  sh:label "Identifier"@en ;
-  sh:order "2"^^xsd:decimal ;
+  sh:name "Identifier"@en ;
+  sh:order "2"^^xsd:decimal .
 ```
 
 To change the order so the `dcterms:identifier` is at the top you can make a minimal specialization of that property shape with another `sh:order`:
 
 ```turtle
 ex:ns2 a sh:NodeShape ;
-  sh:label "Book 2"@en ;
+  rdfs:label "Book 2"@en ;
   sh:property [
       sh:path dcterms:identifier ;
       sh:order "0.5"^^xsd:decimal ;
-      sh:and ( ex:ps-identifier ) .
+      sh:and ( ex:ps-identifier )
     ], ex:ps-title .
 ```
 
@@ -306,7 +306,7 @@ ex:ps1 a sh:PropertyShape ;
         sh:path skos:inScheme ;
         sh:hasValue ex:terminologyA
       ]
-    ]
+    ] .
 ```
 
 The reason we set the `sh:severity` to `sh:Info` is that if we try validate a data graph against this SHACL expression we do not always expect to have the entire terminology loaded with `rdf:type` and `skos:inScheme` triples for all concepts. In this case we instead rely on the `sh:pattern` to give us a more syntactical indication that the URI in the data graph corresponds to a correct concept. The expression with `rdf:type` and `skos:inScheme` (1 & 2 above) is provided to allow us to both detect that this is in fact a terminology when we render the specification and a more correct way to search for the intended concepts.[^1]
@@ -341,7 +341,7 @@ ex:ps1 a sh:PropertyShape ;
         ] ;
         sh:hasValue ex:collectionA
       ]
-    ]
+    ] .
 ```
 
 The reason we set the `sh:severity` to `sh:Info` is that if we try validate a data graph against this SHACL expression we do not always expect to have the entire terminology loaded with `rdf:type` and `skos:member` triples for all concepts in the collection. The expression with `rdf:type` and `skos:member` (1 & 2 above) is provided to allow us to both detect that this is in fact a concept collection when we render the specification and a more correct way to search for the intended concepts.[^1]
@@ -354,10 +354,10 @@ SHACL allows a node shape to include multiple property shapes that together cons
 
 ```turtle
 ex:ns1 a sh:NodeShape ;
-  sh:label "Person" ;
+  rdfs:label "Person" ;
   sh:property ex:ps1, ex:ps2 .
 ex:ps1 a sh:PropertyShape ;
-  sh:label "Name" ;
+  sh:name "Name" ;
   sh:path foaf:givenName ;
   sh:nodeKind sh:Literal .
 ex:ps2 a sh:PropertyShape ;
@@ -369,10 +369,10 @@ Instead the expression should be done via a single property shape:
 
 ```turtle
 ex:ns1 a sh:NodeShape ;
-  sh:label "Person" ;
+  rdfs:label "Person" ;
   sh:property ex:ps1 .
 ex:ps1 a sh:PropertyShape ;
-  sh:label "Name" ;
+  sh:name "Name" ;
   sh:path foaf:givenName ;
   sh:minCount 1 ;
   sh:nodeKind sh:Literal .
@@ -382,18 +382,18 @@ However, there are situations where the same property is reused on the same node
 
 ```turtle
 ex:ns1 a sh:NodeShape ;
-  sh:label "Person" ;
+  rdfs:label "Person" ;
   sh:property ex:ps1, ex:ps2 .
 ex:ps1 a sh:PropertyShape ;
-  sh:label "Hobbies" ;
+  sh:name "Hobbies" ;
   sh:path foaf:topic_interests ;
   sh:nodeKind sh:IRI ;
-  sh:pattern "^http://example.com/hobbies/.*$";
+  sh:pattern "^http://example.com/hobbies/.*$" .
 ex:ps2 a sh:PropertyShape ;
-  sh:label "Professional interests in computer science" ;
+  sh:name "Professional interests in computer science" ;
   sh:path foaf:topic_interests ;
   sh:nodeKind sh:IRI ;
-  sh:pattern "^http://example.com/computer_science/.*$";
+  sh:pattern "^http://example.com/computer_science/.*$" .
 ```
 
 Read the chapter "[Using the same property for different purposes](property-reuse.md)" for a longer background and recommendations on when it is suitable to reuse properties in this manner.
