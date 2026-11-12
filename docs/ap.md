@@ -101,7 +101,7 @@ The following information SHOULD/MAY be provided:
   * `sh:maxCount "N"^^xsd:integer` for a maximum cardinality of `N`
 * A description / definition expressed via the property `sh:description`
 * A usage note expressed via the property `skos:scopeNote`
-* That a datatype is required on literals by using `sh:datatype` (if several datatypes are allowed, a construction with several property shapes with individual `sh:datatype` joined together via `sh:or` is necessary)
+* That a datatype is required on literals by using `sh:datatype`. If several datatypes are allowed, use `sh:or` in the property shape with one path-less shape per datatype, for example `sh:or ( [ sh:datatype xsd:date ] [ sh:datatype xsd:dateTime ] )`, so that each value must have one of them
 * That a language is required on literals by setting `sh:datatype` to `rdf:langString`
 * Constraints on which literals that is allowed by:
   * An explicit list by using `sh:in` pointing to a SHACL list
@@ -111,7 +111,7 @@ The following information SHOULD/MAY be provided:
   * A constraining URI pattern expressed by `sh:pattern` (Regular expression)
   * Constrain to concepts in a terminology (see [section below](#terminology))
   * Constrain to concepts in a concept collection (see [section below](#collection))
-  * Constrain to instances of a class by `sh:class` (if instances from several classes are allowed, a construction with several property shapes with `sh:class` joined together via a `sh:or` is necessary)
+  * Constrain to instances of a class by `sh:class`. If instances of several classes are allowed, use `sh:or` in the property shape with one path-less shape per class, for example `sh:or ( [ sh:class foaf:Person ] [ sh:class foaf:Organization ] )`, so that each value must be an instance of one of them
 * A reference to another property shape it:
   * "refines" via `inspec:refines` AND `sh:and` with a SHACL list containing the refined property shape (see [section on property refinement](#property_refinement)), OR
   * "is variant of" via the `inspec:variant` property (see [section on property variants](#property_variant))
