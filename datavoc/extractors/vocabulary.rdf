@@ -4,10 +4,11 @@
   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   xmlns:owl="http://www.w3.org/2002/07/owl#"
   xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
 >
   <owl:Ontology rdf:about="https://w3id.org/inspec/datavoc/extractors/">
     <rdfs:label xml:lang="en">The Interoperable Specifications Profile (INSPEC) Vocabulary - Extractors</rdfs:label>
-    <rdfs:comment xml:lang="en">This vocabulary defines INSPEC extraction standards and the properties they use.</rdfs:comment>
+    <rdfs:comment xml:lang="en">This vocabulary defines INSPEC extraction standards and the properties and concepts they use.</rdfs:comment>
   </owl:Ontology>
   <dcterms:Standard rdf:about="https://w3id.org/inspec/datavoc/extractors/uml/UML">
     <rdfs:label xml:lang="en">UML</rdfs:label>
@@ -40,8 +41,26 @@
   <rdf:Property rdf:about="https://w3id.org/inspec/datavoc/extractors/uml/extractionOption">
     <rdfs:label xml:lang="en">UML extraction option</rdfs:label>
     <rdfs:isDefinedBy rdf:resource="https://w3id.org/inspec/datavoc/extractors/"/>
-    <rdfs:comment xml:lang="en">An option for how the UML model is read when interoperable specification parts are extracted from it. The values are listed in the INSPEC UML extraction standard.</rdfs:comment>
+    <rdfs:comment xml:lang="en">An option for how the UML model is read when interoperable specification parts are extracted from it. The values are concepts in inspec-uml:ExtractionOptions, described in the INSPEC UML extraction standard.</rdfs:comment>
     <rdfs:domain rdf:resource="http://www.w3.org/ns/dx/prof/ResourceDescriptor"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
   </rdf:Property>
+  <skos:ConceptScheme rdf:about="https://w3id.org/inspec/datavoc/extractors/uml/ExtractionOptions">
+    <skos:prefLabel xml:lang="en">UML extraction options</skos:prefLabel>
+    <skos:definition xml:lang="en">The options for how a UML model is read when interoperable specification parts are extracted from it, used as values of inspec-uml:extractionOption.</skos:definition>
+    <skos:hasTopConcept rdf:resource="https://w3id.org/inspec/datavoc/extractors/uml/osloUris"/>
+    <skos:hasTopConcept rdf:resource="https://w3id.org/inspec/datavoc/extractors/uml/implicitOrder"/>
+  </skos:ConceptScheme>
+  <skos:Concept rdf:about="https://w3id.org/inspec/datavoc/extractors/uml/osloUris">
+    <skos:prefLabel xml:lang="en">OSLO URIs</skos:prefLabel>
+    <skos:definition xml:lang="en">A class or attribute with neither a uri nor a name tag is named from its UML name, as the OSLO toolchain does. It applies to both the data vocabulary and the application profile.</skos:definition>
+    <skos:inScheme rdf:resource="https://w3id.org/inspec/datavoc/extractors/uml/ExtractionOptions"/>
+    <skos:topConceptOf rdf:resource="https://w3id.org/inspec/datavoc/extractors/uml/ExtractionOptions"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://w3id.org/inspec/datavoc/extractors/uml/implicitOrder">
+    <skos:prefLabel xml:lang="en">Implicit order</skos:prefLabel>
+    <skos:definition xml:lang="en">In the application profile, an attribute's property shape without an ap-order tag is ordered by the attribute's position in its class.</skos:definition>
+    <skos:inScheme rdf:resource="https://w3id.org/inspec/datavoc/extractors/uml/ExtractionOptions"/>
+    <skos:topConceptOf rdf:resource="https://w3id.org/inspec/datavoc/extractors/uml/ExtractionOptions"/>
+  </skos:Concept>
 </rdf:RDF>

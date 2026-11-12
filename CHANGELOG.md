@@ -36,7 +36,9 @@ The formal specification is published at <http://w3id.org/inspec/specification>.
   core INSPEC vocabulary, with `inspec-uml:UML`, `inspec-uml:ontology`,
   `inspec-uml:ontologyDiagram`, `inspec-uml:apDiagram` and
   `inspec-uml:extractionOption` for describing a UML model from which
-  interoperable specification parts are extracted.
+  interoperable specification parts are extracted, and the concept scheme
+  `inspec-uml:ExtractionOptions` with the extraction options
+  `inspec-uml:osloUris` and `inspec-uml:implicitOrder`.
 
 #### Fixed
 

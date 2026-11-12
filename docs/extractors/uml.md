@@ -38,12 +38,12 @@ Diagrams are identified by name or by GUID. A name must be unique within the mod
 
 ### <span id="extraction-options"></span>Extraction options
 
-An `inspec-uml:extractionOption` names an option for how the model is read. Its values are literals:
+An `inspec-uml:extractionOption` names an option for how the model is read. Its values are the concepts of the concept scheme `inspec-uml:ExtractionOptions`:
 
-* `osloUris` - a class or attribute with neither a `uri` nor a `name` tag is named from its UML name, as the OSLO toolchain does: a class in upper camel case (e.g. "legal entity" gives `LegalEntity`), an attribute in lower camel case (e.g. "Legal Name" gives `legalName`), with a leading `^` dropped and whitespace removed. The name is then treated as a `name` tag, see [Term URIs](#term-uris). It applies to both the data vocabulary and the application profile. Associations still need a `uri` or `name` tag.
-* `implicitOrder` - in the application profile, an attribute's property shape without an `ap-order` tag is ordered by the attribute's position in its class. It has no effect on a specification part without `inspec-uml:apDiagram`.
+* `inspec-uml:osloUris` - a class or attribute with neither a `uri` nor a `name` tag is named from its UML name, as the OSLO toolchain does: a class in upper camel case (e.g. "legal entity" gives `LegalEntity`), an attribute in lower camel case (e.g. "Legal Name" gives `legalName`), with a leading `^` dropped and whitespace removed. The name is then treated as a `name` tag, see [Term URIs](#term-uris). It applies to both the data vocabulary and the application profile. Associations still need a `uri` or `name` tag.
+* `inspec-uml:implicitOrder` - in the application profile, an attribute's property shape without an `ap-order` tag is ordered by the attribute's position in its class. It has no effect on a specification part without `inspec-uml:apDiagram`.
 
-The specification parts with the same `prof:hasArtifact` must agree on `osloUris`, so that the data vocabulary and the application profile use the same term URIs. A converter should warn about a value it does not recognise and ignore it.
+The specification parts with the same `prof:hasArtifact` must agree on `inspec-uml:osloUris`, so that the data vocabulary and the application profile use the same term URIs. A converter should warn about a value it does not recognise and ignore it, so that other options may be defined as concepts outside this scheme.
 
 ### Several models
 
