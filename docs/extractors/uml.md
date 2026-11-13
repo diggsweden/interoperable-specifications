@@ -17,7 +17,7 @@ The following terms are used with the meaning given here. Terms defined in the [
 
 * **Model** - the UML model in the model file given by `prof:hasArtifact` of a UML specification part.
 * **UML specification part** - a specification part with `dcterms:conformsTo inspec-uml:UML`, see [Describing the model as a specification part](#specification-part).
-* **Element** - a package, class, data type, enumeration, enumeration value, attribute, association or association end in the model.
+* **Element** - a package, class, data type, enumeration, enumeration value, attribute, association, association end or generalization in the model.
 * **Package** - a UML package. A package **owns** the elements it contains, as given by the model.
 * **Class** - a UML class, abstract or not. Data types and enumerations are not classes.
 * **Attribute** - an attribute of a class.
@@ -76,7 +76,7 @@ Each specification part has a single artifact, so that `dcterms:format` is unamb
 
 ### Names
 
-Diagrams are identified by name or by GUID. A name must be unique within the model file, otherwise the GUID must be used. The name of an ontology diagram needs only to be unique among the diagrams of the vocabulary packages. Data vocabularies are identified by URI, see `inspec-uml:ontology`.
+Diagrams, and the packages named by a `package` tag, are identified by name or by GUID. A name must be unique within the model file, otherwise the GUID must be used. The name of an ontology diagram needs only to be unique among the diagrams of the vocabulary packages. Data vocabularies are identified by URI, see `inspec-uml:ontology`.
 
 ### <span id="extraction-options"></span>Extraction options
 
@@ -142,7 +142,71 @@ The values of `domain`, `range` and `parentURI` are absolute IRIs.
 
 ### Tags by element
 
-*This section is not yet written.*
+The tables below list, per kind of element, the tags that are interpreted, and whether they affect the data vocabulary (DV) or the application profile (AP). `xx` stands for a language code, e.g. `label-en`.
+
+#### Package
+
+Tag | Value | DV | AP | See
+--- | --- | :-: | :-: | ---
+`baseURI` | IRI | ✓ | ✓ | [Identifying terms](#identifying-terms), [Scope](#dv-scope)
+`ontologyURI` | IRI | ✓ | | [Scope](#dv-scope)
+`language` | language code | ✓ | ✓ | [Texts](#dv-texts)
+`label-xx`, `definition-xx`, `usageNote-xx` | text | ✓ | | [The data vocabulary resource](#the-data-vocabulary-resource)
+
+#### Class
+
+Tag | Value | DV | AP | See
+--- | --- | :-: | :-: | ---
+`uri` | IRI | ✓ | ✓ | [Identifying terms](#identifying-terms)
+`name` | local name | ✓ | ✓ | [Identifying terms](#identifying-terms)
+`package` | package name or GUID | ✓ | ✓ | [Identifying terms](#identifying-terms)
+`parentURI` | IRI | ✓ | | [Inheritance](#inheritance)
+`label-xx`, `definition-xx`, `usageNote-xx` | text | ✓ | ✓ | [Texts](#dv-texts)
+`ap-label-xx`, `ap-definition-xx`, `ap-usageNote-xx` | text | | ✓ | [Texts](#ap-texts)
+`ap-weight` | `main` or `supportive` | | ✓ | [Node shapes](#node-shapes)
+`ap-refines`, `ap-variant` | shape IRI | | ✓ | [Application profile tags](#application-profile-tags)
+`ignore` | `true` | ✓ | ✓ | [Ignored elements](#ignored-elements)
+
+The stereotypes `«main»` and `«supportive»` can be used instead of `ap-weight`.
+
+#### Attribute
+
+Tag | Value | DV | AP | See
+--- | --- | :-: | :-: | ---
+`uri` | IRI | ✓ | ✓ | [Identifying terms](#identifying-terms)
+`name` | local name | ✓ | ✓ | [Identifying terms](#identifying-terms)
+`package` | package name or GUID | ✓ | ✓ | [Identifying terms](#identifying-terms)
+`parentURI` | IRI | ✓ | | [Inheritance](#inheritance)
+`domain`, `range` | IRI | ✓ | | [Domain and range](#domain-and-range)
+`label-xx`, `definition-xx`, `usageNote-xx` | text | ✓ | ✓ | [Texts](#dv-texts)
+`ap-label-xx`, `ap-definition-xx`, `ap-usageNote-xx` | text | | ✓ | [Texts](#ap-texts)
+`ap-nodeKind` | node kind | | ✓ | [Application profile tags](#application-profile-tags)
+`ap-preferred` | `true` | | ✓ | [Application profile tags](#application-profile-tags)
+`ap-order` | integer | | ✓ | [Application profile tags](#application-profile-tags)
+`ap-pattern` | regular expression | | ✓ | [Application profile tags](#application-profile-tags)
+`ap-codelist` | concept scheme IRI | | ✓ | [Application profile tags](#application-profile-tags)
+`ap-refines`, `ap-variant` | shape IRI | | ✓ | [Application profile tags](#application-profile-tags)
+`ignore` | `true` | ✓ | ✓ | [Ignored elements](#ignored-elements)
+
+The constraints `{subsets x}` and `{redefines x}` are also read, see [Inheritance](#inheritance).
+
+#### Association and association end
+
+An association end takes the same tags as an attribute. The tags that identify the term (`uri`, `name`, `package`), and `parentURI`, `domain` and `range`, are given either on the ends or on the association, not both, see [Associations](#associations). When they are given on the association, its text tags and `ap-` tags apply to both ends, unless an end gives the tag itself. The association as a whole can be ignored as well:
+
+Tag | Value | DV | AP | See
+--- | --- | :-: | :-: | ---
+`ignore` | `true` | ✓ | ✓ | [Ignored elements](#ignored-elements)
+
+#### Other elements
+
+Element | Tag | Value | DV | AP | See
+--- | --- | --- | :-: | :-: | ---
+Enumeration | `uri`, `name` | IRI, local name | ✓ | | [Enumerations](#enumerations)
+Enumeration value | `uri` | IRI | | ✓ | [Enumerations](#enumerations)
+Enumeration value | `ignore` | `true` | | ✓ | [Enumerations](#enumerations)
+Data type or primitive type | `uri` | IRI | ✓ | ✓ | [Domain and range](#domain-and-range)
+Generalization | `ignore` | `true` | ✓ | | [Inheritance](#inheritance)
 
 ## <span id="identifying-terms"></span>Identifying terms
 
@@ -233,7 +297,7 @@ The class of an association class is skipped with a warning, together with its a
 
 ### Inheritance
 
-A generalization becomes `rdfs:subClassOf` only.
+A generalization becomes `rdfs:subClassOf` only, unless it is ignored.
 
 An attribute marked `{subsets x}` gives `rdfs:subPropertyOf` from its property to the property of `x` when its property is introduced. A property gets `rdfs:subPropertyOf` for its `parentURI` tag and for each property it subsets; a class gets `rdfs:subClassOf` for each generalization and for its `parentURI` tag.
 
@@ -317,6 +381,8 @@ An enumeration gives `sh:in` with its values, see [Enumerations](#enumerations),
 
 `ap-refines` and `ap-variant` are allowed on classes (node shapes) as well as on attributes and association ends (property shapes).
 
+When a property is tagged on an association, the association's `ap-` tags apply to the property shapes of both ends, unless an end gives the tag itself.
+
 ### <span id="ap-texts"></span>Texts
 
 Texts are taken as in the data vocabulary, see [Texts](#dv-texts), from the following sources:
@@ -331,7 +397,7 @@ Statement | Taken from, in order
 
 ## Ignored elements
 
-An element is ignored when its `ignore` tag has the value `true`, matched case-insensitively. An ignored element gets no definition and no shape, but its term remains valid for references. The attributes of an ignored class are ignored too. A reference to an ignored class that has no `uri` or `name` tag is an error at the referring attribute or association end.
+An element is ignored when its `ignore` tag has the value `true`, matched case-insensitively. An ignored element gets no definition and no shape, but its term remains valid for references. The attributes of an ignored class are ignored too. A reference to an ignored class that has no `uri` or `name` tag is an error at the referring attribute or association end. An ignored association end gives no property and no property shape, while the other end is still read. An ignored generalization gives no `rdfs:subClassOf`.
 
 ## Extractor conformance
 
