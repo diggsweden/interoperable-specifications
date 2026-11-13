@@ -62,7 +62,7 @@ Statement | Meaning
 `dcterms:conformsTo inspec-uml:UML` [1] | Identifies the specification part as a UML model following the INSPEC UML extraction convention.
 `dcterms:format` [0..1] | Identifies the kind of model file.
 `prof:hasArtifact` [1] | The model file.
-`inspec-uml:ontology` [0..1] | The URI of a data vocabulary resource. The packages of the model with this `ontologyURI`, and those without an `ontologyURI` whose `baseURI` is this URI or this URI followed by `/` or `#`, are extracted, and their **introduced** terms make up the data vocabulary, see [Scope](#dv-scope). It never points out reused terms.
+`inspec-uml:ontology` [0..1] | The URI of a data vocabulary resource. It identifies the vocabulary packages, whose introduced terms make up the data vocabulary, see [Scope](#dv-scope). It never points out reused terms.
 `inspec-uml:ontologyDiagram` [0..1] | A diagram that limits the extraction of the data vocabulary to what it draws, see [Ontology diagram](#ontology-diagram). It is given only together with `inspec-uml:ontology`.
 `inspec-uml:apDiagram` [0..1] | The diagram the application profile is extracted from.
 `inspec-uml:extractionOption` [0..*] | An option for how the model is read, see [Extraction options](#extraction-options).
@@ -76,16 +76,16 @@ Each specification part has a single artifact, so that `dcterms:format` is unamb
 
 ### Names
 
-Diagrams are identified by name or by GUID. A name must be unique within the model file, otherwise the GUID must be used. The name of an ontology diagram needs only to be unique among the diagrams of the data vocabulary's packages. Data vocabularies are identified by URI, see `inspec-uml:ontology`.
+Diagrams are identified by name or by GUID. A name must be unique within the model file, otherwise the GUID must be used. The name of an ontology diagram needs only to be unique among the diagrams of the vocabulary packages. Data vocabularies are identified by URI, see `inspec-uml:ontology`.
 
 ### <span id="extraction-options"></span>Extraction options
 
 An `inspec-uml:extractionOption` names an option for how the model is read. Its values are the concepts of the concept scheme `inspec-uml:ExtractionOptions`:
 
-* `inspec-uml:osloUris` - a class or attribute with neither a `uri` nor a `name` tag is named from its UML name, as the OSLO toolchain does: a class in upper camel case (e.g. "legal entity" gives `LegalEntity`), an attribute in lower camel case (e.g. "Legal Name" gives `legalName`), with a leading `^` dropped and whitespace removed. The name is then treated as a `name` tag, see [Identifying terms](#identifying-terms). It applies to both the data vocabulary and the application profile. Associations still need a `uri` or `name` tag.
+* `inspec-uml:osloUris` - a class or attribute with neither a `uri` nor a `name` tag is named from its UML name, as the OSLO toolchain does: a class in upper camel case (e.g. "legal entity" gives `LegalEntity`), an attribute in lower camel case (e.g. "Legal Name" gives `legalName`), with a leading `^` dropped and whitespace removed. The name is then treated as a `name` tag, see [Identifying terms](#identifying-terms). It applies to both the data vocabulary and the application profile. An association still needs a `uri` or `name` tag, on the association or on its ends.
 * `inspec-uml:implicitOrder` - in the application profile, an attribute's property shape without an `ap-order` tag is ordered by the attribute's position in its class. It has no effect on a specification part without `inspec-uml:apDiagram`.
 
-The specification parts with the same `prof:hasArtifact` must agree on `inspec-uml:osloUris`, so that the data vocabulary and the application profile use the same term URIs. A converter should warn about a value it does not recognise and ignore it, so that other options may be defined as concepts outside this scheme.
+The specification parts with the same `prof:hasArtifact` must agree on `inspec-uml:osloUris`, so that the data vocabulary and the application profile use the same term URIs. An extractor should warn about a value it does not recognise and ignore it, so that other options may be defined as concepts outside this scheme.
 
 ### Several models
 
@@ -150,13 +150,13 @@ URIs are not minted from UML element names, except with the `osloUris` extractio
 
 * a `uri` tag,
 * a `package` and a `name` tag, the name being resolved against the `baseURI` of the given package, or
-* a `name` tag, resolved against the `baseURI` of the package that owns the class or attribute or, for an association, of the package it is located in.
+* a `name` tag, resolved in the package that owns the class or attribute or, for an association or association end, in the package the association is located in.
 
 A `uri` tag takes precedence: a `package` tag given with it is not used. A `uri` tag given with a `name` tag must agree with it.
 
-A class or attribute is located in its owning package, or, when the diagrams of a data vocabulary's packages draw it and another package owns it, in one of those packages, see [Scope](#dv-scope). An association has no owner and is located through the diagrams that draw it. It is an error:
+A class or attribute is located in its owning package, or, when another package owns it and it is drawn on a diagram of the vocabulary packages, in one of the vocabulary packages, see [Scope](#dv-scope). An association has no owner and is located through the diagrams it is drawn on. It is an error:
 
-* if an introduced term has none of the tags above,
+* if a class, attribute or association in the scope of the extraction has none of the tags above, for an association neither on the association nor on its ends,
 * if a `name` tag has characters not allowed in a URI, or
 * if a `package` tag, given without a `uri` tag, names a package that is not in the model file.
 
@@ -164,41 +164,41 @@ A class or attribute is located in its owning package, or, when the diagrams of 
 
 ### <span id="dv-scope"></span>Scope
 
-The ontology URI of a package is its `ontologyURI` tag, or else its `baseURI` tag. An `inspec-uml:ontology` `U` identifies the packages whose `ontologyURI` tag is `U`, and the packages without an `ontologyURI` tag whose `baseURI` is `U`, `U/` or `U#`, as an ontology conventionally mints its terms under such a namespace. Together they make up one data vocabulary, and their `baseURI`s are allowed to differ. It is an error if `U` identifies no package.
+The ontology URI of a package is its `ontologyURI` tag, or else its `baseURI` tag. An `inspec-uml:ontology` `U` identifies the packages whose `ontologyURI` tag is `U`, and the packages without an `ontologyURI` tag whose `baseURI` is `U`, `U/` or `U#`, as an ontology conventionally mints its terms under such a namespace. These are the **vocabulary packages**. Together they make up one data vocabulary, and their `baseURI`s are allowed to differ. It is an error if `U` identifies no package.
 
-Without an ontology diagram, the extraction for the packages identified via `inspec-uml:ontology` looks only at the occurrences located in them:
+Without an ontology diagram, the extraction looks only at the occurrences located in the vocabulary packages:
 
-* the classes owned by the packages (as shown in Enterprise Architect's Project Browser), regardless of which diagrams they are drawn on, including classes drawn on no diagram,
-* the classes owned by other packages and drawn on the packages' own diagrams. Such a class is located in the first of the packages whose diagrams draw it, in the order of the model file, while its terms are still resolved in its owning package,
+* the classes owned by the vocabulary packages (as shown in Enterprise Architect's Project Browser), regardless of which diagrams they are drawn on, including classes drawn on no diagram,
+* the classes owned by other packages and drawn on diagrams owned by the vocabulary packages. Such a class is located in the first vocabulary package with a diagram it is drawn on, in the order of the model file, while its terms are still resolved in its owning package,
 * the attributes of those classes, and
-* the associations drawn visibly on the packages' own diagrams (a hidden link does not count). An association drawn by the diagrams of several of the packages is located in the first of them, in the order of the model file.
+* the associations drawn on diagrams owned by the vocabulary packages. An association drawn on diagrams of several vocabulary packages is located in the first of them, in the order of the model file.
 
-Only class elements, abstract ones included, define terms. Data types and enumerations are only used as ranges, and other element types are skipped. Ignored elements are left out.
+Only classes, abstract ones included, give class terms. Data types and enumerations are only used as types, and other elements are skipped. Ignored elements are left out.
 
 #### <span id="ontology-diagram"></span>Ontology diagram
 
-An `inspec-uml:ontologyDiagram` limits the extraction to the occurrences the diagram draws, instead of those located in the packages:
+An `inspec-uml:ontologyDiagram` limits the extraction to the occurrences drawn on the diagram, instead of those located in the vocabulary packages:
 
 * the classes drawn on the diagram, wherever they are owned, and the attributes of those classes, and
-* the associations drawn visibly on the diagram.
+* the associations drawn on the diagram.
 
-One of the packages identified via `inspec-uml:ontology` must own the diagram, otherwise it is an error. A class owned by one of the packages is located in it. Any other class, and every association, is located in the package that owns the diagram. The terms of a class and its attributes are still resolved in the class's owning package, and the terms of an association in the package that owns the diagram. Which terms are introduced is decided as without an ontology diagram.
+One of the vocabulary packages must own the diagram, otherwise it is an error. A class owned by a vocabulary package is located in it. Any other class, and every association, is located in the package that owns the diagram. The terms given by a class and its attributes are still resolved in the class's owning package, and those given by an association in the package that owns the diagram. Which terms are introduced is decided as without an ontology diagram.
 
 ### Introduced terms and consistency
 
-The packages introduce the terms of those occurrences whose URI resolves into one of them, i.e. that have:
+A term is introduced when an occurrence of it resolves into one of the vocabulary packages, i.e. has:
 
-* a `name` tag alone, resolved in one of the packages,
-* a `package` tag naming one of the packages, together with a `name` tag, or
-* a `uri` tag that is the `baseURI` of one of the packages followed by a local name, not by a sub-namespace.
+* a `name` tag alone, resolved in one of the vocabulary packages,
+* a `package` tag naming one of the vocabulary packages, together with a `name` tag, or
+* a `uri` tag that is the `baseURI` of one of the vocabulary packages followed by a local name, not by a sub-namespace.
 
-Occurrences whose terms resolve elsewhere are uses of other vocabularies and produce nothing in the data vocabulary. The data vocabulary contains only the introduced terms.
+Other terms are reused from other data vocabularies, and their occurrences produce nothing in the data vocabulary. The data vocabulary contains only the introduced terms.
 
-An introduced term must be identical in all its defining occurrences. If the same class or property is defined in several places in the packages, its texts and its superclasses or superproperties must be the same in each. Otherwise it is an error. A property whose occurrences differ in domain or range, after `domain` and `range` tags, gets no domain or range respectively; a converter should warn about it and recommend a `domain` or `range` tag. A redefining attribute is not a defining occurrence, see [Inheritance](#inheritance).
+An introduced term must be identical in all its defining occurrences: its texts and its superclasses or superproperties must be the same in each, otherwise it is an error. A property whose defining occurrences differ in domain or range, after `domain` and `range` tags, gets no domain or range respectively; an extractor should warn about it and recommend a `domain` or `range` tag. A redefining attribute is not a defining occurrence, see [Inheritance](#inheritance).
 
 ### The data vocabulary resource
 
-The data vocabulary resource (see Rule DV-2 in the [rules](../rules.md#dv2)) is the URI given by `inspec-uml:ontology`. The text tags of the packages describe it: the label gives `dcterms:title`, the definition `dcterms:description` and the usage note `skos:scopeNote`. When several packages make up the data vocabulary, each kind of text is taken from the packages that have the corresponding tag, which must give the same text, otherwise it is an error. When none of them has it, it is taken from the first of the packages, in the order of the model file. A converter should warn when the text of another package is left out.
+The data vocabulary resource (see Rule DV-2 in the [rules](../rules.md#dv2)) is the URI given by `inspec-uml:ontology`. The text tags of the vocabulary packages describe it: the label gives `dcterms:title`, the definition `dcterms:description` and the usage note `skos:scopeNote`. When there are several vocabulary packages, each kind of text is taken from those that have the corresponding tag, which must give the same text, otherwise it is an error. When none of them has it, it is taken from the first vocabulary package, in the order of the model file. An extractor should warn when the text of another vocabulary package is left out.
 
 With an ontology diagram, the data vocabulary resource is described by the texts of the package that owns the diagram. A kind of text that package has none of is taken as without an ontology diagram.
 
@@ -206,7 +206,7 @@ With an ontology diagram, the data vocabulary resource is described by the texts
 
 #### Domain and range
 
-The domain of a property is the class that has the property, i.e. the owner of an attribute or, for an association end, the class at the opposite end. The range is the type of the attribute, or the class at the association end. Types are resolved as follows:
+The domain of a property is the class that owns the attribute or, for an association end, the class at the opposite end. The range is the type of the attribute or association end. Types are resolved as follows:
 
 * a class gives that class,
 * a data type or a primitive type with a `uri` tag gives that URI,
@@ -222,11 +222,11 @@ An attribute typed `uri` holds an IRI. Its property gets no `rdfs:range` unless 
 
 #### Associations
 
-When the model leaves navigability unspecified, which is the default in Enterprise Architect, a role name makes its end navigable. When navigability or a direction is given, each navigable end becomes a property of the class at the opposite end. Introduced association properties need a `uri` or `name` tag. Role and connector names are only used as texts.
+When the model leaves navigability unspecified, which is the default in Enterprise Architect, a role name makes its end navigable. When navigability or a direction is given, each navigable end becomes a property of the class at the opposite end. Introduced association properties need a `uri` or `name` tag. Role names and association names are only used as texts.
 
-A term may be tagged on the connector instead of on its ends, giving one property for every direction. A connector `name` tag with no roles and no direction gives one property from source to target. A connector-tagged property that is navigable in both directions between different classes needs `domain` and `range` tags. It is an error to give a `name` or `uri` tag on both the connector and one of its ends.
+A property may be tagged on the association instead of on its ends, giving one property for every direction. A `name` tag on an association with no role names and no direction gives one property from source to target. A property tagged on an association that is navigable in both directions between different classes needs `domain` and `range` tags. It is an error to give a `name` or `uri` tag both on the association and on one of its ends.
 
-The class of an association class is skipped with a warning, together with its attributes and the associations attached to it. The connector of the association class is still converted as an ordinary association.
+The class of an association class is skipped with a warning, together with its attributes and the associations attached to it. The association of the association class is still extracted as an ordinary association.
 
 ### Inheritance
 
@@ -234,13 +234,15 @@ A generalization becomes `rdfs:subClassOf` only.
 
 An attribute marked `{subsets x}` gives `rdfs:subPropertyOf` from its property to the property of `x` when its property is introduced. A property gets `rdfs:subPropertyOf` for its `parentURI` tag and for each property it subsets; a class gets `rdfs:subClassOf` for each generalization and for its `parentURI` tag.
 
-An attribute marked `{redefines x}` must resolve to the same URI as `x`, and `x` must be in the model, otherwise it is an error. This applies to each attribute it redefines. The redefining attribute is not a defining occurrence of the property: it is exempt from the rule that all defining occurrences give the same statements (see [Introduced terms and consistency](#introduced-terms-and-consistency)), and it contributes nothing to the data vocabulary. If nothing else in the package defines the property, `x` defines it (domain, range and texts).
+An attribute marked `{redefines x}` must resolve to the same URI as `x`, and `x` must be in the model, otherwise it is an error. This applies to each attribute it redefines. The redefining attribute is not a defining occurrence of the property: it is exempt from the rule that all defining occurrences give the same statements (see [Introduced terms and consistency](#introduced-terms-and-consistency)), and it contributes nothing to the data vocabulary. If the property has no other defining occurrence, `x` gives its domain, range and texts.
 
 Subsetting and redefinition are only read between attributes, not between association ends.
 
 ### Enumerations
 
-The range of an enumeration-typed property is the enumeration's own `uri` or `name` tag if it has one. Otherwise it is `xsd:string` for plain literals and absent for URI literals.
+The values of an enumeration are URIs when every enumeration value has a `uri` tag, and plain literals when none of them has one. It is an error if only some of them have a `uri` tag. The `uri` tag of an enumeration value must be an absolute IRI. Ignored enumeration values do not count.
+
+The range of an enumeration-typed property is the enumeration's own `uri` or `name` tag if it has one. Otherwise it is `xsd:string` when the values are plain literals, and absent when they are URIs.
 
 ### <span id="dv-texts"></span>Texts
 
@@ -248,21 +250,21 @@ Each kind of text, i.e. label, definition and usage note, is taken as a whole fr
 
 Statement | Taken from, in order
 --- | ---
-`rdfs:label` | `label-xx`, else the UML name (for an association, the connector's name)
+`rdfs:label` | `label-xx`, else the UML name (for an association, the association's name)
 `rdfs:comment` | `definition-xx`, else the Enterprise Architect notes with markup stripped
 `skos:scopeNote` | `usageNote-xx`
 
-Untagged texts (UML names and notes) and text tags without a language suffix are in the language given by the `language` tag of the package they are located in. A converter may let the caller supply a default language when there is none. A text tag without a language suffix gives way, with a warning, to a suffixed tag for the same language.
+Untagged texts (UML names and notes) and text tags without a language suffix are in the language given by the `language` tag of the package they are located in. An extractor may let the caller supply a default language when there is none. A text tag without a language suffix gives way, with a warning, to a suffixed tag for the same language.
 
-When the term of an association is tagged on the connector, the texts of an end are taken from the end, else from the connector, else from the role of the end, and then from the name of the connector.
+When a property is tagged on an association, the texts of each end are taken from the end, else from the association, else from the role name of the end, and then from the name of the association.
 
 ## <span id="application-profile"></span>Extracting the application profile
 
 ### <span id="ap-scope"></span>Scope
 
-The classes drawn on the diagram given by `inspec-uml:apDiagram` become node shapes, abstract ones included. A node shape contains only the attributes of its own class and the associations of its own class drawn visibly on the diagram (a hidden link does not count). An association drawn only on other diagrams is left out.
+The classes drawn on the application profile diagram become node shapes, abstract ones included. A node shape contains only the attributes of its own class and the associations of its own class drawn on the diagram. An association drawn only on other diagrams is left out.
 
-An association term with only a `name` tag is resolved in the package of the profile diagram, which draws every association of the profile.
+A property given by an association with only a `name` tag is resolved in the package that owns the application profile diagram, on which every association of the profile is drawn.
 
 ### Node shapes
 
@@ -297,13 +299,7 @@ A redefining attribute, see [Inheritance](#inheritance), gets an ordinary proper
 
 #### <span id="ap-enumerations"></span>Enumerations
 
-An enumeration gives `sh:in` with the values in the order of the enumeration literals in the model:
-
-* if all literals have a `uri` tag, `sh:in` contains those URIs, with `sh:nodeKind sh:IRI`,
-* if no literal has a `uri` tag, `sh:in` contains the literal names as plain literals, with `sh:nodeKind sh:Literal`,
-* a mix of the two is an error.
-
-The `uri` tag of a literal must be an absolute IRI. Ignored literals do not count. An enumeration without usable literals gives a warning and no `sh:in`.
+An enumeration gives `sh:in` with its values, see [Enumerations](#enumerations), in the order of the enumeration values in the model, with `sh:nodeKind sh:IRI` when they are URIs and `sh:nodeKind sh:Literal` when they are plain literals. An enumeration without usable enumeration values gives a warning and no `sh:in`.
 
 #### Application profile tags
 
@@ -326,7 +322,7 @@ Statement | Taken from, in order
 --- | ---
 `rdfs:label` (node shape) | `ap-label-xx`, else `label-xx`, else the UML name
 `rdfs:comment` (node shape) | `ap-definition-xx`, else `definition-xx`, else the Enterprise Architect notes
-`sh:name` (property shape) | `ap-label-xx`, else `label-xx`, else the UML name (for an association end, its role)
+`sh:name` (property shape) | `ap-label-xx`, else `label-xx`, else the UML name (for an association end, its role name)
 `sh:description` (property shape) | `ap-definition-xx`, else `definition-xx`, else the Enterprise Architect notes
 `skos:scopeNote` | `ap-usageNote-xx`, else `usageNote-xx`
 
@@ -336,7 +332,7 @@ An element is ignored when its `ignore` tag has the value `true`, matched case-i
 
 ## Extractor conformance
 
-Where a rule in this convention says that something is an error, no extraction result is valid; where it says that something gives a warning, the extraction proceeds.
+An extractor reports every error and warning it finds. On an error, no extraction result is valid, and the extractor produces no result for the specification part. On a warning, the extraction proceeds. The errors and warnings are listed below.
 
 ### Errors
 
