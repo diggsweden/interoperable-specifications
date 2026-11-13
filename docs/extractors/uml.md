@@ -289,17 +289,17 @@ An attribute typed `uri` holds an IRI. Its property gets no `rdfs:range` unless 
 
 #### Associations
 
-When the model leaves navigability unspecified, which is the default in Enterprise Architect, a role name makes its end navigable. When navigability or a direction is given, each navigable end becomes a property of the class at the opposite end. Introduced association properties need a `uri` or `name` tag. Role names and association names are only used as texts.
+When the model leaves navigability unspecified, which is the default in Enterprise Architect, a role name makes its end navigable. When navigability or a direction is given, each navigable end becomes a property of the class at the opposite end. Introduced association properties need a `uri` or `name` tag. Role names and association names are only used as texts. An association with no navigable end gives no property, and a `uri` or `name` tag on an end that is not navigable is not used; both give a warning.
 
-A property may be tagged on the association instead of on its ends, giving one property for every direction. A `name` tag on an association with no role names and no direction gives one property from source to target. A property tagged on an association that is navigable in both directions between different classes needs `domain` and `range` tags. It is an error to give a `name` or `uri` tag both on the association and on one of its ends.
+A property may be tagged on the association instead of on its ends, giving one property for every direction. A `name` tag on an association with no role names and no direction gives one property from source to target. A property tagged on an association that is navigable in both directions between different classes gets no domain or range, with a warning, unless `domain` and `range` tags give them, see [Introduced terms and consistency](#introduced-terms-and-consistency). It is an error to give a `name` or `uri` tag both on the association and on one of its ends.
 
-The class of an association class is skipped with a warning, together with its attributes and the associations attached to it. The association of the association class is still extracted as an ordinary association.
+An association is skipped with a warning when the element at one of its ends is missing from the model or is not a class. The class of an association class is skipped with a warning, together with its attributes and the associations attached to it. The association of the association class is still extracted as an ordinary association.
 
 ### Inheritance
 
-A generalization becomes `rdfs:subClassOf` only, unless it is ignored.
+A generalization becomes `rdfs:subClassOf` only, unless it is ignored. A generalization is skipped with a warning when the element at one of its ends is missing from the model or is not a class.
 
-An attribute marked `{subsets x}` gives `rdfs:subPropertyOf` from its property to the property of `x` when its property is introduced. A property gets `rdfs:subPropertyOf` for its `parentURI` tag and for each property it subsets; a class gets `rdfs:subClassOf` for each generalization and for its `parentURI` tag.
+An attribute marked `{subsets x}` gives `rdfs:subPropertyOf` from its property to the property of `x` when its property is introduced. `x` must be in the model, otherwise it is an error. A property gets `rdfs:subPropertyOf` for its `parentURI` tag and for each property it subsets; a class gets `rdfs:subClassOf` for each generalization and for its `parentURI` tag.
 
 An attribute marked `{redefines x}` must resolve to the same URI as `x`, and `x` must be in the model, otherwise it is an error. This applies to each attribute it redefines. The redefining attribute is not a defining occurrence of the property: it is exempt from the rule that all defining occurrences give the same statements (see [Introduced terms and consistency](#introduced-terms-and-consistency)), and it contributes nothing to the data vocabulary. If the property has no other defining occurrence, `x` gives its domain, range and texts.
 
@@ -370,7 +370,7 @@ An enumeration gives `sh:in` with its values, see [Enumerations](#enumerations),
 
 #### Application profile tags
 
-* `ap-weight` - `main` or `supportive`, see [Node shapes](#node-shapes).
+* `ap-weight` - `main` or `supportive`, see [Node shapes](#node-shapes). Any other value is an error.
 * `ap-nodeKind` - gives `sh:nodeKind`. Takes `BlankNode`, `IRI`, `Literal`, `BlankNodeOrIRI`, `BlankNodeOrLiteral` or `IRIOrLiteral`, matched case-insensitively.
 * `ap-preferred` - the value `true` gives `sh:minCount 0` regardless of the lower bound, i.e. the property is preferred (recommended but not required).
 * `ap-order` - gives `sh:order`, must be an integer. Without the `implicitOrder` extraction option, property shapes have no implicit order from their position in the model.
@@ -395,6 +395,8 @@ Statement | Taken from, in order
 `sh:description` (property shape) | `ap-definition-xx`, else `definition-xx`, else the Enterprise Architect notes
 `skos:scopeNote` | `ap-usageNote-xx`, else `usageNote-xx`
 
+It is an error if a property shape gets no `sh:name`, e.g. for an association end with neither a role name nor a label tag, see Rule AP-6 in the [rules](../rules.md#ap6).
+
 ## Ignored elements
 
 An element is ignored when its `ignore` tag has the value `true`, matched case-insensitively. An ignored element gets no definition and no shape, but its term remains valid for references. The attributes of an ignored class are ignored too. A reference to an ignored class that has no `uri` or `name` tag is an error at the referring attribute or association end. An ignored association end gives no property and no property shape, while the other end is still read. An ignored generalization gives no `rdfs:subClassOf`.
@@ -407,11 +409,44 @@ An extractor may include statements about reused terms, for example when a reuse
 
 ### Errors
 
-*This section is not yet written.*
+The following are errors. Each links to the section that states the rule.
+
+* Specification part and scope:
+  * a diagram or package name that is not unique in the model file, see [Names](#names),
+  * an `inspec-uml:ontology` that identifies no package, see [Scope](#dv-scope),
+  * an ontology diagram that no vocabulary package owns, see [Ontology diagram](#ontology-diagram).
+* Identifying terms, see [Identifying terms](#identifying-terms):
+  * a class, attribute or association in the scope of the extraction without a `uri` or `name` tag,
+  * a `name` tag with characters that are not allowed,
+  * a `uri` tag that does not end in `/` or `#` followed by its `name` tag,
+  * a `package` tag without a `name` or `uri` tag, or naming a package that is not in the model file.
+* Data vocabulary:
+  * defining occurrences of a term that differ in texts, superclasses or superproperties, see [Introduced terms and consistency](#introduced-terms-and-consistency),
+  * vocabulary packages that give different texts for the data vocabulary resource, see [The data vocabulary resource](#the-data-vocabulary-resource),
+  * a `uri` or `name` tag both on an association and on one of its ends, see [Associations](#associations),
+  * `{subsets x}` or `{redefines x}` where `x` is not in the model, and `{redefines x}` that resolves to another IRI than `x`, see [Inheritance](#inheritance),
+  * an enumeration whose values have a `uri` tag only in part, see [Enumerations](#enumerations),
+  * a reference to an ignored class without a `uri` or `name` tag, see [Ignored elements](#ignored-elements).
+* Application profile:
+  * a stereotype and an `ap-weight` tag that disagree, see [Node shapes](#node-shapes),
+  * an `ap-weight`, `ap-nodeKind`, `ap-order` or `ap-pattern` tag with a value that is not allowed, and an `ap-codelist` tag on an attribute typed with a literal datatype, see [Application profile tags](#application-profile-tags),
+  * a property shape without `sh:name`, see [Texts](#ap-texts).
 
 ### Warnings
 
-*This section is not yet written.*
+The following give warnings. Each links to the section that states the rule.
+
+* an extraction option that the extractor does not recognise, see [Extraction options](#extraction-options),
+* defining occurrences of a property that differ in domain or range, see [Introduced terms and consistency](#introduced-terms-and-consistency),
+* the text of a vocabulary package that is left out, see [The data vocabulary resource](#the-data-vocabulary-resource),
+* a type that cannot be resolved, see [Domain and range](#domain-and-range),
+* an association with no navigable end, a `uri` or `name` tag on an end that is not navigable, an association class, and an association whose end is missing or not a class, see [Associations](#associations),
+* a generalization whose end is missing or not a class, see [Inheritance](#inheritance),
+* a text tag without a language suffix next to a suffixed one, see [Texts](#dv-texts),
+* a stereotype other than `«main»` or `«supportive»`, see [Node shapes](#node-shapes),
+* an enumeration without usable enumeration values, see [Enumerations](#ap-enumerations).
+
+An extractor may report further warnings.
 
 ## Appendix A: Worked example
 
