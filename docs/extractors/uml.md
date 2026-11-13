@@ -195,6 +195,8 @@ A term is introduced when an occurrence of it resolves into one of the vocabular
 
 Other terms are reused from other data vocabularies and are not part of the extracted data vocabulary. An introduced term may refer to them, e.g. as its superclass or range, but statements about a reused term never point to the data vocabulary resource via `rdfs:isDefinedBy`, see Rule DV-5 in the [rules](../rules.md#dv5).
 
+The introduced terms are the classes and properties the interoperable specification may indicate via `inspec:introduces`, see Rules [ENRICH-2](../rules.md#enrich2) and [ENRICH-3](../rules.md#enrich3).
+
 An introduced term must be identical in all its defining occurrences: its texts and its superclasses or superproperties must be the same in each, otherwise it is an error. A property whose defining occurrences differ in domain or range, after `domain` and `range` tags, gets no domain or range respectively; an extractor should warn about it and recommend a `domain` or `range` tag. A redefining attribute is not a defining occurrence, see [Inheritance](#inheritance).
 
 ### The data vocabulary resource
@@ -263,7 +265,7 @@ When a property is tagged on an association, the texts of each end are taken fro
 
 ### <span id="ap-scope"></span>Scope
 
-The classes drawn on the application profile diagram become node shapes, abstract ones included. A node shape contains only the attributes of its own class and the associations of its own class drawn on the diagram. An association drawn only on other diagrams is left out.
+The classes drawn on the application profile diagram become node shapes, abstract ones included. A node shape contains only the attributes of its own class and the associations of its own class drawn on the diagram. An association drawn only on other diagrams is left out. Whether a term is introduced or reused does not matter in the application profile, shapes are given for both.
 
 A property given by an association with only a `name` tag is resolved in the package that owns the application profile diagram, on which every association of the profile is drawn.
 
