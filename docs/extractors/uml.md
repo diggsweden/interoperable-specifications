@@ -152,12 +152,13 @@ URIs are not minted from UML element names, except with the `osloUris` extractio
 * a `package` and a `name` tag, the name being resolved against the `baseURI` of the given package, or
 * a `name` tag, resolved in the package that owns the class or attribute or, for an association or association end, in the package the association is located in.
 
-A `uri` tag takes precedence: a `package` tag given with it is not used. A `uri` tag given with a `name` tag must agree with it.
+A `uri` tag takes precedence: a `package` tag given with it is not used. A `uri` tag given with a `name` tag must end in `/` or `#` followed by the name.
 
 A class or attribute is located in its owning package, or, when another package owns it and it is drawn on a diagram of the vocabulary packages, in one of the vocabulary packages, see [Scope](#dv-scope). An association has no owner and is located through the diagrams it is drawn on. It is an error:
 
 * if a class, attribute or association in the scope of the extraction has none of the tags above, for an association neither on the association nor on its ends,
-* if a `name` tag has characters not allowed in a URI, or
+* if a `name` tag has characters other than unaccented Latin letters, digits or the characters `-._~` (the unreserved characters of RFC 3986),
+* if a `package` tag is given without a `name` or `uri` tag, or
 * if a `package` tag, given without a `uri` tag, names a package that is not in the model file.
 
 ## Extracting the data vocabulary
@@ -190,15 +191,15 @@ A term is introduced when an occurrence of it resolves into one of the vocabular
 
 * a `name` tag alone, resolved in one of the vocabulary packages,
 * a `package` tag naming one of the vocabulary packages, together with a `name` tag, or
-* a `uri` tag that is the `baseURI` of one of the vocabulary packages followed by a local name, not by a sub-namespace.
+* a `uri` tag that is the `baseURI` of one of the vocabulary packages followed by a name that would be valid as a `name` tag, i.e. not by a sub-namespace.
 
-Other terms are reused from other data vocabularies, and their occurrences produce nothing in the data vocabulary. The data vocabulary contains only the introduced terms.
+Other terms are reused from other data vocabularies and are not part of the extracted data vocabulary. An introduced term may refer to them, e.g. as its superclass or range, but statements about a reused term never point to the data vocabulary resource via `rdfs:isDefinedBy`, see Rule DV-5 in the [rules](../rules.md#dv5).
 
 An introduced term must be identical in all its defining occurrences: its texts and its superclasses or superproperties must be the same in each, otherwise it is an error. A property whose defining occurrences differ in domain or range, after `domain` and `range` tags, gets no domain or range respectively; an extractor should warn about it and recommend a `domain` or `range` tag. A redefining attribute is not a defining occurrence, see [Inheritance](#inheritance).
 
 ### The data vocabulary resource
 
-The data vocabulary resource (see Rule DV-2 in the [rules](../rules.md#dv2)) is the URI given by `inspec-uml:ontology`. The text tags of the vocabulary packages describe it: the label gives `dcterms:title`, the definition `dcterms:description` and the usage note `skos:scopeNote`. When there are several vocabulary packages, each kind of text is taken from those that have the corresponding tag, which must give the same text, otherwise it is an error. When none of them has it, it is taken from the first vocabulary package, in the order of the model file. An extractor should warn when the text of another vocabulary package is left out.
+The data vocabulary resource (see Rule DV-2 in the [rules](../rules.md#dv2)) is the URI given by `inspec-uml:ontology`, typed as `owl:Ontology`. The text tags of the vocabulary packages describe it: the label gives `dcterms:title`, the definition `dcterms:description` and the usage note `skos:scopeNote`. When there are several vocabulary packages, each kind of text is taken from those that have the corresponding tag, which must give the same text, otherwise it is an error. When none of them has it, it is taken from the first vocabulary package, in the order of the model file. An extractor should warn when the text of another vocabulary package is left out.
 
 With an ontology diagram, the data vocabulary resource is described by the texts of the package that owns the diagram. A kind of text that package has none of is taken as without an ontology diagram.
 
@@ -333,6 +334,8 @@ An element is ignored when its `ignore` tag has the value `true`, matched case-i
 ## Extractor conformance
 
 An extractor reports every error and warning it finds. On an error, no extraction result is valid, and the extractor produces no result for the specification part. On a warning, the extraction proceeds. The errors and warnings are listed below.
+
+An extractor may include statements about reused terms, for example when a reused term is owned by a package with its own ontology URI, as long as they do not point to the extracted data vocabulary resource via `rdfs:isDefinedBy`, see Rule DV-5 in the [rules](../rules.md#dv5).
 
 ### Errors
 
