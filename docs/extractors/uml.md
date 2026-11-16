@@ -27,6 +27,7 @@ The following terms are used with the meaning given here. Terms defined in the [
 * **Type** - the type of an attribute (a class, data type, primitive type or enumeration), or the class at an association end.
 * **Tag** - a tagged value on an element. *The tag `x`* means the tagged value named `x`.
 * **Stereotype** - a UML stereotype on an element, written `«name»`.
+* **Notes** - the documentation text of an element (in UML, its comments), with any markup stripped.
 * **Diagram** - a UML diagram in the model. An element is **drawn on** a diagram when the diagram shows it. An association is drawn on a diagram only when it is visible there, so a hidden link does not count.
 * **Ontology diagram** - the diagram given by `inspec-uml:ontologyDiagram`.
 * **Application profile diagram** - the diagram given by `inspec-uml:apDiagram`.
@@ -233,7 +234,7 @@ The ontology URI of a package is its `ontologyURI` tag, or else its `baseURI` ta
 
 Without an ontology diagram, the extraction looks only at the occurrences located in the vocabulary packages:
 
-* the classes owned by the vocabulary packages (as shown in Enterprise Architect's Project Browser), regardless of which diagrams they are drawn on, including classes drawn on no diagram,
+* the classes owned by the vocabulary packages, regardless of which diagrams they are drawn on, including classes drawn on no diagram,
 * the classes owned by other packages and drawn on diagrams owned by the vocabulary packages. Such a class is located in the first vocabulary package with a diagram it is drawn on, in the order of the model file, while its terms are still resolved in its owning package,
 * the attributes of those classes, and
 * the associations drawn on diagrams owned by the vocabulary packages. An association drawn on diagrams of several vocabulary packages is located in the first of them, in the order of the model file.
@@ -289,7 +290,7 @@ An attribute typed `uri` holds an IRI. Its property gets no `rdfs:range` unless 
 
 #### Associations
 
-When the model leaves navigability unspecified, which is the default in Enterprise Architect, a role name makes its end navigable. When navigability or a direction is given, each navigable end becomes a property of the class at the opposite end. Introduced association properties need a `uri` or `name` tag. Role names and association names are only used as texts. An association with no navigable end gives no property, and a `uri` or `name` tag on an end that is not navigable is not used; both give a warning.
+When the model leaves navigability unspecified, a role name makes its end navigable. When navigability or a direction is given, each navigable end becomes a property of the class at the opposite end. Introduced association properties need a `uri` or `name` tag. Role names and association names are only used as texts. An association with no navigable end gives no property, and a `uri` or `name` tag on an end that is not navigable is not used; both give a warning.
 
 A property may be tagged on the association instead of on its ends, giving one property for every direction. A `name` tag on an association with no role names and no direction gives one property from source to target. A property tagged on an association that is navigable in both directions between different classes gets no domain or range, with a warning, unless `domain` and `range` tags give them, see [Introduced terms and consistency](#introduced-terms-and-consistency). It is an error to give a `name` or `uri` tag both on the association and on one of its ends.
 
@@ -318,7 +319,7 @@ Each kind of text, i.e. label, definition and usage note, is taken as a whole fr
 Statement | Taken from, in order
 --- | ---
 `rdfs:label` | `label-xx`, else the UML name (for an association, the association's name)
-`rdfs:comment` | `definition-xx`, else the Enterprise Architect notes with markup stripped
+`rdfs:comment` | `definition-xx`, else the notes
 `skos:scopeNote` | `usageNote-xx`
 
 Untagged texts (UML names and notes) and text tags without a language suffix are in the language given by the `language` tag of the package they are located in. An extractor may let the caller supply a default language when there is none. A text tag without a language suffix gives way, with a warning, to a suffixed tag for the same language.
@@ -390,9 +391,9 @@ Texts are taken as in the data vocabulary, see [Texts](#dv-texts), from the foll
 Statement | Taken from, in order
 --- | ---
 `rdfs:label` (node shape) | `ap-label-xx`, else `label-xx`, else the UML name
-`rdfs:comment` (node shape) | `ap-definition-xx`, else `definition-xx`, else the Enterprise Architect notes
+`rdfs:comment` (node shape) | `ap-definition-xx`, else `definition-xx`, else the notes
 `sh:name` (property shape) | `ap-label-xx`, else `label-xx`, else the UML name (for an association end, its role name)
-`sh:description` (property shape) | `ap-definition-xx`, else `definition-xx`, else the Enterprise Architect notes
+`sh:description` (property shape) | `ap-definition-xx`, else `definition-xx`, else the notes
 `skos:scopeNote` | `ap-usageNote-xx`, else `usageNote-xx`
 
 It is an error if a property shape gets no `sh:name`, e.g. for an association end with neither a role name nor a label tag, see Rule AP-6 in the [rules](../rules.md#ap6).
@@ -448,6 +449,12 @@ The following give warnings. Each links to the section that states the rule.
 
 An extractor may report further warnings.
 
+### Implementation notes
+
+This section is informative.
+
+* To make it easier for the modeller, an extractor can accept a GUID with or without enclosing braces and regardless of case, so that GUIDs can be copied as Enterprise Architect shows them, see [Appendix C](#appendix-c-notes-for-enterprise-architect).
+
 ## Appendix A: Worked example
 
 *This section is not yet written.*
@@ -470,7 +477,16 @@ See the [supported tags of the OSLO-UML-Transformer](https://github.com/Informat
 
 ## Appendix C: Notes for Enterprise Architect
 
-*This section is not yet written.*
+This appendix is informative. It relates the terms of this convention to how they appear in Enterprise Architect.
+
+* **Tags** are Enterprise Architect's tagged values. Tags on an association end are the tagged values of the connector's source or target role.
+* **Associations** are connectors of the type Association. The ends of an association are the connector's source and target.
+* **Ownership** is what the Project Browser shows: a package owns the elements listed under it, regardless of which diagrams they are drawn on.
+* **Navigability** is unspecified by default, so a role name is what makes an end navigable, see [Associations](#associations).
+* **Drawn on** - a connector hidden on a diagram is not drawn on it, even though it is still in the diagram.
+* **Notes** are the Notes field of an element, which may contain formatting markup.
+* **GUIDs** are shown by Enterprise Architect in braces and upper case, e.g. `{4F1B…}`, see [Implementation notes](#implementation-notes).
+* **Names** of diagrams and packages need not be unique in Enterprise Architect. Use the GUID where they are not, see [Names](#names).
 
 ## Appendix D: Open questions
 
