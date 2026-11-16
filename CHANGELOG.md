@@ -27,6 +27,12 @@ The formal specification is published at <http://w3id.org/inspec/specification>.
 
 - Clarified in `PROF-2` that other parts have no prescribed meaning by
   PROF-INSPEC, as other rule sets such as EXTRACT-INSPEC may give them one.
+- Refinement via `inspec:refines` no longer uses `sh:and`, a refinement must
+  not loosen the constraints of the shape it refines, and a node shape may
+  refine several node shapes. Affects `AP-3`, `AP-7` and `AP-9`.
+- A node shape may be a variant of several node shapes, with at least one
+  variant property shape for each, and a property shape of at most one.
+  Affects `AP-8` and `AP-10`.
 
 ### Vocabulary (`datavoc/`)
 
