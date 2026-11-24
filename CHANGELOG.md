@@ -22,6 +22,9 @@ The formal specification is published at <http://w3id.org/inspec/specification>.
   extracting interoperable specification parts from other specification parts,
   with a non-normative pointer to the extraction conventions maintained
   alongside INSPEC.
+- New rules `ENRICH-5` and `ENRICH-6` for resolving refinements into
+  validating SHACL: a shape that refines other shapes gets the characteristics
+  of the refined shapes that it does not state itself.
 
 #### Changed
 

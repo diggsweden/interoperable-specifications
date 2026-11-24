@@ -130,7 +130,7 @@ This set of rules describes how interoperable specification parts can be extract
 
 ## Rules for enriching the interoperable specifications - ENRICH-INSPEC
 
-This set of rules aim to enrich the interoperable specification by analysing the contents of, and interaction between, the different interoperable specification parts in order to surface information which may be valuable for a webb of interoperable specifications.
+This set of rules aim to enrich the interoperable specification by analysing the contents of, and interaction between, the different interoperable specification parts in order to surface information which may be valuable for a webb of interoperable specifications. Rules ENRICH-1 to ENRICH-4 add to the "interoperable specification resource", while Rules ENRICH-5 and ENRICH-6 derive a further form of the application profile.
 
 ><span id="enrich1"></span> **Rule ENRICH-1:** Every public property or node shape MAY be pointed to from the "interoperable specification resource" (introduced in Rule PROF-1) via the `dcterms:hasPart` property.
 
@@ -139,6 +139,10 @@ This set of rules aim to enrich the interoperable specification by analysing the
 ><span id="enrich3"></span> **Rule ENRICH-3:** For a foundational interoperable specification all classes and properties defined by (see Rule DV-3) an **introduced** data vocabulary MAY be explicitly indicated from the "interoperable specification resource" using `inspec:introduces`.
 
 ><span id="enrich4"></span> **Rule ENRICH-4:** If a `inspec:refines` relation is present in the application profile resource the specification introducing the refined application MAY be indicated from the "interoperable specification resource" using `prof:isProfileOf`.
+
+><span id="enrich5"></span> **Rule ENRICH-5:** The application profile MAY be enriched into *validating SHACL* by resolving its refinements. A shape that refines other shapes via `inspec:refines` gets every *characteristic* of the shapes it refines that it does not state itself. A characteristic is what a shape states about the nodes it applies to: which nodes they are (targets), what they must satisfy (constraints, with their severity) and how they are presented (non-validating characteristics such as a label). What it states about the shape itself, e.g. `rdfs:isDefinedBy`, `sh:deactivated`, `inspec:refines` and `inspec:variant`, is not a characteristic. A refined shape is resolved before the shapes that refine it. `inspec:refines` is kept. Enriching validating SHACL MUST NOT change it.
+
+><span id="enrich6"></span> **Rule ENRICH-6:** A characteristic is given by its main parameter, and a parameter that qualifies another belongs to its characteristic. All targets are one characteristic, as are a text in all its languages and the property shapes of a node shape. An `sh:or` whose members each only state a datatype is the same characteristic as `sh:datatype`, and likewise for classes; any other `sh:or` is a characteristic of its own.<sup><a href="#fn8" id="fn8_1">[8]</a></sup>
 
 <section id="footnotes" style="font-size:smaller;border-top:1px solid" class="informative">
 <ol>
@@ -149,5 +153,6 @@ This set of rules aim to enrich the interoperable specification by analysing the
  <li id="fn5">The id value could in principle be the URI, however, it is highly likely that we want to write CSS rules targeting individual elements and then we need to be more restrictive as CSS rules cannot use URIs as part of selectors. <a href="#fn5_1">↩</a></li>
  <li id="fn6">Extraction conventions maintained alongside INSPEC, such as the INSPEC UML extraction convention, are listed at <a href="https://w3id.org/inspec/extractors">https://w3id.org/inspec/extractors</a>. The list is not exhaustive and is not part of this specification. <a href="#fn6_1">↩</a></li>
  <li id="fn7">A consumer that does not support an extraction convention cannot establish conformance to PROF-INSPEC for specifications that depend on it. <a href="#fn7_1">↩</a></li>
+ <li id="fn8">For example, `sh:flags` qualifies `sh:pattern`, and a node shape without property shapes of its own gets those of every node shape it refines. The details and edge cases are described in the <a href="https://diggsweden.github.io/interoperable-specifications/docs/ap.html#resolving_refinements">SHACL-INSPEC document</a>. <a href="#fn8_1">↩</a></li>
 </ol>
 </section>

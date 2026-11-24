@@ -142,11 +142,9 @@ ex:ps-publisher2 a sh:PropertyShape ;
 
 Note that at a minimum we have to repeat the `sh:path` property, which must be the same as in the refined property shape.
 
-The refining property shape gets the constraints and characteristics of the refined property shape that it does not state itself. In the example above, `ex:ps-publisher2` gets `sh:name`, `sh:nodeKind` and `sh:minCount` from `ex:ps-publisher`, while its own `sh:class foaf:Organization` takes the place of `sh:class foaf:Agent`. If the refined property shape itself refines another property shape, that refinement is resolved first. A shape cannot refine itself, directly or through other shapes.
+The refining property shape gets every characteristic of the refined property shape that it does not state itself ([Rule ENRICH-6](rules.md#enrich6)). In the example above, `ex:ps-publisher2` gets `sh:name`, `sh:nodeKind` and `sh:minCount` from `ex:ps-publisher`, while its own `sh:class foaf:Organization` takes the place of `sh:class foaf:Agent`. If the refined property shape itself refines another property shape, that refinement is resolved first. A shape cannot refine itself, directly or through other shapes.
 
-<!-- TODO(ESM-285): link the ENRICH rule that defines how a refinement is resolved. -->
-
-A standard SHACL validator does not know about `inspec:refines`, so to it the refining property shape carries only what it states itself. To validate data as intended, the refinements have to be resolved first, by copying the refined property shape's constraints onto the refining one. The result is called *validating SHACL*.
+A standard SHACL validator does not know about `inspec:refines`, so to it the refining property shape carries only what it states itself. To validate data as intended, the refinements have to be resolved first, by copying the refined property shape's characteristics onto the refining one ([Rule ENRICH-5](rules.md#enrich5)). The result is called *validating SHACL*, see [Resolving refinements](#resolving_refinements).
 
 ### A refinement must not loosen constraints
 
@@ -171,6 +169,48 @@ A single `sh:datatype` *D* counts as the set {*D*}, and an `sh:or` where every m
 ### Why not `sh:and`
 
 SHACL can combine shapes via `sh:and`, but in a property shape `sh:and` applies to the value nodes, i.e. the values of `sh:path`, not to the focus node ([SHACL, section 4.6.2](https://www.w3.org/TR/shacl/#AndConstraintComponent)). If `ex:ps-publisher2` above stated `sh:and ( ex:ps-publisher )`, each publisher would be checked for a `dcterms:publisher` of its own. A book with a publisher would then fail the `sh:minCount 1`, and a book without one would pass, since there is no value to check. So `sh:and` cannot be used to refine a property shape.
+
+### Resolving refinements
+
+<a id="resolving_refinements"></a>
+
+Resolving refinements turns the application profile into *validating SHACL* ([Rule ENRICH-5](rules.md#enrich5)). Each shape that refines another gets the *characteristics* of the refined shape that it does not state itself. The refined shape is resolved first, so a chain of refinements is resolved from its start. `inspec:refines` is kept, so the validating SHACL can still be read as an application profile.
+
+The following are copied:
+
+* the SHACL constraint parameters, e.g. `sh:minCount`, `sh:class` or `sh:pattern`;
+* `sh:severity`, so a refinement of a shape with severity `sh:Warning` stays a warning unless it states a severity of its own;
+* the targets, e.g. `sh:targetClass`;
+* the non-validating characteristics `sh:name`, `sh:description`, `rdfs:label`, `rdfs:comment`, `skos:scopeNote`, `sh:order`, `sh:group` and `sh:defaultValue`.
+
+What a shape states about itself is not copied: `rdfs:isDefinedBy` records which specification the shape belongs to ([Rule AP-13](rules.md#ap13)), `sh:deactivated` deactivates the shape itself, and `inspec:refines` and `inspec:variant` relate the shape to other shapes. A shape that refines a deactivated shape is therefore still validated, including the characteristics it gets from the deactivated one. `sh:path` is not copied either, as a refining property shape states the same `sh:path` as the refined one ([Rule AP-7](rules.md#ap7)).
+
+Whether a shape states a characteristic itself is decided per characteristic, not per triple ([Rule ENRICH-6](rules.md#enrich6)):
+
+| Characteristic | Counts as stated when the shape states |
+| --- | --- |
+| a constraint parameter and the parameters that qualify it: `sh:pattern` with `sh:flags`, `sh:qualifiedValueShape` with `sh:qualifiedMinCount`, `sh:qualifiedMaxCount` and `sh:qualifiedValueShapesDisjoint`, `sh:closed` with `sh:ignoredProperties` | the main parameter, e.g. `sh:pattern` |
+| the datatypes | `sh:datatype`, or an `sh:or` whose members each only state a datatype |
+| the classes | `sh:class`, or an `sh:or` whose members each only state a class |
+| the targets | any target, e.g. `sh:targetNode` keeps out a `sh:targetClass` of the refined shape |
+| a text, e.g. `sh:name` | the text in any language, e.g. `sh:name "Utgivare"@sv` keeps out `sh:name "Publisher"@en` |
+| the property shapes of a node shape | any `sh:property` |
+| any other `sh:or` | an `sh:or` that is not one of datatypes or classes |
+| any other parameter | that parameter |
+
+A qualifying parameter that the refining shape states without its main parameter keeps its own value, but keeps nothing out: a shape stating only `sh:flags` still gets the refined shape's `sh:pattern`, without its `sh:flags`.
+
+Logical constraints are handled the same way: a refining shape's own `sh:not` takes the place of the refined shape's `sh:not`, and must not loosen it ([Rule AP-7](rules.md#ap7)), while the refined shape's `sh:not` is copied next to an own `sh:xone`.
+
+When a node shape refines several node shapes that give a characteristic differently, e.g. different labels, which one applies cannot be decided. The exception is the property shapes: the node shape gets those of all of them, each once ([Rule AP-9](rules.md#ap9)).
+
+Also note that:
+
+* combinations that no value can meet, e.g. an own `sh:minCount` above an inherited `sh:maxCount`, are not checked;
+* a refinement cannot remove a characteristic, since a characteristic it does not state is copied, so use a variant instead ([Rule AP-8](rules.md#ap8));
+* values are compared as RDF terms, so two blank nodes describing the same list or shape count as different values.
+
+Resolving refinements in validating SHACL changes nothing, as every refining shape already has what there is to copy. SHACL can therefore be enriched whenever it is unclear whether it already is validating.
 
 ### Refined shapes in other datasets
 
@@ -199,7 +239,7 @@ Note that for node shapes it is more common to have "variants" as you often want
 
 A node shape refines another node shape via `inspec:refines`, just as for property shapes. What differs is how the property shapes are handled. Either the refining node shape lists no property shapes of its own via `sh:property` and gets those of the refined node shape, e.g. when it refines only to change its label. Or it lists all of them, each either as is or as a refinement of it ([Rule AP-9](rules.md#ap9)). The latter is needed to refine some of the property shapes, or to change their order (see [section on order](#order)). Property shapes that are used as is are listed directly.
 
-A node shape may also refine several node shapes, e.g. to combine them. If it then lists no property shapes of its own, it gets the property shapes of all of them. Whether they can be combined is not checked, e.g. two property shapes with the same `sh:path` whose constraints no value can meet. This is the same as for a refinement whose own `sh:minCount` exceeds an inherited `sh:maxCount`.
+A node shape may also refine several node shapes, e.g. to combine them. If it then lists no property shapes of its own, it gets the property shapes of all of them, without checking whether they can be combined, e.g. two property shapes with the same `sh:path` whose constraints no value can meet (see [Resolving refinements](#resolving_refinements)).
 
 Let us introduce a node shape for a book profile that we want to extend including it's two property shapes (we define the property shape ps-publisher from above again to make it easier to read):
 
