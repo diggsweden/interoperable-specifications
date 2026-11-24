@@ -482,7 +482,181 @@ This section is informative.
 
 ## Appendix A: Worked example
 
-*This section is not yet written.*
+*This section is informative.*
+
+This example extracts the data vocabulary and the application profile of the [specification part example](#example) from a small model. The extraction results were produced by the reference extractor. Only the order of the statements and the shape URIs were changed, for readability.
+
+### Example model
+
+The model has two packages:
+
+Package | Tags | Notes
+--- | --- | ---
+`Book` | `baseURI` = `https://example.org/ns/book/`, `language` = `en`, `label-en` = `Book vocabulary` | Terms for describing books and their chapters.
+`FOAF` | `baseURI` = `http://xmlns.com/foaf/0.1/` |
+
+`Book` owns the diagram *Book model*, which draws `Book`, `Chapter`, `Agent` and `Genre` and both associations. It is the only diagram. The data vocabulary does not depend on it, as it takes the classes owned by `Book` regardless of diagrams, and the specification part names it as the application profile diagram.
+
+Element | Owner | Tags | Notes
+--- | --- | --- | ---
+Class `Book` | `Book` | `name` = `Book`, `label-en` = `Book`, `label-sv` = `Bok` | A written work published as a whole.
+&nbsp;&nbsp;attribute `title : String [1]` | | `uri` = `http://purl.org/dc/terms/title` |
+&nbsp;&nbsp;attribute `genre : Genre [0..1]` | | `name` = `genre` | The literary genre of the book.
+Class `Chapter`, `«supportive»` | `Book` | `name` = `Chapter` | A numbered part of a book.
+&nbsp;&nbsp;attribute `number : Integer [1]` | | `name` = `chapterNumber` | The position of the chapter in the book.
+Class `Agent` | `FOAF` | `uri` = `http://xmlns.com/foaf/0.1/Agent` |
+Enumeration `Genre` | `Book` | |
+&nbsp;&nbsp;value `novel` | | `uri` = `https://example.org/genre/novel` |
+&nbsp;&nbsp;value `poetry` | | `uri` = `https://example.org/genre/poetry` |
+
+Association | Ends | Direction | Tags
+--- | --- | --- | ---
+`Book` – `Chapter` | `Book [1]`, role `chapter` on `Chapter [1..*]` | unspecified | `name` = `hasChapter` on the end `chapter`
+`creator` | `Book`, `Agent [0..*]` | `Book` to `Agent` | `uri` = `http://purl.org/dc/terms/creator` on the association
+
+### Extracted data vocabulary
+
+The specification part gives `inspec-uml:ontology` `https://example.org/ns/book/`, so `Book` is the only vocabulary package, see [Scope](#dv-scope).
+
+```turtle
+@prefix book: <https://example.org/ns/book/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://example.org/ns/book/> a owl:Ontology ;
+  dcterms:title "Book vocabulary"@en ;
+  dcterms:description "Terms for describing books and their chapters."@en .
+
+book:Book a rdfs:Class ;
+  rdfs:isDefinedBy <https://example.org/ns/book/> ;
+  rdfs:label "Book"@en, "Bok"@sv ;
+  rdfs:comment "A written work published as a whole."@en .
+
+book:Chapter a rdfs:Class ;
+  rdfs:isDefinedBy <https://example.org/ns/book/> ;
+  rdfs:label "Chapter"@en ;
+  rdfs:comment "A numbered part of a book."@en .
+
+book:genre a rdf:Property ;
+  rdfs:isDefinedBy <https://example.org/ns/book/> ;
+  rdfs:label "genre"@en ;
+  rdfs:comment "The literary genre of the book."@en ;
+  rdfs:domain book:Book .
+
+book:chapterNumber a rdf:Property ;
+  rdfs:isDefinedBy <https://example.org/ns/book/> ;
+  rdfs:label "number"@en ;
+  rdfs:comment "The position of the chapter in the book."@en ;
+  rdfs:domain book:Chapter ;
+  rdfs:range xsd:integer .
+
+book:hasChapter a rdf:Property ;
+  rdfs:isDefinedBy <https://example.org/ns/book/> ;
+  rdfs:label "chapter"@en ;
+  rdfs:domain book:Book ;
+  rdfs:range book:Chapter .
+```
+
+* `dcterms:title`, `dcterms:creator` and `foaf:Agent` are reused terms, as they do not resolve into `Book`, and are left out, see [Introduced terms and consistency](#introduced-terms-and-consistency). `Agent` is owned by `FOAF`, but would be left out even if `Book` owned it.
+* The texts of the data vocabulary resource are the label tag and the notes of `Book`, see [The data vocabulary resource](#the-data-vocabulary-resource).
+* `Chapter` has no label tag, so its UML name is its label. `chapterNumber` takes its label from the attribute's UML name `number`, see [Texts](#dv-texts).
+* `book:genre` has no range, as the values of `Genre` are URIs, see [Enumerations](#enumerations).
+* The end `chapter` is navigable as it has a role name, and its role name is the label of `book:hasChapter`, see [Associations](#associations). The end at `Book` has neither a role name nor a tag, and the direction is unspecified, so it gives no property.
+
+### Extracted application profile
+
+The specification part gives `inspec-uml:apDiagram` `"Book model"`. The application profile resource is the interoperable specification resource `https://example.org/spec`, see Rule AP-2 in the [rules](../rules.md#ap2). The shape URIs are not given by the model.
+
+```turtle
+@prefix book: <https://example.org/ns/book/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix genre: <https://example.org/genre/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shape: <https://example.org/spec/shapes/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://example.org/spec> a owl:Ontology ;
+  owl:imports sh: .
+
+shape:Book a sh:NodeShape ;
+  rdfs:isDefinedBy <https://example.org/spec> ;
+  rdfs:label "Book"@en, "Bok"@sv ;
+  rdfs:comment "A written work published as a whole."@en ;
+  sh:targetClass book:Book ;
+  sh:nodeKind sh:IRI ;
+  sh:property [ sh:path rdf:type ; sh:hasValue book:Book ] ,
+    shape:Book-title, shape:Book-genre, shape:Book-chapter, shape:Book-creator .
+
+shape:Book-title a sh:PropertyShape ;
+  rdfs:isDefinedBy <https://example.org/spec> ;
+  sh:name "title"@en ;
+  sh:path dcterms:title ;
+  sh:minCount 1 ;
+  sh:maxCount 1 ;
+  sh:nodeKind sh:Literal ;
+  sh:datatype xsd:string .
+
+shape:Book-genre a sh:PropertyShape ;
+  rdfs:isDefinedBy <https://example.org/spec> ;
+  sh:name "genre"@en ;
+  sh:description "The literary genre of the book."@en ;
+  sh:path book:genre ;
+  sh:maxCount 1 ;
+  sh:nodeKind sh:IRI ;
+  sh:in ( genre:novel genre:poetry ) .
+
+shape:Book-chapter a sh:PropertyShape ;
+  rdfs:isDefinedBy <https://example.org/spec> ;
+  sh:name "chapter"@en ;
+  sh:path book:hasChapter ;
+  sh:minCount 1 ;
+  sh:nodeKind sh:BlankNodeOrIRI ;
+  sh:class book:Chapter ;
+  sh:node shape:Chapter .
+
+shape:Book-creator a sh:PropertyShape ;
+  rdfs:isDefinedBy <https://example.org/spec> ;
+  sh:name "creator"@en ;
+  sh:path dcterms:creator ;
+  sh:nodeKind sh:IRI ;
+  sh:class foaf:Agent .
+
+shape:Chapter a sh:NodeShape ;
+  rdfs:isDefinedBy <https://example.org/spec> ;
+  rdfs:label "Chapter"@en ;
+  rdfs:comment "A numbered part of a book."@en ;
+  sh:nodeKind sh:BlankNodeOrIRI ;
+  sh:property [ sh:path rdf:type ; sh:hasValue book:Chapter ] , shape:Chapter-number .
+
+shape:Chapter-number a sh:PropertyShape ;
+  rdfs:isDefinedBy <https://example.org/spec> ;
+  sh:name "number"@en ;
+  sh:description "The position of the chapter in the book."@en ;
+  sh:path book:chapterNumber ;
+  sh:minCount 1 ;
+  sh:maxCount 1 ;
+  sh:nodeKind sh:Literal ;
+  sh:datatype xsd:integer .
+
+shape:Agent a sh:NodeShape ;
+  rdfs:isDefinedBy <https://example.org/spec> ;
+  rdfs:label "Agent"@en ;
+  sh:targetClass foaf:Agent ;
+  sh:nodeKind sh:IRI ;
+  sh:property [ sh:path rdf:type ; sh:hasValue foaf:Agent ] .
+```
+
+* Reused terms get shapes as well, e.g. `shape:Book-title` and `shape:Agent`, see [Scope](#ap-scope).
+* `Chapter` is supportive, so its node shape has no target and is reached via `sh:node` from `shape:Book-chapter`, see [Node shapes](#node-shapes) and [Property shapes](#property-shapes).
+* `Agent` is drawn on the diagram and is not supportive, so its node shape is main, and `shape:Book-creator` gets `sh:nodeKind sh:IRI`.
+* `shape:Book-creator` takes its name from the association, as the property is tagged on the association and the end has no role name, see [Texts](#ap-texts).
 
 ## Appendix B: Relation to OSLO
 
