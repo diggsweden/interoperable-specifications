@@ -76,7 +76,7 @@ SHACL-INSPEC builds on top of the SHACL specification by providing additional re
 
 ><span id="ap2"></span> **Rule AP-2:** There MUST be a single "application profile resource" with a URI in the RDF Dataset AND it MUST be the same as the "interoperable specification resource" (introduced in Rule PROF-1)
 
-><span id="ap3"></span> **Rule AP-3:** All property shapes with a severity of `sh:Violation` and with at least one constraint (`sh:and` for specialization does not count) are considered **public** and they MUST have URIs. Use unique URIs for the shapes, avoid re-using the URI of the target class.<sup><a href="#fn3" id="fn3_1">[3]</a></sup>
+><span id="ap3"></span> **Rule AP-3:** All property shapes with a severity of `sh:Violation` and with at least one constraint are considered **public** and they MUST have URIs. Use unique URIs for the shapes, avoid re-using the URI of the target class.<sup><a href="#fn3" id="fn3_1">[3]</a></sup>
 
 ><span id="ap4"></span> **Rule AP-4:** All node shapes with a severity of `sh:Violation` are considered **public** and MUST have URIs
 
@@ -84,13 +84,13 @@ SHACL-INSPEC builds on top of the SHACL specification by providing additional re
 
 ><span id="ap6"></span> **Rule AP-6:** All public node shapes, as well as all property shapes pointed to from those, MUST provide a label and MAY also provide a definition and a usage note
 
-><span id="ap7"></span> **Rule AP-7:** A property shape MAY express that it **refines** a public property shape via both the `inspec:refines` property as well as via a `sh:and` construct, the latter to be compatible with normal SHACL validation.
+><span id="ap7"></span> **Rule AP-7:** A property shape *B* MAY express that it **refines** a public property shape *A* via the `inspec:refines` property only if *B* has the same `sh:path` as *A*, and for every constraint that both *A* and *B* state, every value that *B* accepts is also accepted by *A*.<sup><a href="#fn4" id="fn4_1">[4]</a></sup> A property shape MUST NOT refine more than one property shape.
 
-><span id="ap8"></span> **Rule AP-8:** A property shape MAY express that it is a **variant** of a public property shape via the `inspec:variant` property
+><span id="ap8"></span> **Rule AP-8:** A property shape MAY express that it is a **variant** of a public property shape via the `inspec:variant` property. A property shape MUST NOT be a variant of more than one property shape.
 
-><span id="ap9"></span> **Rule AP-9:** A node shape *B* MAY express that it **refines** a public node shape *A* via the `inspec:refines` property only if for every property shape *X* in *A* either *X* or a refinement *Y* of *X* is in *B*.
+><span id="ap9"></span> **Rule AP-9:** A node shape *B* MAY express that it **refines** one or more public node shapes via the `inspec:refines` property only if for every refined node shape *A* and every property shape *X* in *A* either *X* or a refinement *Y* of *X* is in *B*. If *B* has no property shapes of its own, it is considered to have the property shapes of all the node shapes it refines.
 
-><span id="ap10"></span> **Rule AP-10:** A node shape *B* MAY express that it is a **variant** of a public node shape *A* via the `inspec:variant` property only if for every property shape *X* in *A* either *X* or *Y* is in *B* where *Y* is a refinement or a variant of *X*. At least one of the property shapes must be a variant and not a refinement.
+><span id="ap10"></span> **Rule AP-10:** A node shape *B* MAY express that it is a **variant** of one or more public node shapes via the `inspec:variant` property only if for every such node shape *A* and every property shape *X* in *A* either *X* or *Y* is in *B* where *Y* is a refinement or a variant of *X*. For every *A*, at least one of the property shapes must be a variant and not a refinement.
 
 ><span id="ap11"></span> **Rule AP-11:** An application profile *B* MAY express that it is a **subprofile of** of an application profile *A* via the `inspec:refines` property only if for every node shape *X* in *A* there is a refined node shape *Y* in *B*.
 
@@ -110,7 +110,7 @@ SVG-INSPEC builds on top of SVG to provide a way to clarify whether objects in a
 
 ><span id="svg2"></span> **Rule SVG-2:** An element corresponding to an INSPEC entity MUST have a custom data attribute on the form `data-inspec-type="TYPE"` where TYPE is one of foundational, application-profile, diagram, data-vocabulary, class, property, node-shape, property-shape, concept, terminology and concept-collection. If the element corresponds to two things, e.g. both a class and a node-shape they can be listed both with a separating comma, the first should be considered dominant.
 
-><span id="svg3"></span> **Rule SVG-3:** An element corresponding to an INSPEC entity MAY have an id on the form `id="d_EID"` where EID is the md5 sum<sup><a href="#fn4" id="fn4_1">[4]</a></sup> of the entity's URI.
+><span id="svg3"></span> **Rule SVG-3:** An element corresponding to an INSPEC entity MAY have an id on the form `id="d_EID"` where EID is the md5 sum<sup><a href="#fn5" id="fn5_1">[5]</a></sup> of the entity's URI.
 
 ><span id="svg4"></span> **Rule SVG-4:** An element with type node-shape or property-shape MAY have a custom data attribute on the form `data-inspec-public="true"` if it is public according to rule AP-3 or AP-4.
 
@@ -120,17 +120,17 @@ SVG-INSPEC builds on top of SVG to provide a way to clarify whether objects in a
 
 This set of rules describes how interoperable specification parts can be extracted from other specification parts, e.g. a UML model. Extraction is a preparatory step; the extracted parts are treated and validated like any other interoperable specification parts. A consumer is expected to declare which extraction conventions it supports.
 
-><span id="extract1"></span> **Rule EXTRACT-1:** An *extraction convention* is a `dcterms:Standard`, defined outside this specification,<sup><a href="#fn5" id="fn5_1">[5]</a></sup> that describes how interoperable specification parts are extracted from an artifact and which conventions that artifact must follow. An *extraction source* is a specification part whose `dcterms:conformsTo` points to an extraction convention. The resource indicated via its `prof:hasArtifact` MUST follow that extraction convention.
+><span id="extract1"></span> **Rule EXTRACT-1:** An *extraction convention* is a `dcterms:Standard`, defined outside this specification,<sup><a href="#fn6" id="fn6_1">[6]</a></sup> that describes how interoperable specification parts are extracted from an artifact and which conventions that artifact must follow. An *extraction source* is a specification part whose `dcterms:conformsTo` points to an extraction convention. The resource indicated via its `prof:hasArtifact` MUST follow that extraction convention.
 
 ><span id="extract2"></span> **Rule EXTRACT-2:** The extraction results MAY be added, by the publisher or a consumer, as new specification parts (introduced in Rule PROF-2), and MUST then point to the extraction source via `dcterms:source`.
 
 ><span id="extract3"></span> **Rule EXTRACT-3:** If a specification part has `dcterms:source` pointing to an extraction source, that extraction source SHOULD be treated as fully extracted and SHOULD NOT be extracted again.
 
-><span id="extract4"></span> **Rule EXTRACT-4:** Rules PROF-3 to PROF-10 MUST NOT be evaluated for an interoperable specification before all its extraction sources have been extracted.<sup><a href="#fn6" id="fn6_1">[6]</a></sup>
+><span id="extract4"></span> **Rule EXTRACT-4:** Rules PROF-3 to PROF-10 MUST NOT be evaluated for an interoperable specification before all its extraction sources have been extracted.<sup><a href="#fn7" id="fn7_1">[7]</a></sup>
 
 ## Rules for enriching the interoperable specifications - ENRICH-INSPEC
 
-This set of rules aim to enrich the interoperable specification by analysing the contents of, and interaction between, the different interoperable specification parts in order to surface information which may be valuable for a webb of interoperable specifications.
+This set of rules aim to enrich the interoperable specification by analysing the contents of, and interaction between, the different interoperable specification parts in order to surface information which may be valuable for a webb of interoperable specifications. Rules ENRICH-1 to ENRICH-4 add to the "interoperable specification resource", while Rules ENRICH-5 and ENRICH-6 derive a further form of the application profile.
 
 ><span id="enrich1"></span> **Rule ENRICH-1:** Every public property or node shape MAY be pointed to from the "interoperable specification resource" (introduced in Rule PROF-1) via the `dcterms:hasPart` property.
 
@@ -140,13 +140,19 @@ This set of rules aim to enrich the interoperable specification by analysing the
 
 ><span id="enrich4"></span> **Rule ENRICH-4:** If a `inspec:refines` relation is present in the application profile resource the specification introducing the refined application MAY be indicated from the "interoperable specification resource" using `prof:isProfileOf`.
 
+><span id="enrich5"></span> **Rule ENRICH-5:** The application profile MAY be enriched into *validating SHACL* by resolving its refinements. A shape that refines other shapes via `inspec:refines` gets every *characteristic* of the shapes it refines that it does not state itself. A characteristic is what a shape states about the nodes it applies to: which nodes they are (targets), what they must satisfy (constraints, with their severity) and how they are presented (non-validating characteristics such as a label). What it states about the shape itself, e.g. `rdfs:isDefinedBy`, `sh:deactivated`, `inspec:refines` and `inspec:variant`, is not a characteristic. A refined shape is resolved before the shapes that refine it. `inspec:refines` is kept. Enriching validating SHACL MUST NOT change it.
+
+><span id="enrich6"></span> **Rule ENRICH-6:** A characteristic is given by its main parameter, and a parameter that qualifies another belongs to its characteristic. All targets are one characteristic, as are a text in all its languages and the property shapes of a node shape. An `sh:or` whose members each only state a datatype is the same characteristic as `sh:datatype`, and likewise for classes; any other `sh:or` is a characteristic of its own.<sup><a href="#fn8" id="fn8_1">[8]</a></sup>
+
 <section id="footnotes" style="font-size:smaller;border-top:1px solid" class="informative">
 <ol>
  <li id="fn1">Both RDFS and SKOS introduce building blocks (classes and properties) for defining things (other classes, properties, concepts, collections) in an open world manner. However, both vocabularies and terminologies needs to work in the context of semantic specifications where it is stated explicitly what is included, hence it corresponds to a closed world perspective. Hence, in both RDFS-INSPEC and SKOS-INSPEC there is a restriction to assume that everything needed is provided in the indicated RDF Datasets. <a href="#fn1_1">↩<sup>1</sup></a><a href="#fn1_2">↩<sup>2</sup></a></li>
  <li id="fn2">SHACL supports imports declared via `owl:imports`, the rules are written from the perspective that these are respected and all RDF Datasets (potentially recursively) are imported first into a single RDF Dataset. <a href="#fn2_1">↩</a></li>
  <li id="fn3">Using implicit class targets makes it harder to re-use and extend the shape. It is therefore recommended to rather use an explicit `sh:targetClass` statement. <a href="#fn3_1">↩</a></li>
- <li id="fn4">The id value could in principle be the URI, however, it is highly likely that we want to write CSS rules targeting individual elements and then we need to be more restrictive as CSS rules cannot use URIs as part of selectors. <a href="#fn4_1">↩</a></li>
- <li id="fn5">Extraction conventions maintained alongside INSPEC, such as the INSPEC UML extraction convention, are listed at <a href="https://w3id.org/inspec/extractors">https://w3id.org/inspec/extractors</a>. The list is not exhaustive and is not part of this specification. <a href="#fn5_1">↩</a></li>
- <li id="fn6">A consumer that does not support an extraction convention cannot establish conformance to PROF-INSPEC for specifications that depend on it. <a href="#fn6_1">↩</a></li>
+ <li id="fn4">How each constraint is compared is described in the <a href="https://diggsweden.github.io/interoperable-specifications/docs/ap.html#property_refinement">SHACL-INSPEC document</a>. <a href="#fn4_1">↩</a></li>
+ <li id="fn5">The id value could in principle be the URI, however, it is highly likely that we want to write CSS rules targeting individual elements and then we need to be more restrictive as CSS rules cannot use URIs as part of selectors. <a href="#fn5_1">↩</a></li>
+ <li id="fn6">Extraction conventions maintained alongside INSPEC, such as the INSPEC UML extraction convention, are listed at <a href="https://w3id.org/inspec/extractors">https://w3id.org/inspec/extractors</a>. The list is not exhaustive and is not part of this specification. <a href="#fn6_1">↩</a></li>
+ <li id="fn7">A consumer that does not support an extraction convention cannot establish conformance to PROF-INSPEC for specifications that depend on it. <a href="#fn7_1">↩</a></li>
+ <li id="fn8">For example, `sh:flags` qualifies `sh:pattern`, and a node shape without property shapes of its own gets those of every node shape it refines. The details and edge cases are described in the <a href="https://diggsweden.github.io/interoperable-specifications/docs/ap.html#resolving_refinements">SHACL-INSPEC document</a>. <a href="#fn8_1">↩</a></li>
 </ol>
 </section>

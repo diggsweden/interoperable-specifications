@@ -227,7 +227,7 @@ Without an `ap-nodeKind` tag, the node kind is inferred:
 * `ap-order` - gives `sh:order`, must be an integer. Without the `implicitOrder` extraction option, property shapes have no implicit order from their position in the model.
 * `ap-pattern` - gives `sh:pattern`, must be a valid regular expression. `sh:pattern` is only given by this tag, not by constraints in the model.
 * `ap-codelist` - on an attribute or association end, the concept scheme whose concepts are allowed as values. Gives `sh:nodeKind sh:IRI` and an anonymous `sh:node` with `sh:severity sh:Info` requiring `rdf:type skos:Concept` and `skos:inScheme` the concept scheme. It is an error on an attribute typed with a literal datatype, so leave the type empty or use `uri`.
-* `ap-refines` - a shape URI, gives `inspec:refines` and `sh:and` with a list containing the same shape, see Rules [AP-7](../rules.md#ap7) and [AP-9](../rules.md#ap9).
+* `ap-refines` - a shape URI, gives `inspec:refines`, see Rules [AP-7](../rules.md#ap7) and [AP-9](../rules.md#ap9).
 * `ap-variant` - a shape URI, gives `inspec:variant`, see Rules [AP-8](../rules.md#ap8) and [AP-10](../rules.md#ap10).
 
 `ap-refines` and `ap-variant` are allowed on classes (node shapes) as well as on attributes and association ends (property shapes).
